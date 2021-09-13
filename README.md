@@ -30,6 +30,6 @@ ok ~3.28 min (197 s + 849320900 ns)
 ```
 
 ## TODO:
-[ ] Add Polyline encoding benchmark too.
-[ ] Compare the results and the speed of translation to a specific standard like GeoJSON.
-[ ] Add four stage 1000, 10000, 100000 and 1000000 encodings/decodings benchmark.
+- [ ] Add Polyline encoding benchmark too.
+- [ ] Compare the results and the speed of translation to a specific standard like GeoJSON.
+- [ ] Add four stage 1000, 10000, 100000 and 1000000 encodings/decodings benchmark.
