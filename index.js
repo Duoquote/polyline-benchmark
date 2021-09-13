@@ -54,7 +54,7 @@ bench('@mapbox/polyline 1000 times', function (b) {
   b.end()
 });
 
-bench('@mapbox/polyline 1000 times', function (b) {
+bench('decode-google-map-polyline 1000 times', function (b) {
   b.start()
 
   for (var i = 0; i < 1000; i++) {

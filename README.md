@@ -18,7 +18,7 @@ ok ~25 s (25 s + 87594900 ns)
 # @mapbox/polyline 1000 times
 ok ~8.04 s (8 s + 36240100 ns)
 
-# @mapbox/polyline 1000 times
+# decode-google-map-polyline 1000 times
 ok ~2.45 min (147 s + 810016800 ns)
 
 all benchmarks completed
