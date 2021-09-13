@@ -1,6 +1,10 @@
 # Benchmarks of Various Implementations of Polyline Decoding in Javascript
 
-## Benchmark:
+## How to run:
+
+First install the node modules by typing `yarn` or `npm install` and then you can run it with `node index.js`.
+
+## The Benchmark:
 ###### Ran on Ryzen 5 3600 @ Stock, 32GB ram machine.
 
 ```cmd
