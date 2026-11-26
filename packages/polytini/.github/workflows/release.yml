@@ -1,0 +1,104 @@
+# Publishes to JSR and npm when a GitHub release is published or a v* tag is
+# pushed. No long-lived tokens: both registries use GitHub's OIDC token.
+# See RELEASING.md for the one-time setup and the first manual npm publish.
+name: release
+
+on:
+  release:
+    types: [published]
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+# A release and its tag push are the same release: run once.
+concurrency:
+  group: release-${{ github.event.release.tag_name || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    uses: ./.github/workflows/ci.yml
+
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.check.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: check
+        name: package.json, jsr.json and the CLI must all match the tag
+        env:
+          TAG: ${{ github.event.release.tag_name || github.ref_name }}
+        run: |
+          node -e '
+            const tag = process.env.TAG.replace(/^v/, "");
+            const pkg = require("./package.json").version;
+            const jsr = require("./jsr.json").version;
+            const cli = require("fs").readFileSync("src/cli-lib.js", "utf8").match(/VERSION = .([^\x27]+)/)[1];
+            const all = { "package.json": pkg, "jsr.json": jsr, "src/cli-lib.js": cli };
+            const bad = Object.entries(all).filter(([, v]) => v !== tag);
+            if (bad.length) {
+              console.error(`tag ${process.env.TAG} does not match: ` + bad.map(([f, v]) => `${f} has ${v}`).join(", "));
+              process.exit(1);
+            }
+            console.log(`version ${tag} matches everywhere`);
+            require("fs").appendFileSync(process.env.GITHUB_OUTPUT, `version=${tag}\n`);
+          '
+
+  jsr:
+    needs: [test, version]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OIDC: JSR trusts this repository, no token needed
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      # A published release also pushes its tag, so this can run twice.
+      - name: Skip if JSR already has this version
+        id: jsr
+        run: |
+          if curl -fsS https://jsr.io/@duoquote/polytini/meta.json | grep -q '"${{ needs.version.outputs.version }}"'; then
+            echo "already on JSR"; echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.jsr.outputs.skip != 'true'
+        run: deno publish
+
+  npm:
+    needs: [test, version]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OIDC trusted publishing and provenance
+    env:
+      HAS_NPM_TOKEN: ${{ secrets.NPM_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          # Trusted publishing needs npm 11.5.1 or newer; Node 24 ships it.
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - run: npm ci
+      - name: Skip if npm already has this version
+        id: npm
+        run: |
+          if npm view "@duoquote/polytini@${{ needs.version.outputs.version }}" version 2>/dev/null | grep -q .; then
+            echo "already on npm"; echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Publish with OIDC trusted publishing
+        if: steps.npm.outputs.skip != 'true' && env.HAS_NPM_TOKEN != 'true'
+        run: npm publish --provenance --access public
+      # Deprecated fallback for before trusted publishing is set up. npm is
+      # restricting tokens that bypass 2FA (https://gh.io/npm-gat-bypass2fa-deprecation);
+      # remove the NPM_TOKEN secret once the trusted publisher works.
+      - name: Publish with NPM_TOKEN (deprecated)
+        if: steps.npm.outputs.skip != 'true' && env.HAS_NPM_TOKEN == 'true'
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

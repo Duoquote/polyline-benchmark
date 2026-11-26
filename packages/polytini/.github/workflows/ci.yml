@@ -1,0 +1,118 @@
+# CI for polytini once it lives in its own repository
+# (github.com/Duoquote/polytini). Inside the polyline-benchmark repository
+# this file is inert; that repository's own workflow runs the same checks.
+name: ci
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  node:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22, 24, 26]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: node test/run.js
+
+  bun:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - uses: oven-sh/setup-bun@v2
+      - run: npm ci
+      - run: bun test/run.js
+
+  deno:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - run: npm ci
+      - run: deno run -A test/run.js
+      - run: deno publish --dry-run --allow-dirty
+
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Size budgets
+        run: node scripts/size.js
+      - name: The committed .wasm matches the .wat
+        run: node scripts/build-wasm.js && git diff --exit-code -- wasm/polytini.wasm src/wasm-bytes.js
+      - name: Coverage
+        run: npx c8 --reporter=text-summary --include='src/**' node test/run.js
+      - name: npm publish dry run
+        run: npm publish --dry-run
+
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: oven-sh/setup-bun@v2
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - run: npm ci
+      - run: node test/smoke.js
+
+  # Optional: regenerates the PostGIS parity fixtures against a real PostGIS
+  # and fails if they changed. Manual runs only, so a PostGIS image update
+  # never blocks a pull request.
+  postgis:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest # amd64; the fixture depends on x86-64 int conversion
+    services:
+      postgres:
+        image: postgis/postgis:18-3.7
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd "pg_isready -h 127.0.0.1 -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Regenerate the PostGIS fixtures and fail if they changed
+        env:
+          POSTGIS_CONTAINER: ${{ job.services.postgres.id }}
+        run: node scripts/postgis-fixtures.js --check
