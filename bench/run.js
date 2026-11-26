@@ -4,15 +4,18 @@
 //
 // Each implementation runs in its own child process, so the JIT and GC state
 // one library leaves behind can't change the numbers of the next one.
-// Prints markdown and writes results/<runtime>.md plus results/<runtime>.json.
+// Prints markdown and writes results/<runtime>.md plus results/<runtime>.json
+// (Node results are per major version: results/node-24.md and so on).
 import { Bench } from 'tinybench';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
-import { implementations } from '../src/implementations.js';
-import { benchFixtures } from '../src/fixtures.js';
+import { implementations as googleImpls, flexImplementations, polytiniEntry } from '../src/implementations.js';
+import { benchFixtures, flexFixtures } from '../src/fixtures.js';
+import { encodeFlexible } from '../src/adapters.js';
 import { environment, environmentMarkdown } from '../src/environment.js';
+import { measure, summarize, tables } from './measure.js';
 
 const args = process.argv.slice(2);
 const opt = (name, fallback) => {
@@ -25,67 +28,20 @@ const only = opt('only', '');
 const write = !args.includes('--no-write');
 const rounds = Number(opt('rounds', 3));
 const worker = opt('worker', null); // internal: benchmark one implementation and print JSON
-
-// Each timed call processes at least this many points, so short lines are not
-// dominated by timer overhead. 10 pts -> 2000 repetitions per timed call.
-const MIN_POINTS_PER_CALL = 20_000;
+// google (default) or flexible: HERE's Flexible Polyline, a different format.
+const format = opt('format', 'google');
+const implementations = format === 'flexible' ? flexImplementations : googleImpls;
+const fixturesFor = (p) => (format === 'flexible' ? flexFixtures(p, encodeFlexible) : benchFixtures(p));
 
 const env = environment();
 
 if (worker) {
   const impl = implementations.find((i) => i.name === worker);
-  const results = await benchmark(impl);
+  const gc = globalThis.gc ?? (globalThis.Bun ? () => globalThis.Bun.gc(true) : () => {});
+  const results = await measure(impl, fixturesFor(precision), { Bench, precision, time, gc });
   process.stdout.write(`RESULTS ${JSON.stringify(results)}\n`);
 } else {
   await main();
-}
-
-async function benchmark(impl) {
-  const collectGarbage = globalThis.gc ?? (globalThis.Bun ? () => globalThis.Bun.gc(true) : () => {});
-  let sink = 0; // results feed into this so the work can't be optimised away
-  const results = [];
-  for (const op of ['decode', 'encode']) {
-    if (!impl[op]) continue;
-    for (const fixture of benchFixtures(precision)) {
-      const reps = Math.max(1, Math.ceil(MIN_POINTS_PER_CALL / fixture.points));
-      const lines = fixture.encoded;
-      const inputs = op === 'encode' ? fixture.coords.map((c) => impl.toNative(c)) : lines;
-
-      // Check once outside the timed loop: the numbers mean nothing for an
-      // implementation that returns the wrong answer.
-      inputs.forEach((input, i) => {
-        const out = impl[op](input, precision);
-        const ok = op === 'encode' ? out === lines[i] : out.length === fixture.coords[i].length;
-        if (!ok) throw new Error(`${impl.name} ${op} gives a wrong result on ${fixture.name}, line ${i}`);
-      });
-
-      const fn = impl[op];
-      const bench = new Bench({ time, warmupTime: Math.min(250, time), throws: true });
-      bench.add(impl.name, () => {
-        for (let r = 0; r < reps; r++) {
-          for (let i = 0; i < inputs.length; i++) sink += fn(inputs[i], precision).length;
-        }
-      });
-      collectGarbage();
-      await bench.run();
-
-      const { latency } = bench.tasks[0].result;
-      results.push({
-        op,
-        fixture: fixture.name,
-        impl: impl.name,
-        points: fixture.points,
-        reps,
-        samples: latency.samplesCount,
-        medianMs: latency.p50,
-        meanMs: latency.mean,
-        rme: latency.rme,
-        mptsPerSec: (reps * fixture.points) / (latency.p50 / 1000) / 1e6,
-      });
-    }
-  }
-  if (sink === 42) console.error(''); // keep `sink` observable
-  return results;
 }
 
 // The command that starts this same script on the current runtime.
@@ -107,7 +63,7 @@ async function main() {
   for (let round = 1; round <= rounds; round++) {
     for (const impl of impls) {
       process.stderr.write(`round ${round}/${rounds} ${impl.name} ... `);
-      const child = spawnSync(cmd, [...baseArgs, '--worker', impl.name, '--precision', String(precision), '--time', String(time)], {
+      const child = spawnSync(cmd, [...baseArgs, '--worker', impl.name, '--format', format, '--precision', String(precision), '--time', String(time)], {
         encoding: 'utf8',
         maxBuffer: 64 * 1024 * 1024,
       });
@@ -120,32 +76,21 @@ async function main() {
     }
   }
 
-  // Median across rounds per cell, plus how far apart the rounds were.
-  const median = (xs) => {
-    const s = [...xs].sort((a, b) => a - b);
-    return s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2;
-  };
-  const results = [];
-  for (const r of runs.filter((x) => x.round === 1)) {
-    const all = runs.filter((x) => x.op === r.op && x.fixture === r.fixture && x.impl === r.impl).map((x) => x.mptsPerSec);
-    const m = median(all);
-    results.push({ op: r.op, fixture: r.fixture, impl: r.impl, mptsPerSec: m, rounds: all, spread: (Math.max(...all) - Math.min(...all)) / m });
-  }
-  const spreads = results.map((r) => r.spread);
-
-  const fixtures = benchFixtures(precision).map((f) => f.name);
+  const { results, medianSpread, worstSpread } = summarize(runs);
+  const entry = polytiniEntry();
+  const fixtures = fixturesFor(precision).map((f) => f.name);
+  const flatNames = new Set(impls.filter((i) => i.group === 'flat').map((i) => i.name));
   const md = [
-    `## ${env.runtimeLabel}, precision ${precision}`,
+    `## ${env.runtimeLabel}, ${format === 'flexible' ? 'HERE Flexible Polyline, ' : ''}precision ${precision}`,
     '',
     environmentMarkdown(env),
+    `- \`@duoquote/polytini\` resolved to \`${entry}\``,
     '',
-    `Million points per second. Each cell is the median of ${rounds} rounds, and each round is the median sample of a ${time} ms tinybench run in a fresh process. Higher is better. Rows are sorted by the 10,000 point column.`,
+    `Million points per second. Each cell is the median of ${rounds} rounds, and each round is the median sample of a ${time} ms tinybench run in a fresh process. Higher is better. Rows are sorted by the 10,000 point column. The typed-array tables use flat arrays of numbers instead of [lat, lng] arrays, so they aren't comparable with the main tables.`,
     '',
-    `Spread between the fastest and slowest round of a cell: median ${(median(spreads) * 100).toFixed(0)}%, worst ${(Math.max(...spreads) * 100).toFixed(0)}%.`,
+    `Spread between the fastest and slowest round of a cell: median ${(medianSpread * 100).toFixed(0)}%, worst ${(worstSpread * 100).toFixed(0)}%.`,
     '',
-    table(results, fixtures, 'decode'),
-    '',
-    table(results, fixtures, 'encode'),
+    tables(results, fixtures, flatNames),
     '',
   ].join('\n');
 
@@ -154,26 +99,10 @@ async function main() {
   if (write) {
     const dir = fileURLToPath(new URL('../results/', import.meta.url));
     mkdirSync(dir, { recursive: true });
-    const base = `${dir}${env.runtime}${precision === 5 ? '' : `-p${precision}`}`;
+    const name = env.runtime === 'node' ? `node-${env.runtimeVersion.slice(1).split('.')[0]}` : env.runtime;
+    const base = `${dir}${name}${format === 'flexible' ? '-flexible' : ''}${precision === 5 ? '' : `-p${precision}`}`;
     writeFileSync(`${base}.md`, md);
-    writeFileSync(`${base}.json`, JSON.stringify({ env, precision, time, rounds, results, runs }, null, 2) + '\n');
+    writeFileSync(`${base}.json`, JSON.stringify({ env, precision, time, rounds, polytiniEntry: entry, groups: { flat: [...flatNames] }, results, runs }, null, 2) + '\n');
     console.error(`wrote ${base}.md and .json`);
   }
-}
-
-function table(results, cols, op) {
-  const fmt = (v) => (v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2));
-  const rows = results.filter((r) => r.op === op);
-  const names = [...new Set(rows.map((r) => r.impl))];
-  const get = (impl, col) => rows.find((r) => r.impl === impl && r.fixture === col);
-  // Sort by the 10,000 point column.
-  const key = cols.find((c) => c.startsWith('10,000')) ?? cols[0];
-  names.sort((a, b) => get(b, key).mptsPerSec - get(a, key).mptsPerSec);
-
-  const lines = [`| ${op} | ${cols.join(' | ')} |`, `|---|${cols.map(() => '--:').join('|')}|`];
-  for (const name of names) {
-    const cells = cols.map((c) => fmt(get(name, c).mptsPerSec));
-    lines.push(`| ${name} | ${cells.join(' | ')} |`);
-  }
-  return lines.join('\n');
 }
