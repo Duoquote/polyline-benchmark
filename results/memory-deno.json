@@ -1,0 +1,3379 @@
+{
+  "env": {
+    "runtime": "deno",
+    "runtimeVersion": "v2.5.4",
+    "runtimeLabel": "Deno v2.5.4",
+    "engine": "V8 14.0.365.5-rusty",
+    "cpu": "AMD Ryzen 7 5800X 8-Core Processor",
+    "threads": 16,
+    "memoryGiB": 64,
+    "os": "Windows_NT 10.0.26300 x64",
+    "date": "2026-11-26"
+  },
+  "rounds": 3,
+  "polytiniEntry": "src/deno.js",
+  "results": [
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 2195.332,
+      "retained": 1795.132,
+      "allocatedPerPoint": 21.953319999999998,
+      "retainedPerPoint": 17.95132,
+      "spread": 0.008255698910233075
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 160986.8,
+      "retained": 160306,
+      "allocatedPerPoint": 16.098679999999998,
+      "retainedPerPoint": 16.0306,
+      "spread": 0.002099551019089764
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 1602368,
+      "retained": 1600460,
+      "allocatedPerPoint": 16.02368,
+      "retainedPerPoint": 16.0046,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 6871.524,
+      "retained": 6306.656,
+      "allocatedPerPoint": 68.71524000000001,
+      "retainedPerPoint": 63.06656,
+      "spread": 0.02152593805973757
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 32871.2,
+      "retained": 26933.2,
+      "allocatedPerPoint": 3.28712,
+      "retainedPerPoint": 2.69332,
+      "spread": 0.10852052860862997
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 1683548,
+      "retained": 283064,
+      "allocatedPerPoint": 16.83548,
+      "retainedPerPoint": 2.83064,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 4502.14,
+      "retained": 1864.012,
+      "allocatedPerPoint": 45.0214,
+      "retainedPerPoint": 18.64012,
+      "spread": 0.019054938318222102
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 573572.8,
+      "retained": 180716,
+      "allocatedPerPoint": 57.35728,
+      "retainedPerPoint": 18.0716,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 6209784,
+      "retained": 2061060,
+      "allocatedPerPoint": 62.09784,
+      "retainedPerPoint": 20.6106,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 8289.656,
+      "retained": 6304,
+      "allocatedPerPoint": 82.89656000000001,
+      "retainedPerPoint": 63.04,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 969284.8,
+      "retained": 808096,
+      "allocatedPerPoint": 96.92848000000001,
+      "retainedPerPoint": 80.8096,
+      "spread": 0.0001464997697271225
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 9993676,
+      "retained": 8392864,
+      "allocatedPerPoint": 99.93676,
+      "retainedPerPoint": 83.92864,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 2182.372,
+      "retained": 1800.012,
+      "allocatedPerPoint": 21.823719999999998,
+      "retainedPerPoint": 18.00012,
+      "spread": 0.0001832868090316825
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 160712.8,
+      "retained": 160204,
+      "allocatedPerPoint": 16.071279999999998,
+      "retainedPerPoint": 16.0204,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 1602504,
+      "retained": 1600460,
+      "allocatedPerPoint": 16.02504,
+      "retainedPerPoint": 16.0046,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 388.512,
+      "retained": 224,
+      "allocatedPerPoint": 3.88512,
+      "retainedPerPoint": 2.24,
+      "spread": 0.001101639074211343
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 28922.8,
+      "retained": 27032,
+      "allocatedPerPoint": 2.89228,
+      "retainedPerPoint": 2.7032,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 283324,
+      "retained": 283064,
+      "allocatedPerPoint": 2.83324,
+      "retainedPerPoint": 2.83064,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 7387.052,
+      "retained": 7276.232,
+      "allocatedPerPoint": 73.87052,
+      "retainedPerPoint": 72.76232,
+      "spread": 0.007469826935020939
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 784586,
+      "retained": 748116,
+      "allocatedPerPoint": 78.4586,
+      "retainedPerPoint": 74.8116,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 7535348,
+      "retained": 7532500,
+      "allocatedPerPoint": 75.35348,
+      "retainedPerPoint": 75.325,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 12716.024,
+      "retained": 224,
+      "allocatedPerPoint": 127.16023999999999,
+      "retainedPerPoint": 2.24,
+      "spread": 0.001747716110004209
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 2249206.8,
+      "retained": 27032,
+      "allocatedPerPoint": 224.92067999999998,
+      "retainedPerPoint": 2.7032,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 22540656,
+      "retained": 283064,
+      "allocatedPerPoint": 225.40656,
+      "retainedPerPoint": 2.83064,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 8765.596,
+      "retained": 7568.012,
+      "allocatedPerPoint": 87.65596,
+      "retainedPerPoint": 75.68012,
+      "spread": 0.00002464179275434885
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 6675.728,
+      "retained": 6304,
+      "allocatedPerPoint": 66.75728,
+      "retainedPerPoint": 63.04,
+      "spread": 0.00767257144089757
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 864480.8,
+      "retained": 864160,
+      "allocatedPerPoint": 86.44808,
+      "retainedPerPoint": 86.416,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 9058120,
+      "retained": 9057184,
+      "allocatedPerPoint": 90.5812,
+      "retainedPerPoint": 90.57184,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 8847.34,
+      "retained": 7564.14,
+      "allocatedPerPoint": 88.4734,
+      "retainedPerPoint": 75.6414,
+      "spread": 0.005730083844409722
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 11846.796,
+      "retained": 6304,
+      "allocatedPerPoint": 118.46796,
+      "retainedPerPoint": 63.04,
+      "spread": 0.05082150481868685
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 808421.2,
+      "retained": 808096,
+      "allocatedPerPoint": 80.84212,
+      "retainedPerPoint": 80.8096,
+      "spread": 0.000024244787247015194
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 8393612,
+      "retained": 8392864,
+      "allocatedPerPoint": 83.93612,
+      "retainedPerPoint": 83.92864,
+      "spread": 0.000007624846132987801
+    },
+    {
+      "op": "decode",
+      "fixture": "real-world",
+      "impl": "@duoquote/polytini@0.1.0 (wasm decodeMany/encodeMany)",
+      "allocated": 2821268,
+      "retained": 2345724,
+      "allocatedPerPoint": 19.28017494703752,
+      "retainedPerPoint": 16.030369712294128,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "real-world",
+      "impl": "@duoquote/polytini@0.1.0 (wasm decodeMany/encodeMany)",
+      "allocated": 1161336,
+      "retained": 505640,
+      "allocatedPerPoint": 7.936417686052074,
+      "retainedPerPoint": 3.455477345725415,
+      "spread": 0.11833956753256594
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 11750.996,
+      "retained": 19575.34,
+      "allocatedPerPoint": 117.50995999999999,
+      "retainedPerPoint": 195.7534,
+      "spread": 0.0025260837464331624
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 3167704.4,
+      "retained": 1922991.6,
+      "allocatedPerPoint": 316.77044,
+      "retainedPerPoint": 192.29916,
+      "spread": 0.0035260865881299066
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 32292004,
+      "retained": 19316044,
+      "allocatedPerPoint": 322.92004,
+      "retainedPerPoint": 193.16044,
+      "spread": 0.07852061457690888
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 32739.064,
+      "retained": 6306.94,
+      "allocatedPerPoint": 327.39063999999996,
+      "retainedPerPoint": 63.069399999999995,
+      "spread": 0.0016035889113995441
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 3536761.2,
+      "retained": 808110,
+      "allocatedPerPoint": 353.67612,
+      "retainedPerPoint": 80.811,
+      "spread": 0.0001321602257119038
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 33328984,
+      "retained": 8392864,
+      "allocatedPerPoint": 333.28984,
+      "retainedPerPoint": 83.92864,
+      "spread": 0.005639055783998696
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 7463.504,
+      "retained": 7274.936,
+      "allocatedPerPoint": 74.63504,
+      "retainedPerPoint": 72.74936,
+      "spread": 0.01348857051594003
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 784586,
+      "retained": 748116,
+      "allocatedPerPoint": 78.4586,
+      "retainedPerPoint": 74.8116,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 7627132,
+      "retained": 7526660,
+      "allocatedPerPoint": 76.27132,
+      "retainedPerPoint": 75.2666,
+      "spread": 0.011128691623535558
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 6753.524,
+      "retained": 6304,
+      "allocatedPerPoint": 67.53524,
+      "retainedPerPoint": 63.04,
+      "spread": 0.04325208587398227
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 640588.8,
+      "retained": 639376.8,
+      "allocatedPerPoint": 64.05888,
+      "retainedPerPoint": 63.93768000000001,
+      "spread": 0.001345059751933445
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 6400672,
+      "retained": 6399904,
+      "allocatedPerPoint": 64.00672,
+      "retainedPerPoint": 63.99904,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 8844.364,
+      "retained": 7564.68,
+      "allocatedPerPoint": 88.44364,
+      "retainedPerPoint": 75.6468,
+      "spread": 0.002972740606334303
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 11302.916,
+      "retained": 6304,
+      "allocatedPerPoint": 113.02915999999999,
+      "retainedPerPoint": 63.04,
+      "spread": 0.02728428663895227
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 808421.2,
+      "retained": 808096,
+      "allocatedPerPoint": 80.84212,
+      "retainedPerPoint": 80.8096,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 8393612,
+      "retained": 8392864,
+      "allocatedPerPoint": 83.93612,
+      "retainedPerPoint": 83.92864,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 2489.784,
+      "retained": 8368.012,
+      "allocatedPerPoint": 24.897840000000002,
+      "retainedPerPoint": 83.68012,
+      "spread": 0.08246819804448899
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 2803700,
+      "retained": 800196,
+      "allocatedPerPoint": 280.37,
+      "retainedPerPoint": 80.0196,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 32256960,
+      "retained": 8116044,
+      "allocatedPerPoint": 322.5696,
+      "retainedPerPoint": 81.16044,
+      "spread": 0.0001264843308234874
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 28392.124,
+      "retained": 224,
+      "allocatedPerPoint": 283.92124,
+      "retainedPerPoint": 2.24,
+      "spread": 0.007822169274831278
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 3021063.6,
+      "retained": 27032,
+      "allocatedPerPoint": 302.10636,
+      "retainedPerPoint": 2.7032,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 33808288,
+      "retained": 283064,
+      "allocatedPerPoint": 338.08288,
+      "retainedPerPoint": 2.83064,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 7466.848,
+      "retained": 7274.936,
+      "allocatedPerPoint": 74.66848,
+      "retainedPerPoint": 72.74936,
+      "spread": 0.007337500374990955
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 784586,
+      "retained": 748116,
+      "allocatedPerPoint": 78.4586,
+      "retainedPerPoint": 74.8116,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 7641844,
+      "retained": 7526660,
+      "allocatedPerPoint": 76.41844,
+      "retainedPerPoint": 75.2666,
+      "spread": 0.00972069045115289
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 552.576,
+      "retained": 219.224,
+      "allocatedPerPoint": 5.52576,
+      "retainedPerPoint": 2.19224,
+      "spread": 0.21589066481352778
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 28922.8,
+      "retained": 27046.4,
+      "allocatedPerPoint": 2.89228,
+      "retainedPerPoint": 2.70464,
+      "spread": 0.01937411263606247
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 283324,
+      "retained": 283064,
+      "allocatedPerPoint": 2.83324,
+      "retainedPerPoint": 2.83064,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "real-world",
+      "impl": "@duoquote/polytini@0.1.0 (deck.gl binaryPaths)",
+      "allocated": 2363356,
+      "retained": 2345876,
+      "allocatedPerPoint": 16.15086448438461,
+      "retainedPerPoint": 16.03140846032939,
+      "spread": 0.0000033850168996968716
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 9089.224,
+      "retained": 7568.012,
+      "allocatedPerPoint": 90.89224,
+      "retainedPerPoint": 75.68012,
+      "spread": 0.005424445475213295
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "spread": 0
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 7062.048,
+      "retained": 6304,
+      "allocatedPerPoint": 70.62048,
+      "retainedPerPoint": 63.04,
+      "spread": 0.023670187458368998
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 865227.2,
+      "retained": 864160,
+      "allocatedPerPoint": 86.52271999999999,
+      "retainedPerPoint": 86.416,
+      "spread": 0.0004396533072469558
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 9058168,
+      "retained": 9057184,
+      "allocatedPerPoint": 90.58168,
+      "retainedPerPoint": 90.57184,
+      "spread": 0
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "decode-google-map-polyline@1.0.1",
+      "allocated": 16781.408,
+      "retained": 8048.26,
+      "allocatedPerPoint": 167.81408,
+      "retainedPerPoint": 80.4826,
+      "spread": 0.006658320922773631
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "decode-google-map-polyline@1.0.1",
+      "allocated": 1848262,
+      "retained": 800052,
+      "allocatedPerPoint": 184.8262,
+      "retainedPerPoint": 80.0052,
+      "spread": 0.008436033419504378
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "decode-google-map-polyline@1.0.1",
+      "allocated": 45286480,
+      "retained": 8000308,
+      "allocatedPerPoint": 452.8648,
+      "retainedPerPoint": 80.00308,
+      "spread": 0.000028352832898472128
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 7656.4,
+      "retained": 7249.22,
+      "allocatedPerPoint": 76.564,
+      "retainedPerPoint": 72.4922,
+      "spread": 0.007498040854709714
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 783163.2,
+      "retained": 720146,
+      "allocatedPerPoint": 78.31631999999999,
+      "retainedPerPoint": 72.0146,
+      "spread": 0.000006665315088949416
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 7219220,
+      "retained": 7200308,
+      "allocatedPerPoint": 72.1922,
+      "retainedPerPoint": 72.00308,
+      "spread": 0.002199129545851214
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 6964.632,
+      "retained": 6306.524,
+      "allocatedPerPoint": 69.64632,
+      "retainedPerPoint": 63.06524,
+      "spread": 0.05090635083088393
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 33327.2,
+      "retained": 26552.4,
+      "allocatedPerPoint": 3.3327199999999997,
+      "retainedPerPoint": 2.65524,
+      "spread": 0.08076286036630737
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 1683548,
+      "retained": 283064,
+      "allocatedPerPoint": 16.83548,
+      "retainedPerPoint": 2.83064,
+      "spread": 0
+    }
+  ],
+  "runs": [
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 2183.096,
+      "retained": 1795.132,
+      "allocatedPerPoint": 21.83096,
+      "retainedPerPoint": 17.95132,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 160648.8,
+      "retained": 160304,
+      "allocatedPerPoint": 16.06488,
+      "retainedPerPoint": 16.0304,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 1602368,
+      "retained": 1600460,
+      "allocatedPerPoint": 16.02368,
+      "retainedPerPoint": 16.0046,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 6871.524,
+      "retained": 6306.656,
+      "allocatedPerPoint": 68.71524000000001,
+      "retainedPerPoint": 63.06656,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 32871.2,
+      "retained": 26933.2,
+      "allocatedPerPoint": 3.28712,
+      "retainedPerPoint": 2.69332,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 1683548,
+      "retained": 283064,
+      "allocatedPerPoint": 16.83548,
+      "retainedPerPoint": 2.83064,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 4427.132,
+      "retained": 1864.012,
+      "allocatedPerPoint": 44.271319999999996,
+      "retainedPerPoint": 18.64012,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 573572.8,
+      "retained": 180716,
+      "allocatedPerPoint": 57.35728,
+      "retainedPerPoint": 18.0716,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 6209784,
+      "retained": 2061060,
+      "allocatedPerPoint": 62.09784,
+      "retainedPerPoint": 20.6106,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 8289.656,
+      "retained": 6304,
+      "allocatedPerPoint": 82.89656000000001,
+      "retainedPerPoint": 63.04,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 969145.6,
+      "retained": 808096,
+      "allocatedPerPoint": 96.91456,
+      "retainedPerPoint": 80.8096,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 9993676,
+      "retained": 8392864,
+      "allocatedPerPoint": 99.93676,
+      "retainedPerPoint": 83.92864,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 2182.372,
+      "retained": 1800.012,
+      "allocatedPerPoint": 21.823719999999998,
+      "retainedPerPoint": 18.00012,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 160712.8,
+      "retained": 160204,
+      "allocatedPerPoint": 16.071279999999998,
+      "retainedPerPoint": 16.0204,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 1602504,
+      "retained": 1600460,
+      "allocatedPerPoint": 16.02504,
+      "retainedPerPoint": 16.0046,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 388.084,
+      "retained": 224,
+      "allocatedPerPoint": 3.88084,
+      "retainedPerPoint": 2.24,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 28922.8,
+      "retained": 27032,
+      "allocatedPerPoint": 2.89228,
+      "retainedPerPoint": 2.7032,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 283324,
+      "retained": 283064,
+      "allocatedPerPoint": 2.83324,
+      "retainedPerPoint": 2.83064,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 7387.052,
+      "retained": 7276.228,
+      "allocatedPerPoint": 73.87052,
+      "retainedPerPoint": 72.76228,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 784586,
+      "retained": 748116,
+      "allocatedPerPoint": 78.4586,
+      "retainedPerPoint": 74.8116,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 7535348,
+      "retained": 7532500,
+      "allocatedPerPoint": 75.35348,
+      "retainedPerPoint": 75.325,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 12733.476,
+      "retained": 224,
+      "allocatedPerPoint": 127.33476,
+      "retainedPerPoint": 2.24,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 2249206.8,
+      "retained": 27032,
+      "allocatedPerPoint": 224.92067999999998,
+      "retainedPerPoint": 2.7032,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 22540656,
+      "retained": 283064,
+      "allocatedPerPoint": 225.40656,
+      "retainedPerPoint": 2.83064,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 8765.812,
+      "retained": 7568.012,
+      "allocatedPerPoint": 87.65812,
+      "retainedPerPoint": 75.68012,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 6675.728,
+      "retained": 6304,
+      "allocatedPerPoint": 66.75728,
+      "retainedPerPoint": 63.04,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 864480.8,
+      "retained": 864160,
+      "allocatedPerPoint": 86.44808,
+      "retainedPerPoint": 86.416,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 9058120,
+      "retained": 9057184,
+      "allocatedPerPoint": 90.5812,
+      "retainedPerPoint": 90.57184,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 8847.34,
+      "retained": 7564.14,
+      "allocatedPerPoint": 88.4734,
+      "retainedPerPoint": 75.6414,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 11846.796,
+      "retained": 6304,
+      "allocatedPerPoint": 118.46796,
+      "retainedPerPoint": 63.04,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 808421.2,
+      "retained": 808096,
+      "allocatedPerPoint": 80.84212,
+      "retainedPerPoint": 80.8096,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 8393612,
+      "retained": 8392864,
+      "allocatedPerPoint": 83.93612,
+      "retainedPerPoint": 83.92864,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "real-world",
+      "impl": "@duoquote/polytini@0.1.0 (wasm decodeMany/encodeMany)",
+      "allocated": 2821268,
+      "retained": 2345724,
+      "allocatedPerPoint": 19.28017494703752,
+      "retainedPerPoint": 16.030369712294128,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "real-world",
+      "impl": "@duoquote/polytini@0.1.0 (wasm decodeMany/encodeMany)",
+      "allocated": 1118464,
+      "retained": 505640,
+      "allocatedPerPoint": 7.643436069158751,
+      "retainedPerPoint": 3.455477345725415,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 11749.676,
+      "retained": 19575.34,
+      "allocatedPerPoint": 117.49676,
+      "retainedPerPoint": 195.7534,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 3156824,
+      "retained": 1920196,
+      "allocatedPerPoint": 315.6824,
+      "retainedPerPoint": 192.0196,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 34810268,
+      "retained": 19316044,
+      "allocatedPerPoint": 348.10268,
+      "retainedPerPoint": 193.16044,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 32767.424,
+      "retained": 6306.94,
+      "allocatedPerPoint": 327.67424,
+      "retainedPerPoint": 63.069399999999995,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 3536761.2,
+      "retained": 808003.2,
+      "allocatedPerPoint": 353.67612,
+      "retainedPerPoint": 80.80032,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 33460048,
+      "retained": 8392864,
+      "allocatedPerPoint": 334.60048,
+      "retainedPerPoint": 83.92864,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 7389.132,
+      "retained": 7274.936,
+      "allocatedPerPoint": 73.89132,
+      "retainedPerPoint": 72.74936,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 784586,
+      "retained": 748116,
+      "allocatedPerPoint": 78.4586,
+      "retainedPerPoint": 74.8116,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 7619640,
+      "retained": 7526660,
+      "allocatedPerPoint": 76.1964,
+      "retainedPerPoint": 75.2666,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 7011.916,
+      "retained": 6304,
+      "allocatedPerPoint": 70.11916000000001,
+      "retainedPerPoint": 63.04,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 640211.2,
+      "retained": 639044,
+      "allocatedPerPoint": 64.02112,
+      "retainedPerPoint": 63.9044,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 6400672,
+      "retained": 6399904,
+      "allocatedPerPoint": 64.00672,
+      "retainedPerPoint": 63.99904,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 8844.364,
+      "retained": 7564.68,
+      "allocatedPerPoint": 88.44364,
+      "retainedPerPoint": 75.6468,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 11455.668,
+      "retained": 6304,
+      "allocatedPerPoint": 114.55668,
+      "retainedPerPoint": 63.04,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 808421.2,
+      "retained": 808096,
+      "allocatedPerPoint": 80.84212,
+      "retainedPerPoint": 80.8096,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 8393612,
+      "retained": 8392864,
+      "allocatedPerPoint": 83.93612,
+      "retainedPerPoint": 83.92864,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 2296.316,
+      "retained": 8368.012,
+      "allocatedPerPoint": 22.96316,
+      "retainedPerPoint": 83.68012,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 2803700,
+      "retained": 800196,
+      "allocatedPerPoint": 280.37,
+      "retainedPerPoint": 80.0196,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 32261040,
+      "retained": 8116044,
+      "allocatedPerPoint": 322.6104,
+      "retainedPerPoint": 81.16044,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 28340.432,
+      "retained": 224,
+      "allocatedPerPoint": 283.40432,
+      "retainedPerPoint": 2.24,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 3021063.6,
+      "retained": 27032,
+      "allocatedPerPoint": 302.10636,
+      "retainedPerPoint": 2.7032,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 33808288,
+      "retained": 283064,
+      "allocatedPerPoint": 338.08288,
+      "retainedPerPoint": 2.83064,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 7438.396,
+      "retained": 7274.936,
+      "allocatedPerPoint": 74.38396,
+      "retainedPerPoint": 72.74936,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 784586,
+      "retained": 748116,
+      "allocatedPerPoint": 78.4586,
+      "retainedPerPoint": 74.8116,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 7619840,
+      "retained": 7526732,
+      "allocatedPerPoint": 76.1984,
+      "retainedPerPoint": 75.26732,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 659.496,
+      "retained": 219.124,
+      "allocatedPerPoint": 6.5949599999999995,
+      "retainedPerPoint": 2.19124,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 28922.8,
+      "retained": 27062,
+      "allocatedPerPoint": 2.89228,
+      "retainedPerPoint": 2.7062,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 283324,
+      "retained": 283064,
+      "allocatedPerPoint": 2.83324,
+      "retainedPerPoint": 2.83064,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "real-world",
+      "impl": "@duoquote/polytini@0.1.0 (deck.gl binaryPaths)",
+      "allocated": 2363356,
+      "retained": 2345876,
+      "allocatedPerPoint": 16.15086448438461,
+      "retainedPerPoint": 16.03140846032939,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 9128.092,
+      "retained": 7568.012,
+      "allocatedPerPoint": 91.28092000000001,
+      "retainedPerPoint": 75.68012,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 7067.604,
+      "retained": 6304,
+      "allocatedPerPoint": 70.67604,
+      "retainedPerPoint": 63.04,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 865227.2,
+      "retained": 864160,
+      "allocatedPerPoint": 86.52271999999999,
+      "retainedPerPoint": 86.416,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 9058168,
+      "retained": 9057184,
+      "allocatedPerPoint": 90.58168,
+      "retainedPerPoint": 90.57184,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "decode-google-map-polyline@1.0.1",
+      "allocated": 16807.112,
+      "retained": 8048.152,
+      "allocatedPerPoint": 168.07112,
+      "retainedPerPoint": 80.48152,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "decode-google-map-polyline@1.0.1",
+      "allocated": 1848262,
+      "retained": 800052,
+      "allocatedPerPoint": 184.8262,
+      "retainedPerPoint": 80.0052,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "decode-google-map-polyline@1.0.1",
+      "allocated": 45286480,
+      "retained": 8000308,
+      "allocatedPerPoint": 452.8648,
+      "retainedPerPoint": 80.00308,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 7706.432,
+      "retained": 7249.22,
+      "allocatedPerPoint": 77.06432,
+      "retainedPerPoint": 72.4922,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 783163.2,
+      "retained": 720146,
+      "allocatedPerPoint": 78.31631999999999,
+      "retainedPerPoint": 72.0146,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 7219220,
+      "retained": 7200308,
+      "allocatedPerPoint": 72.1922,
+      "retainedPerPoint": 72.00308,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 6964.632,
+      "retained": 6306.524,
+      "allocatedPerPoint": 69.64632,
+      "retainedPerPoint": 63.06524,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 32917.6,
+      "retained": 26552.4,
+      "allocatedPerPoint": 3.29176,
+      "retainedPerPoint": 2.65524,
+      "round": 1
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 1683548,
+      "retained": 283064,
+      "allocatedPerPoint": 16.83548,
+      "retainedPerPoint": 2.83064,
+      "round": 1
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 4512.92,
+      "retained": 1864.012,
+      "allocatedPerPoint": 45.1292,
+      "retainedPerPoint": 18.64012,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 573572.8,
+      "retained": 180716,
+      "allocatedPerPoint": 57.35728,
+      "retainedPerPoint": 18.0716,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 6209784,
+      "retained": 2061060,
+      "allocatedPerPoint": 62.09784,
+      "retainedPerPoint": 20.6106,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 8289.656,
+      "retained": 6304,
+      "allocatedPerPoint": 82.89656000000001,
+      "retainedPerPoint": 63.04,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 969287.6,
+      "retained": 808096,
+      "allocatedPerPoint": 96.92876,
+      "retainedPerPoint": 80.8096,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 9993676,
+      "retained": 8392864,
+      "allocatedPerPoint": 99.93676,
+      "retainedPerPoint": 83.92864,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 8847.34,
+      "retained": 7564.068,
+      "allocatedPerPoint": 88.4734,
+      "retainedPerPoint": 75.64068,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 12068.06,
+      "retained": 6304,
+      "allocatedPerPoint": 120.6806,
+      "retainedPerPoint": 63.04,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 808401.6,
+      "retained": 808096,
+      "allocatedPerPoint": 80.84016,
+      "retainedPerPoint": 80.8096,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 8393548,
+      "retained": 8392864,
+      "allocatedPerPoint": 83.93548,
+      "retainedPerPoint": 83.92864,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 11779.36,
+      "retained": 19575.34,
+      "allocatedPerPoint": 117.79360000000001,
+      "retainedPerPoint": 195.7534,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 3167704.4,
+      "retained": 1922991.6,
+      "allocatedPerPoint": 316.77044,
+      "retainedPerPoint": 192.29916,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 32292004,
+      "retained": 19316044,
+      "allocatedPerPoint": 322.92004,
+      "retainedPerPoint": 193.16044,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 32714.924,
+      "retained": 6306.94,
+      "allocatedPerPoint": 327.14923999999996,
+      "retainedPerPoint": 63.069399999999995,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 3536760.8,
+      "retained": 808110,
+      "allocatedPerPoint": 353.67607999999996,
+      "retainedPerPoint": 80.811,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 33272104,
+      "retained": 8392864,
+      "allocatedPerPoint": 332.72104,
+      "retainedPerPoint": 83.92864,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 2501.644,
+      "retained": 8368.012,
+      "allocatedPerPoint": 25.01644,
+      "retainedPerPoint": 83.68012,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 2803700,
+      "retained": 800196,
+      "allocatedPerPoint": 280.37,
+      "retainedPerPoint": 80.0196,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 32256960,
+      "retained": 8116044,
+      "allocatedPerPoint": 322.5696,
+      "retainedPerPoint": 81.16044,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 28392.124,
+      "retained": 224,
+      "allocatedPerPoint": 283.92124,
+      "retainedPerPoint": 2.24,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 3021063.6,
+      "retained": 27032,
+      "allocatedPerPoint": 302.10636,
+      "retainedPerPoint": 2.7032,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 33808288,
+      "retained": 283064,
+      "allocatedPerPoint": 338.08288,
+      "retainedPerPoint": 2.83064,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 2182.052,
+      "retained": 1800.012,
+      "allocatedPerPoint": 21.820520000000002,
+      "retainedPerPoint": 18.00012,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 160712.8,
+      "retained": 160204,
+      "allocatedPerPoint": 16.071279999999998,
+      "retainedPerPoint": 16.0204,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 1602504,
+      "retained": 1600460,
+      "allocatedPerPoint": 16.02504,
+      "retainedPerPoint": 16.0046,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 388.512,
+      "retained": 224,
+      "allocatedPerPoint": 3.88512,
+      "retainedPerPoint": 2.24,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 28922.8,
+      "retained": 27032,
+      "allocatedPerPoint": 2.89228,
+      "retainedPerPoint": 2.7032,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 283324,
+      "retained": 283064,
+      "allocatedPerPoint": 2.83324,
+      "retainedPerPoint": 2.83064,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 2201.22,
+      "retained": 1795.132,
+      "allocatedPerPoint": 22.012199999999996,
+      "retainedPerPoint": 17.95132,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 160986.8,
+      "retained": 160312.4,
+      "allocatedPerPoint": 16.098679999999998,
+      "retainedPerPoint": 16.03124,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 1602368,
+      "retained": 1600460,
+      "allocatedPerPoint": 16.02368,
+      "retainedPerPoint": 16.0046,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 6926.308,
+      "retained": 6306.656,
+      "allocatedPerPoint": 69.26308,
+      "retainedPerPoint": 63.06656,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 29324,
+      "retained": 27538.8,
+      "allocatedPerPoint": 2.9324,
+      "retainedPerPoint": 2.75388,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 1683548,
+      "retained": 283064,
+      "allocatedPerPoint": 16.83548,
+      "retainedPerPoint": 2.83064,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 8765.596,
+      "retained": 7568.012,
+      "allocatedPerPoint": 87.65596,
+      "retainedPerPoint": 75.68012,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 6659.724,
+      "retained": 6304,
+      "allocatedPerPoint": 66.59724,
+      "retainedPerPoint": 63.04,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 864480.8,
+      "retained": 864160,
+      "allocatedPerPoint": 86.44808,
+      "retainedPerPoint": 86.416,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 9058120,
+      "retained": 9057184,
+      "allocatedPerPoint": 90.5812,
+      "retainedPerPoint": 90.57184,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 7430.1,
+      "retained": 7280.192,
+      "allocatedPerPoint": 74.301,
+      "retainedPerPoint": 72.80192,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 784586,
+      "retained": 748116,
+      "allocatedPerPoint": 78.4586,
+      "retainedPerPoint": 74.8116,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 7535348,
+      "retained": 7532500,
+      "allocatedPerPoint": 75.35348,
+      "retainedPerPoint": 75.325,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 12711.252,
+      "retained": 224,
+      "allocatedPerPoint": 127.11252,
+      "retainedPerPoint": 2.24,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 2249206.8,
+      "retained": 27032,
+      "allocatedPerPoint": 224.92067999999998,
+      "retainedPerPoint": 2.7032,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 22540656,
+      "retained": 283064,
+      "allocatedPerPoint": 225.40656,
+      "retainedPerPoint": 2.83064,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 7463.504,
+      "retained": 7274.9,
+      "allocatedPerPoint": 74.63504,
+      "retainedPerPoint": 72.749,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 784586,
+      "retained": 748116,
+      "allocatedPerPoint": 78.4586,
+      "retainedPerPoint": 74.8116,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 7704520,
+      "retained": 7526660,
+      "allocatedPerPoint": 77.0452,
+      "retainedPerPoint": 75.2666,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 6719.812,
+      "retained": 6304,
+      "allocatedPerPoint": 67.19812,
+      "retainedPerPoint": 63.04,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 640588.8,
+      "retained": 639376.8,
+      "allocatedPerPoint": 64.05888,
+      "retainedPerPoint": 63.93768000000001,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 6400672,
+      "retained": 6399904,
+      "allocatedPerPoint": 64.00672,
+      "retainedPerPoint": 63.99904,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 9078.788,
+      "retained": 7568.012,
+      "allocatedPerPoint": 90.78788,
+      "retainedPerPoint": 75.68012,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 6900.444,
+      "retained": 6304,
+      "allocatedPerPoint": 69.00444,
+      "retainedPerPoint": 63.04,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 865227.6,
+      "retained": 864160,
+      "allocatedPerPoint": 86.52275999999999,
+      "retainedPerPoint": 86.416,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 9058168,
+      "retained": 9057184,
+      "allocatedPerPoint": 90.58168,
+      "retainedPerPoint": 90.57184,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 8861.236,
+      "retained": 7564.572,
+      "allocatedPerPoint": 88.61236000000001,
+      "retainedPerPoint": 75.64572,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 11302.916,
+      "retained": 6304,
+      "allocatedPerPoint": 113.02915999999999,
+      "retainedPerPoint": 63.04,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 808421.2,
+      "retained": 808096,
+      "allocatedPerPoint": 80.84212,
+      "retainedPerPoint": 80.8096,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 8393612,
+      "retained": 8392864,
+      "allocatedPerPoint": 83.93612,
+      "retainedPerPoint": 83.92864,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "real-world",
+      "impl": "@duoquote/polytini@0.1.0 (deck.gl binaryPaths)",
+      "allocated": 2363348,
+      "retained": 2345876,
+      "allocatedPerPoint": 16.150809813435387,
+      "retainedPerPoint": 16.03140846032939,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "decode-google-map-polyline@1.0.1",
+      "allocated": 16781.408,
+      "retained": 8048.26,
+      "allocatedPerPoint": 167.81408,
+      "retainedPerPoint": 80.4826,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "decode-google-map-polyline@1.0.1",
+      "allocated": 1858328.8,
+      "retained": 800052,
+      "allocatedPerPoint": 185.83288000000002,
+      "retainedPerPoint": 80.0052,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "decode-google-map-polyline@1.0.1",
+      "allocated": 45285832,
+      "retained": 8000308,
+      "allocatedPerPoint": 452.85832,
+      "retainedPerPoint": 80.00308,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 7466.848,
+      "retained": 7280.52,
+      "allocatedPerPoint": 74.66848,
+      "retainedPerPoint": 72.8052,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 784586,
+      "retained": 748116,
+      "allocatedPerPoint": 78.4586,
+      "retainedPerPoint": 74.8116,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 7694124,
+      "retained": 7526660,
+      "allocatedPerPoint": 76.94124,
+      "retainedPerPoint": 75.2666,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 552.576,
+      "retained": 219.224,
+      "allocatedPerPoint": 5.52576,
+      "retainedPerPoint": 2.19224,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 28922.8,
+      "retained": 27046.4,
+      "allocatedPerPoint": 2.89228,
+      "retainedPerPoint": 2.70464,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 283324,
+      "retained": 283064,
+      "allocatedPerPoint": 2.83324,
+      "retainedPerPoint": 2.83064,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 7656.4,
+      "retained": 7249.22,
+      "allocatedPerPoint": 76.564,
+      "retainedPerPoint": 72.4922,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 783163.2,
+      "retained": 720141.2,
+      "allocatedPerPoint": 78.31631999999999,
+      "retainedPerPoint": 72.01411999999999,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 7203348,
+      "retained": 7200308,
+      "allocatedPerPoint": 72.03348,
+      "retainedPerPoint": 72.00308,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 7123.024,
+      "retained": 6306.524,
+      "allocatedPerPoint": 71.23024000000001,
+      "retainedPerPoint": 63.06524,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 35609.2,
+      "retained": 26538,
+      "allocatedPerPoint": 3.56092,
+      "retainedPerPoint": 2.6538,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 1683548,
+      "retained": 283064,
+      "allocatedPerPoint": 16.83548,
+      "retainedPerPoint": 2.83064,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "real-world",
+      "impl": "@duoquote/polytini@0.1.0 (wasm decodeMany/encodeMany)",
+      "allocated": 2821268,
+      "retained": 2345724,
+      "allocatedPerPoint": 19.28017494703752,
+      "retainedPerPoint": 16.030369712294128,
+      "round": 2
+    },
+    {
+      "op": "encode",
+      "fixture": "real-world",
+      "impl": "@duoquote/polytini@0.1.0 (wasm decodeMany/encodeMany)",
+      "allocated": 1255896,
+      "retained": 505328,
+      "allocatedPerPoint": 8.582628305883961,
+      "retainedPerPoint": 3.4533451787056655,
+      "round": 2
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 7493.184,
+      "retained": 7274.9,
+      "allocatedPerPoint": 74.93184000000001,
+      "retainedPerPoint": 72.749,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 784586,
+      "retained": 748116,
+      "allocatedPerPoint": 78.4586,
+      "retainedPerPoint": 74.8116,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 7641844,
+      "retained": 7526660,
+      "allocatedPerPoint": 76.41844,
+      "retainedPerPoint": 75.2666,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 540.2,
+      "retained": 219.224,
+      "allocatedPerPoint": 5.402,
+      "retainedPerPoint": 2.19224,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 28922.8,
+      "retained": 26538,
+      "allocatedPerPoint": 2.89228,
+      "retainedPerPoint": 2.6538,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm)",
+      "allocated": 283324,
+      "retained": 283064,
+      "allocatedPerPoint": 2.83324,
+      "retainedPerPoint": 2.83064,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 9089.224,
+      "retained": 7568.012,
+      "allocatedPerPoint": 90.89224,
+      "retainedPerPoint": 75.68012,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 7062.048,
+      "retained": 6304,
+      "allocatedPerPoint": 70.62048,
+      "retainedPerPoint": 63.04,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 864847.2,
+      "retained": 864160,
+      "allocatedPerPoint": 86.48472,
+      "retainedPerPoint": 86.416,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@pirxpilot/google-polyline@4.0.1",
+      "allocated": 9058168,
+      "retained": 9057184,
+      "allocatedPerPoint": 90.58168,
+      "retainedPerPoint": 90.57184,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 2182.452,
+      "retained": 1800.012,
+      "allocatedPerPoint": 21.824520000000003,
+      "retainedPerPoint": 18.00012,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 160712.8,
+      "retained": 160204,
+      "allocatedPerPoint": 16.071279999999998,
+      "retainedPerPoint": 16.0204,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 1602504,
+      "retained": 1600460,
+      "allocatedPerPoint": 16.02504,
+      "retainedPerPoint": 16.0046,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 388.512,
+      "retained": 224,
+      "allocatedPerPoint": 3.88512,
+      "retainedPerPoint": 2.24,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 28922.8,
+      "retained": 27032,
+      "allocatedPerPoint": 2.89228,
+      "retainedPerPoint": 2.7032,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (wasm, Float64Array)",
+      "allocated": 283324,
+      "retained": 283064,
+      "allocatedPerPoint": 2.83324,
+      "retainedPerPoint": 2.83064,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 7374.92,
+      "retained": 7276.232,
+      "allocatedPerPoint": 73.7492,
+      "retainedPerPoint": 72.76232,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 784586,
+      "retained": 748116,
+      "allocatedPerPoint": 78.4586,
+      "retainedPerPoint": 74.8116,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 7535348,
+      "retained": 7532500,
+      "allocatedPerPoint": 75.35348,
+      "retainedPerPoint": 75.325,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 12716.024,
+      "retained": 224,
+      "allocatedPerPoint": 127.16023999999999,
+      "retainedPerPoint": 2.24,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 2249206.8,
+      "retained": 27032,
+      "allocatedPerPoint": 224.92067999999998,
+      "retainedPerPoint": 2.7032,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@googlemaps/polyline-codec@1.0.28",
+      "allocated": 22540656,
+      "retained": 283064,
+      "allocatedPerPoint": 225.40656,
+      "retainedPerPoint": 2.83064,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 7489.804,
+      "retained": 7274.936,
+      "allocatedPerPoint": 74.89804,
+      "retainedPerPoint": 72.74936,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 784586,
+      "retained": 748116,
+      "allocatedPerPoint": 78.4586,
+      "retainedPerPoint": 74.8116,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 7627132,
+      "retained": 7526660,
+      "allocatedPerPoint": 76.27132,
+      "retainedPerPoint": 75.2666,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 6753.524,
+      "retained": 6304,
+      "allocatedPerPoint": 67.53524,
+      "retainedPerPoint": 63.04,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 640929.6,
+      "retained": 639904,
+      "allocatedPerPoint": 64.09295999999999,
+      "retainedPerPoint": 63.9904,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (web entry)",
+      "allocated": 6400672,
+      "retained": 6399904,
+      "allocatedPerPoint": 64.00672,
+      "retainedPerPoint": 63.99904,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 7649.024,
+      "retained": 7249.204,
+      "allocatedPerPoint": 76.49024,
+      "retainedPerPoint": 72.49204,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 783163.2,
+      "retained": 720146,
+      "allocatedPerPoint": 78.31631999999999,
+      "retainedPerPoint": 72.0146,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 7219224,
+      "retained": 7200308,
+      "allocatedPerPoint": 72.19224,
+      "retainedPerPoint": 72.00308,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 6768.48,
+      "retained": 6306.524,
+      "allocatedPerPoint": 67.6848,
+      "retainedPerPoint": 63.06524,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 33327.2,
+      "retained": 27032,
+      "allocatedPerPoint": 3.3327199999999997,
+      "retainedPerPoint": 2.7032,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0",
+      "allocated": 1683548,
+      "retained": 283064,
+      "allocatedPerPoint": 16.83548,
+      "retainedPerPoint": 2.83064,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 4502.14,
+      "retained": 1864.012,
+      "allocatedPerPoint": 45.0214,
+      "retainedPerPoint": 18.64012,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 573572.8,
+      "retained": 180716,
+      "allocatedPerPoint": 57.35728,
+      "retainedPerPoint": 18.0716,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 6209784,
+      "retained": 2061060,
+      "allocatedPerPoint": 62.09784,
+      "retainedPerPoint": 20.6106,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 8289.656,
+      "retained": 6304,
+      "allocatedPerPoint": 82.89656000000001,
+      "retainedPerPoint": 63.04,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 969284.8,
+      "retained": 808096,
+      "allocatedPerPoint": 96.92848000000001,
+      "retainedPerPoint": 80.8096,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
+      "allocated": 9993676,
+      "retained": 8392864,
+      "allocatedPerPoint": 99.93676,
+      "retainedPerPoint": 83.92864,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 2195.332,
+      "retained": 1795.12,
+      "allocatedPerPoint": 21.953319999999998,
+      "retainedPerPoint": 17.9512,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 160986.8,
+      "retained": 160306,
+      "allocatedPerPoint": 16.098679999999998,
+      "retainedPerPoint": 16.0306,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 1602368,
+      "retained": 1600460,
+      "allocatedPerPoint": 16.02368,
+      "retainedPerPoint": 16.0046,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 6778.392,
+      "retained": 6306.656,
+      "allocatedPerPoint": 67.78392,
+      "retainedPerPoint": 63.06656,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 32891.2,
+      "retained": 26932.8,
+      "allocatedPerPoint": 3.2891199999999996,
+      "retainedPerPoint": 2.69328,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@duoquote/polytini@0.1.0 (Float64Array)",
+      "allocated": 1683548,
+      "retained": 283064,
+      "allocatedPerPoint": 16.83548,
+      "retainedPerPoint": 2.83064,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 2489.784,
+      "retained": 8368.012,
+      "allocatedPerPoint": 24.897840000000002,
+      "retainedPerPoint": 83.68012,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 2803700,
+      "retained": 800196,
+      "allocatedPerPoint": 280.37,
+      "retainedPerPoint": 80.0196,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 32256960,
+      "retained": 8116044,
+      "allocatedPerPoint": 322.5696,
+      "retainedPerPoint": 81.16044,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 28562.52,
+      "retained": 224,
+      "allocatedPerPoint": 285.6252,
+      "retainedPerPoint": 2.24,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 3021063.6,
+      "retained": 27032,
+      "allocatedPerPoint": 302.10636,
+      "retainedPerPoint": 2.7032,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@lp-labs/polyline-codec@0.1.0",
+      "allocated": 33808288,
+      "retained": 283064,
+      "allocatedPerPoint": 338.08288,
+      "retainedPerPoint": 2.83064,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 11750.996,
+      "retained": 19575.34,
+      "allocatedPerPoint": 117.50995999999999,
+      "retainedPerPoint": 195.7534,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 3167993.6,
+      "retained": 1922992,
+      "allocatedPerPoint": 316.79936000000004,
+      "retainedPerPoint": 192.2992,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 32274680,
+      "retained": 19316044,
+      "allocatedPerPoint": 322.7468,
+      "retainedPerPoint": 193.16044,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 32739.064,
+      "retained": 6306.94,
+      "allocatedPerPoint": 327.39063999999996,
+      "retainedPerPoint": 63.069399999999995,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 3536761.2,
+      "retained": 808110,
+      "allocatedPerPoint": 353.67612,
+      "retainedPerPoint": 80.811,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "polyline-encoded@0.0.9",
+      "allocated": 33328984,
+      "retained": 8392864,
+      "allocatedPerPoint": 333.28984,
+      "retainedPerPoint": 83.92864,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 8898.036,
+      "retained": 7564.172,
+      "allocatedPerPoint": 88.98036,
+      "retainedPerPoint": 75.64171999999999,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 11465.988,
+      "retained": 6304,
+      "allocatedPerPoint": 114.65987999999999,
+      "retainedPerPoint": 63.04,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 808421.2,
+      "retained": 808096,
+      "allocatedPerPoint": 80.84212,
+      "retainedPerPoint": 80.8096,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@mapbox/polyline@1.2.1",
+      "allocated": 8393612,
+      "retained": 8392864,
+      "allocatedPerPoint": 83.93612,
+      "retainedPerPoint": 83.92864,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 8765.596,
+      "retained": 7568.012,
+      "allocatedPerPoint": 87.65596,
+      "retainedPerPoint": 75.68012,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 6710.944,
+      "retained": 6304,
+      "allocatedPerPoint": 67.10944,
+      "retainedPerPoint": 63.04,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 864480.8,
+      "retained": 864160,
+      "allocatedPerPoint": 86.44808,
+      "retainedPerPoint": 86.416,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "google-polyline@2.0.0",
+      "allocated": 9058120,
+      "retained": 9057184,
+      "allocatedPerPoint": 90.5812,
+      "retainedPerPoint": 90.57184,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "real-world",
+      "impl": "@duoquote/polytini@0.1.0 (wasm decodeMany/encodeMany)",
+      "allocated": 2821268,
+      "retained": 2345724,
+      "allocatedPerPoint": 19.28017494703752,
+      "retainedPerPoint": 16.030369712294128,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "real-world",
+      "impl": "@duoquote/polytini@0.1.0 (wasm decodeMany/encodeMany)",
+      "allocated": 1161336,
+      "retained": 505640,
+      "allocatedPerPoint": 7.936417686052074,
+      "retainedPerPoint": 3.455477345725415,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "real-world",
+      "impl": "@duoquote/polytini@0.1.0 (deck.gl binaryPaths)",
+      "allocated": 2363356,
+      "retained": 2345876,
+      "allocatedPerPoint": 16.15086448438461,
+      "retainedPerPoint": 16.03140846032939,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "decode-google-map-polyline@1.0.1",
+      "allocated": 16695.376,
+      "retained": 8048.26,
+      "allocatedPerPoint": 166.95376,
+      "retainedPerPoint": 80.4826,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "decode-google-map-polyline@1.0.1",
+      "allocated": 1842736.8,
+      "retained": 800052,
+      "allocatedPerPoint": 184.27368,
+      "retainedPerPoint": 80.0052,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "decode-google-map-polyline@1.0.1",
+      "allocated": 45287116,
+      "retained": 8000308,
+      "allocatedPerPoint": 452.87116,
+      "retainedPerPoint": 80.00308,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 8834.944,
+      "retained": 7564.68,
+      "allocatedPerPoint": 88.34944,
+      "retainedPerPoint": 75.6468,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "10,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 919124.4,
+      "retained": 720196,
+      "allocatedPerPoint": 91.91244,
+      "retainedPerPoint": 72.0196,
+      "round": 3
+    },
+    {
+      "op": "decode",
+      "fixture": "100,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 9149444,
+      "retained": 7316044,
+      "allocatedPerPoint": 91.49444,
+      "retainedPerPoint": 73.16044,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 11147.276,
+      "retained": 6304,
+      "allocatedPerPoint": 111.47276,
+      "retainedPerPoint": 63.04,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "10,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 808421.2,
+      "retained": 808096,
+      "allocatedPerPoint": 80.84212,
+      "retainedPerPoint": 80.8096,
+      "round": 3
+    },
+    {
+      "op": "encode",
+      "fixture": "100,000 pts",
+      "impl": "@placemarkio/polyline@2.0.3",
+      "allocated": 8393612,
+      "retained": 8392864,
+      "allocatedPerPoint": 83.93612,
+      "retainedPerPoint": 83.92864,
+      "round": 3
+    }
+  ]
+}

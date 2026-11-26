@@ -61,8 +61,8 @@
   },
   {
     "name": "@duoquote/polytini@0.1.0 (wasm, JS glue plus inlined .wasm)",
-    "min": 5424,
-    "gzip": 2878
+    "min": 9138,
+    "gzip": 4447
   },
   {
     "name": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
