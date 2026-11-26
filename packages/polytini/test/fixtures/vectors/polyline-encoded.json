@@ -1,0 +1,387 @@
+{
+  "source": {
+    "name": "polyline-encoded (Leaflet.encoded)",
+    "url": "https://github.com/jieter/Leaflet.encoded",
+    "version": "commit c186c7c75d9d255abb8ac342ad52d4ac0c25ca02 (npm 0.0.9 was published from cc459ab)",
+    "license": "MIT",
+    "files": [
+      "test/test.js",
+      "test/testcases/issue5.json"
+    ]
+  },
+  "cases": [
+    {
+      "name": "encoding: simple 2d line",
+      "op": "encode",
+      "input": [
+        [38.5, -120.5],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "expected": "_p~iF~cn~U_ulLn{vA_mqNvxq`@"
+    },
+    {
+      "name": "encoding: with precision = 6",
+      "op": "encode",
+      "input": [
+        [38.5, -120.5],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "options": 6,
+      "expected": "_izlhA~pvydF_{geC~{mZ_kwzCn`{nI"
+    },
+    {
+      "name": "encoding: signed integers with dimension = 1",
+      "op": "encode",
+      "input": [
+        [0],
+        [15],
+        [14],
+        [-2],
+        [14],
+        [15]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "?]@^_@A",
+      "note": "The source encodes these values one by one with no deltas (encodeSignedIntegers / encodeFloats). polytini with dimensions 1 encodes deltas, so the input here is the running sum of the source values."
+    },
+    {
+      "name": "encoding: floats with dimension = 1",
+      "op": "encode",
+      "input": [
+        [0],
+        [0.00015],
+        [0.00014],
+        [-0.00002],
+        [0.00014],
+        [0.00015]
+      ],
+      "options": {
+        "dimensions": 1
+      },
+      "expected": "?]@^_@A",
+      "note": "The source encodes these values one by one with no deltas (encodeSignedIntegers / encodeFloats). polytini with dimensions 1 encodes deltas, so the input here is the running sum of the source values."
+    },
+    {
+      "name": "encoding: floats with dimension = 1, factor 1e2",
+      "op": "encode",
+      "input": [
+        [0],
+        [0.15],
+        [0.14],
+        [-0.02],
+        [0.14],
+        [0.15]
+      ],
+      "options": {
+        "dimensions": 1,
+        "factor": 100
+      },
+      "expected": "?]@^_@A",
+      "note": "The source encodes these values one by one with no deltas (encodeSignedIntegers / encodeFloats). polytini with dimensions 1 encodes deltas, so the input here is the running sum of the source values."
+    },
+    {
+      "name": "decoding: 2D line",
+      "op": "decode",
+      "input": "_p~iF~cn~U_ulLn{vA_mqNvxq`@",
+      "expected": [
+        [38.5, -120.5],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "decoding: with precision = 6",
+      "op": "decode",
+      "input": "_izlhA~pvydF_{geC~{mZ_kwzCn`{nI",
+      "options": 6,
+      "expected": [
+        [38.5, -120.5],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "decoding: respects the precision (first point equals last)",
+      "op": "decode",
+      "input": "ehukEveaqO|D~Laf@YiZw[oOgQqGeIqE_GeXu_@aOiKkCkMbGrDxIzF`Ct@~@L`FYhAMrNoFfEoArIwBvGwBvB}@jHcBnFcBz@g@jMsDzJ_DfEoAf@SRjCrDbQbBg@vB{@jCoArDg@bBfE|CvKtIbWrDrNvBnAvGfEvBjGqNzNcMtDgN`I_LpM",
+      "options": 5,
+      "expected": [
+        [33.53747, -86.84652],
+        [33.53652, -86.84876],
+        [33.54277, -86.84863],
+        [33.54714, -86.84403],
+        [33.54978, -86.84111],
+        [33.55115, -86.83948],
+        [33.5522, -86.8382],
+        [33.55623, -86.83297],
+        [33.5588, -86.831],
+        [33.5595, -86.8287],
+        [33.5582, -86.8296],
+        [33.55647, -86.83086],
+        [33.55582, -86.83113],
+        [33.5555, -86.8312],
+        [33.55437, -86.83107],
+        [33.554, -86.831],
+        [33.5515, -86.8298],
+        [33.5505, -86.8294],
+        [33.5488, -86.8288],
+        [33.5474, -86.8282],
+        [33.5468, -86.82789],
+        [33.5453, -86.82739],
+        [33.5441, -86.82689],
+        [33.5438, -86.82669],
+        [33.5415, -86.82579],
+        [33.5396, -86.82499],
+        [33.5386, -86.82459],
+        [33.5384, -86.82449],
+        [33.5383, -86.82519],
+        [33.5374, -86.82809],
+        [33.5369, -86.82789],
+        [33.5363, -86.82759],
+        [33.5356, -86.82719],
+        [33.5347, -86.82699],
+        [33.5342, -86.82799],
+        [33.53341, -86.83003],
+        [33.5317, -86.83389],
+        [33.5308, -86.83639],
+        [33.5302, -86.83679],
+        [33.5288, -86.83779],
+        [33.5282, -86.83913],
+        [33.53069, -86.84167],
+        [33.53295, -86.84258],
+        [33.53539, -86.84419],
+        [33.53747, -86.84652]
+      ],
+      "note": "Expected value derived with test/reference.js; the source checks that the first and last points are equal."
+    },
+    {
+      "name": "decoding: signed integers with dimension = 1",
+      "op": "decode",
+      "input": "?]@^_@A",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [0],
+        [15],
+        [14],
+        [-2],
+        [14],
+        [15]
+      ],
+      "note": "The source encodes these values one by one with no deltas (encodeSignedIntegers / encodeFloats). polytini with dimensions 1 encodes deltas, so the input here is the running sum of the source values."
+    },
+    {
+      "name": "decoding: unsigned integers read as signed",
+      "op": "decode",
+      "input": "?]@^_@AmD",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [0],
+        [15],
+        [14],
+        [-2],
+        [14],
+        [15],
+        [102]
+      ],
+      "note": "The source decodes this string as unsigned integers [0, 30, 1, 31, 32, 2, 174]. polytini has no unsigned mode, so the expected values are the zigzag-decoded signed values, summed."
+    },
+    {
+      "name": "decoding: floats with dimension = 1",
+      "op": "decode",
+      "input": "?]@^_@A",
+      "options": {
+        "dimensions": 1
+      },
+      "expected": [
+        [0],
+        [0.00015],
+        [0.00014],
+        [-0.00002],
+        [0.00014],
+        [0.00015]
+      ],
+      "note": "The source encodes these values one by one with no deltas (encodeSignedIntegers / encodeFloats). polytini with dimensions 1 encodes deltas, so the input here is the running sum of the source values."
+    },
+    {
+      "name": "decoding: floats with dimension = 1, factor 1e2",
+      "op": "decode",
+      "input": "?]@^_@A",
+      "options": {
+        "dimensions": 1,
+        "factor": 100
+      },
+      "expected": [
+        [0],
+        [0.15],
+        [0.14],
+        [-0.02],
+        [0.14],
+        [0.15]
+      ],
+      "note": "The source encodes these values one by one with no deltas (encodeSignedIntegers / encodeFloats). polytini with dimensions 1 encodes deltas, so the input here is the running sum of the source values."
+    },
+    {
+      "name": "encode -> decode: simple latlngs",
+      "op": "decode",
+      "input": "_p~iF~cn~U_ulLn{vA_mqNvxq`@",
+      "expected": [
+        [38.5, -120.5],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "encode -> decode: precision 6 latlngs at precision 5",
+      "op": "encode",
+      "input": [
+        [0, 0],
+        [0.000006, 0.000006],
+        [0.000012, 0.000012],
+        [0.000018, 0.000018],
+        [0.000024, 0.000024],
+        [0.00003, 0.00003],
+        [0, 0]
+      ],
+      "expected": "??AA??AA??AADD",
+      "note": "Expected value derived with test/reference.js; the source checks that the last decoded point is [0, 0]."
+    },
+    {
+      "name": "encode -> decode: precision 6 latlngs at precision 5, decode",
+      "op": "decode",
+      "input": "??AA??AA??AADD",
+      "expected": [
+        [0, 0],
+        [0.00001, 0.00001],
+        [0.00001, 0.00001],
+        [0.00002, 0.00002],
+        [0.00002, 0.00002],
+        [0.00003, 0.00003],
+        [0, 0]
+      ]
+    },
+    {
+      "name": "encode -> decode: latlngs height",
+      "op": "encode",
+      "input": [
+        [38.5, -120.5, 3],
+        [40.7, -120.95, 4],
+        [43.252, -126.453, 5]
+      ],
+      "options": {
+        "dimensions": 3
+      },
+      "expected": "_p~iF~cn~U_}hQ_ulLn{vA_ibE_mqNvxq`@_ibE",
+      "note": "Expected value derived with an n-dimensional version of test/reference.js; the source checks decode(encode(x)) == x with dimension 3 (one factor for all three values)."
+    },
+    {
+      "name": "encode -> decode: latlngs height, decode",
+      "op": "decode",
+      "input": "_p~iF~cn~U_}hQ_ulLn{vA_ibE_mqNvxq`@_ibE",
+      "options": {
+        "dimensions": 3
+      },
+      "expected": [
+        [38.5, -120.5, 3],
+        [40.7, -120.95, 4],
+        [43.252, -126.453, 5]
+      ]
+    },
+    {
+      "name": "NaN generated: https://github.com/jieter/Leaflet.encoded/issues/5",
+      "op": "decode",
+      "input": "c{|xHbo|OSnFrSjW~M{EnFwVz@wy@vQsq@cBoUzJ{EzObBrIcLfE~C~H{Y~C~CfOgY{EjM{EgTcLzTsSwQcGf@IoKgJSkMsb@RkRvVkRDon@SooBvBsXbGgE{@{EfE{EwLsXgEo{AcVgw@kRc|A_q@seAcLg@bBvQkCnKcGjCwQsSkM?cL{YjHrS{J~HgOwBgOjf@{Jju@cLjRcGz^oUjW{Tni@f@jRsIj\\wBjf@sNbo@wG~iArDnlArIj\\bGfr@bQf^~WrSnPvVfOjHnURzc@cQbQzc@nUrtAbBfYkC~M~HnZ~Mz^f^_N~MrDbBwQkWsXR{E",
+      "expected": [
+        [51.434900000000006, -2.7725000000000004],
+        [51.435, -2.7737000000000003],
+        [51.431700000000006, -2.7776],
+        [51.429300000000005, -2.7765000000000004],
+        [51.42810000000001, -2.7727000000000004],
+        [51.427800000000005, -2.7633],
+        [51.424800000000005, -2.7552000000000003],
+        [51.42530000000001, -2.7516000000000003],
+        [51.4234, -2.7505],
+        [51.420700000000004, -2.7510000000000003],
+        [51.419000000000004, -2.7489000000000003],
+        [51.418000000000006, -2.7497000000000003],
+        [51.4164, -2.7454],
+        [51.415600000000005, -2.7462000000000004],
+        [51.413000000000004, -2.7420000000000004],
+        [51.414100000000005, -2.7443000000000004],
+        [51.415200000000006, -2.7409000000000003],
+        [51.417300000000004, -2.7444],
+        [51.42060000000001, -2.7414],
+        [51.4219, -2.7416],
+        [51.42195, -2.7396000000000003],
+        [51.423750000000005, -2.7395],
+        [51.426050000000004, -2.7338],
+        [51.42595000000001, -2.7307],
+        [51.42215, -2.7276000000000002],
+        [51.42212000000001, -2.72],
+        [51.42222, -2.7020000000000004],
+        [51.421620000000004, -2.6979],
+        [51.420320000000004, -2.6969000000000003],
+        [51.42062000000001, -2.6958],
+        [51.41962, -2.6947],
+        [51.421820000000004, -2.6906000000000003],
+        [51.42282, -2.6758],
+        [51.426520000000004, -2.6668000000000003],
+        [51.42962000000001, -2.6519000000000004],
+        [51.43762, -2.6406],
+        [51.43972, -2.6404],
+        [51.439220000000006, -2.6434],
+        [51.43992, -2.6454000000000004],
+        [51.44122, -2.6461],
+        [51.44422, -2.6428000000000003],
+        [51.44652000000001, -2.6428000000000003],
+        [51.448620000000005, -2.6385],
+        [51.447120000000005, -2.6418000000000004],
+        [51.449020000000004, -2.6434],
+        [51.451620000000005, -2.6428000000000003],
+        [51.45422000000001, -2.6491000000000002],
+        [51.456120000000006, -2.6578000000000004],
+        [51.458220000000004, -2.6609000000000003],
+        [51.459520000000005, -2.6660000000000004],
+        [51.46312, -2.6699],
+        [51.466620000000006, -2.6767000000000003],
+        [51.46642000000001, -2.6798],
+        [51.468120000000006, -2.6845000000000003],
+        [51.468720000000005, -2.6908000000000003],
+        [51.47122, -2.6985],
+        [51.472620000000006, -2.7105],
+        [51.471720000000005, -2.7229],
+        [51.470020000000005, -2.7276000000000002],
+        [51.468720000000005, -2.7358000000000002],
+        [51.46582, -2.7408],
+        [51.46182, -2.7441000000000004],
+        [51.45902, -2.7479],
+        [51.45642, -2.7494],
+        [51.45282, -2.7495000000000003],
+        [51.446920000000006, -2.7466000000000004],
+        [51.44402, -2.7525000000000004],
+        [51.44042, -2.7662000000000004],
+        [51.43992, -2.7704000000000004],
+        [51.44062, -2.7728],
+        [51.439020000000006, -2.7772],
+        [51.436620000000005, -2.7823],
+        [51.43162, -2.7799],
+        [51.42922, -2.7808],
+        [51.428720000000006, -2.7778],
+        [51.43262000000001, -2.7737000000000003],
+        [51.432520000000004, -2.7726]
+      ],
+      "tolerance": 0.0001,
+      "note": "The expected values carry floating-point error (for example 51.434900000000006), so the source compares within its delta of 1e-4."
+    }
+  ]
+}

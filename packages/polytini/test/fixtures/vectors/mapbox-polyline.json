@@ -1,0 +1,227 @@
+{
+  "source": {
+    "name": "@mapbox/polyline",
+    "url": "https://github.com/mapbox/polyline",
+    "version": "commit 5e797bf9cdf46db94bc3290b0e4d39e6db5a51c9 (npm 1.2.1 line)",
+    "license": "BSD-3-Clause",
+    "files": [
+      "test/polyline.test.js"
+    ]
+  },
+  "cases": [
+    {
+      "name": "decodes an empty Array",
+      "op": "decode",
+      "input": "",
+      "expected": []
+    },
+    {
+      "name": "decodes a String into an Array of lat/lon pairs",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "decodes with a custom precision",
+      "op": "decode",
+      "input": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI",
+      "options": 6,
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "decodes with precision 0",
+      "op": "decode",
+      "input": "mAnFC@CH",
+      "options": 0,
+      "expected": [
+        [39, -120],
+        [41, -121],
+        [43, -126]
+      ]
+    },
+    {
+      "name": "identity: encode example_slashes",
+      "op": "encode",
+      "input": [
+        [35.6, -82.55],
+        [35.59985, -82.55015],
+        [35.6, -82.55]
+      ],
+      "expected": "_chxEn`zvN\\\\]]",
+      "note": "Expected value derived with test/reference.js; the source checks decode(encode(x)) == x."
+    },
+    {
+      "name": "identity: decode example_slashes",
+      "op": "decode",
+      "input": "_chxEn`zvN\\\\]]",
+      "expected": [
+        [35.6, -82.55],
+        [35.59985, -82.55015],
+        [35.6, -82.55]
+      ]
+    },
+    {
+      "name": "identity: encode high precision (13)",
+      "op": "encode",
+      "input": [
+        [179.1234567895121, -179.1245965456112]
+      ],
+      "options": 13,
+      "expected": "ad{bckqfydB~mxfnrfgydB",
+      "note": "Expected value derived with test/reference.js; the source checks decode(encode(x, 13), 13) == x."
+    },
+    {
+      "name": "identity: decode high precision (13)",
+      "op": "decode",
+      "input": "ad{bckqfydB~mxfnrfgydB",
+      "options": 13,
+      "expected": [
+        [179.1234567895121, -179.1245965456112]
+      ]
+    },
+    {
+      "name": "identity: decode a string with backslashes",
+      "op": "decode",
+      "input": "_chxEn`zvN\\\\]]",
+      "expected": [
+        [35.6, -82.55],
+        [35.59985, -82.55015],
+        [35.6, -82.55]
+      ],
+      "note": "Expected value derived with test/reference.js; the source checks encode(decode(s)) == s."
+    },
+    {
+      "name": "identity: re-encode a string with backslashes",
+      "op": "encode",
+      "input": [
+        [35.6, -82.55],
+        [35.59985, -82.55015],
+        [35.6, -82.55]
+      ],
+      "expected": "_chxEn`zvN\\\\]]"
+    },
+    {
+      "name": "encodes an empty Array",
+      "op": "encode",
+      "input": [],
+      "expected": ""
+    },
+    {
+      "name": "encodes an Array of lat/lon pairs into a String",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "encodes lat/lon/z into the same string as lat/lon",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2, 0],
+        [40.7, -120.95, 0],
+        [43.252, -126.453, 0]
+      ],
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "note": "With the default 2 dimensions the third value is ignored."
+    },
+    {
+      "name": "encodes with proper rounding",
+      "op": "encode",
+      "input": [
+        [0, 0.000006],
+        [0, 0.000002]
+      ],
+      "expected": "?A?@"
+    },
+    {
+      "name": "encodes with proper negative rounding",
+      "op": "encode",
+      "input": [
+        [36.05322, -112.084004],
+        [36.053573, -112.083914],
+        [36.053845, -112.083965]
+      ],
+      "expected": "ss`{E~kbkTeAQw@J"
+    },
+    {
+      "name": "encodes with a custom precision",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "options": 6,
+      "expected": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI"
+    },
+    {
+      "name": "encodes with precision 0",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "options": 0,
+      "expected": "mAnFC@CH"
+    },
+    {
+      "name": "encodes negative values correctly (precision 7)",
+      "op": "encode",
+      "input": [
+        [-107.3741825, 0]
+      ],
+      "options": 7,
+      "expected": "`_____A?",
+      "note": "Expected value derived with test/reference.js; the source checks that the decoded latitude is negative."
+    },
+    {
+      "name": "decodes negative values correctly (precision 7)",
+      "op": "decode",
+      "input": "`_____A?",
+      "options": 7,
+      "expected": [
+        [-107.3741825, 0]
+      ]
+    },
+    {
+      "name": "fromGeoJSON: flips coordinates and encodes",
+      "op": "encode",
+      "input": [
+        [-120.2, 38.5],
+        [-120.95, 40.7],
+        [-126.453, 43.252]
+      ],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "note": "The source calls fromGeoJSON on a LineString; here that is encode with order lnglat."
+    },
+    {
+      "name": "toGeoJSON: flips coordinates and decodes geometry",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": [
+        [-120.2, 38.5],
+        [-120.95, 40.7],
+        [-126.453, 43.252]
+      ],
+      "note": "The source calls toGeoJSON; here that is decode with order lnglat."
+    }
+  ]
+}

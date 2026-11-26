@@ -1,0 +1,61 @@
+{
+  "source": {
+    "name": "Written cases for the PHP polyline encoding tool behavior",
+    "url": "https://github.com/emcconville/google-map-polyline-encoding-tool",
+    "version": "behavior of commit c584626e77228380d09deb1bac4bfeaa701b7a1e; no data copied",
+    "license": "MIT (cases written for polytini; the PHP project is LGPL-3.0, so nothing was copied)",
+    "files": []
+  },
+  "cases": [
+    {
+      "name": "encode a street-level path with a repeated point",
+      "op": "encode",
+      "input": [
+        [51.50072, -0.12462],
+        [51.50094, -0.12417],
+        [51.50094, -0.12417],
+        [51.50131, -0.12301],
+        [51.50162, -0.12215],
+        [51.5016, -0.12091],
+        [51.50201, -0.11944]
+      ],
+      "expected": "oviyHziWk@yA??iAgF}@kDBwFqAeH",
+      "note": "Written case; expected value derived with test/reference.js. The PHP test encodes a 7-point street path the same way."
+    },
+    {
+      "name": "decode the street-level path",
+      "op": "decode",
+      "input": "oviyHziWk@yA??iAgF}@kDBwFqAeH",
+      "expected": [
+        [51.50072, -0.12462],
+        [51.50094, -0.12417],
+        [51.50094, -0.12417],
+        [51.50131, -0.12301],
+        [51.50162, -0.12215],
+        [51.5016, -0.12091],
+        [51.50201, -0.11944]
+      ],
+      "note": "Written case. The PHP decode returns a flat list; polytini decodeFlat gives the same numbers."
+    },
+    {
+      "name": "PHP round(): positive tie away from zero",
+      "op": "encode",
+      "input": [
+        [0.5, 2.5]
+      ],
+      "options": 0,
+      "expected": "AE",
+      "note": "Written case. PHP round() rounds half away from zero, like polytini."
+    },
+    {
+      "name": "PHP round(): negative tie away from zero",
+      "op": "encode",
+      "input": [
+        [-0.5, -2.5]
+      ],
+      "options": 0,
+      "expected": "@D",
+      "note": "Written case."
+    }
+  ]
+}

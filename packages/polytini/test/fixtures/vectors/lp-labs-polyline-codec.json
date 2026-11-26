@@ -1,0 +1,104 @@
+{
+  "source": {
+    "name": "@lp-labs/polyline-codec",
+    "url": "https://www.npmjs.com/package/@lp-labs/polyline-codec",
+    "version": "npm 0.1.0 (gitHead f5b06193e11990074a5af327fb76b0f490d6d779)",
+    "license": "MIT",
+    "files": [
+      "README.md"
+    ]
+  },
+  "cases": [
+    {
+      "name": "README example: encode",
+      "op": "encode",
+      "input": [
+        {
+          "latitude": 38.5,
+          "longitude": -120.2
+        },
+        {
+          "latitude": 40.7,
+          "longitude": -120.95
+        },
+        {
+          "latitude": 43.252,
+          "longitude": -126.453
+        }
+      ],
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "README example: decode",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "note": "The library returns {latitude, longitude} objects; the values are the same."
+    },
+    {
+      "name": "negative half tie rounds toward +infinity",
+      "op": "encode",
+      "input": [
+        [-0.5, 0.5]
+      ],
+      "options": 0,
+      "expected": "?A",
+      "note": "Written for polytini from the README description (the package ships no tests): it quantizes with Math.floor(value * 10^precision + 0.5), so -0.5 becomes 0. polytini rounds half away from zero, as Google's algorithm does, so -0.5 becomes -1.",
+      "polytini": {
+        "expected": "@A"
+      }
+    },
+    {
+      "name": "overlong (noncanonical) value is rejected",
+      "op": "decode",
+      "input": "a?Z",
+      "expected": null,
+      "throws": true,
+      "note": "Written for polytini from the README description (the package ships no tests): a value whose last group is 0 after another group (\"a?\" is a two-group spelling of 1) throws \"invalid\". polytini follows the algorithm, which only defines how to read the groups, and accepts it.",
+      "polytini": {
+        "expected": [
+          [0.00001, -0.00014]
+        ]
+      }
+    },
+    {
+      "name": "decoded latitude outside [-90, 90] is rejected",
+      "op": "decode",
+      "input": "_gjaR?",
+      "expected": null,
+      "throws": true,
+      "note": "Written for polytini from the README description (the package ships no tests): decoded points outside latitude [-90, 90] or longitude [-180, 180] throw. polytini does not check ranges: the format stores any number, and factor or order options change what the values mean.",
+      "polytini": {
+        "expected": [
+          [100, 0]
+        ]
+      }
+    },
+    {
+      "name": "precision 8 is rejected",
+      "op": "encode",
+      "input": [
+        [1, 1]
+      ],
+      "options": 8,
+      "expected": null,
+      "throws": true,
+      "note": "Written for polytini from the README description (the package ships no tests): precision must be 0 to 7. polytini allows 0 to 15 and computes with exact integers up to 2^53.",
+      "polytini": {
+        "expected": "_oov}D_oov}D"
+      }
+    },
+    {
+      "name": "truncated pair throws",
+      "op": "decode",
+      "input": "_p~iF",
+      "expected": null,
+      "throws": "truncated",
+      "note": "Written for polytini from the README description (the package ships no tests): an incomplete lat/lon pair throws \"truncated\". polytini does the same."
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "source": {
+    "name": "Encoded Polyline Algorithm Format (Google Maps Platform documentation)",
+    "url": "https://developers.google.com/maps/documentation/utilities/polylinealgorithm",
+    "version": "page last updated 2026-11-09, fetched 2026-11-26",
+    "license": "CC-BY-4.0 (page text); Apache-2.0 (code samples)",
+    "files": [
+      "polylinealgorithm (web page)"
+    ]
+  },
+  "cases": [
+    {
+      "name": "example: three points",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "example: three points",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "step example: single value -179.9832104",
+      "op": "encode",
+      "input": [
+        [-179.9832104]
+      ],
+      "options": {
+        "dimensions": 1
+      },
+      "expected": "`~oia@",
+      "note": "The page encodes one value step by step; dimensions 1 encodes a single value."
+    },
+    {
+      "name": "step example: single value",
+      "op": "decode",
+      "input": "`~oia@",
+      "options": {
+        "dimensions": 1
+      },
+      "expected": [
+        [-179.98321]
+      ],
+      "note": "The page rounds -179.9832104 to -17998321 at step 1, so decoding gives -179.98321."
+    },
+    {
+      "name": "table: first point",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2]
+      ],
+      "expected": "_p~iF~ps|U"
+    },
+    {
+      "name": "table: second point offset alone",
+      "op": "encode",
+      "input": [
+        [2.2, -0.75]
+      ],
+      "expected": "_ulLnnqC",
+      "note": "The table encodes the offset (2.2, -0.75) from the first point; encoding it as an absolute point gives the same characters."
+    },
+    {
+      "name": "table: third point offset alone",
+      "op": "encode",
+      "input": [
+        [2.552, -5.503]
+      ],
+      "expected": "_mqNvxq`@",
+      "note": "Offset (2.552, -5.503) from the second point."
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "source": {
+    "name": "GraphHopper (ResponsePathSerializer / ResponsePathDeserializerHelper)",
+    "url": "https://github.com/graphhopper/graphhopper",
+    "version": "commit ce72e96197eb16fcc3ab4f18fdd543fa270be9d5",
+    "license": "Apache-2.0",
+    "files": [
+      "web-api/src/test/java/com/graphhopper/jackson/ResponsePathRepresentationTest.java"
+    ]
+  },
+  "cases": [
+    {
+      "name": "testDecode: one point",
+      "op": "decode",
+      "input": "_p~iF~ps|U",
+      "expected": [
+        [38.5, -120.2]
+      ]
+    },
+    {
+      "name": "testDecode: three points",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "testEncode: one point",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2]
+      ],
+      "expected": "_p~iF~ps|U"
+    },
+    {
+      "name": "testEncode: three points",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "testBoth: five points",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [43.252, -126.453],
+        [40.7, -120.95],
+        [50.3139, 10.61279],
+        [50.04303, 9.49768]
+      ],
+      "expected": "_p~iF~ps|U_c_\\fhde@~lqNwxq`@{uty@mz~aX|{s@lxxE",
+      "note": "Expected value derived with test/reference.js; the source checks decode(encode(x)) == x."
+    },
+    {
+      "name": "testBoth: five points, decode",
+      "op": "decode",
+      "input": "_p~iF~ps|U_c_\\fhde@~lqNwxq`@{uty@mz~aX|{s@lxxE",
+      "expected": [
+        [38.5, -120.2],
+        [43.252, -126.453],
+        [40.7, -120.95],
+        [50.3139, 10.61279],
+        [50.04303, 9.49768]
+      ]
+    },
+    {
+      "name": "testBoth: points 1e-5 apart",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [43.252, -126.453],
+        [40.7, -120.95],
+        [40.70001, -120.95001]
+      ],
+      "expected": "_p~iF~ps|U_c_\\fhde@~lqNwxq`@A@",
+      "note": "Expected value derived with test/reference.js; the source checks decode(encode(x)) == x."
+    },
+    {
+      "name": "testBoth: points 1e-5 apart, decode",
+      "op": "decode",
+      "input": "_p~iF~ps|U_c_\\fhde@~lqNwxq`@A@",
+      "expected": [
+        [38.5, -120.2],
+        [43.252, -126.453],
+        [40.7, -120.95],
+        [40.70001, -120.95001]
+      ]
+    },
+    {
+      "name": "testDecode3D: one point",
+      "op": "decode",
+      "input": "_p~iF~ps|Uo}@",
+      "options": {
+        "dimensions": 3,
+        "zFactor": 100
+      },
+      "expected": [
+        [38.5, -120.2, 10]
+      ],
+      "note": "GraphHopper stores elevation in centimeters: factor 100 for the third value."
+    },
+    {
+      "name": "testDecode3D: three points",
+      "op": "decode",
+      "input": "_p~iF~ps|Uo}@_ulLnnqC_anF_mqNvxq`@?",
+      "options": {
+        "dimensions": 3,
+        "zFactor": 100
+      },
+      "expected": [
+        [38.5, -120.2, 10],
+        [40.7, -120.95, 1234],
+        [43.252, -126.453, 1234]
+      ]
+    },
+    {
+      "name": "testEncode3D: one point",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2, 10]
+      ],
+      "options": {
+        "dimensions": 3,
+        "zFactor": 100
+      },
+      "expected": "_p~iF~ps|Uo}@"
+    },
+    {
+      "name": "testEncode3D: three points",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2, 10],
+        [40.7, -120.95, 1234],
+        [43.252, -126.453, 1234]
+      ],
+      "options": {
+        "dimensions": 3,
+        "zFactor": 100
+      },
+      "expected": "_p~iF~ps|Uo}@_ulLnnqC_anF_mqNvxq`@?"
+    },
+    {
+      "name": "testEncode1e6",
+      "op": "encode",
+      "input": [
+        [47.827608, 12.123476],
+        [47.827712, 12.123469]
+      ],
+      "options": 6,
+      "expected": "ohdfzAgt}bVoEL"
+    }
+  ]
+}

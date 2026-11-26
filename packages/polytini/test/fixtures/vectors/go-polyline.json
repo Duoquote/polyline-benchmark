@@ -1,0 +1,725 @@
+{
+  "source": {
+    "name": "go-polyline (Go, twpayne)",
+    "url": "https://github.com/twpayne/go-polyline",
+    "version": "commit 15b67cd55e490dabe4c60ba8935cf0682f4331be (latest tag v1.1.2)",
+    "license": "BSD-2-Clause",
+    "files": [
+      "polyline_test.go",
+      "example_test.go"
+    ]
+  },
+  "cases": [
+    {
+      "name": "TestUint ?",
+      "op": "decode",
+      "input": "?",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [0]
+      ],
+      "note": "The source decodes an unsigned value; polytini values are signed, so the expected value is the zigzag-decoded source value."
+    },
+    {
+      "name": "TestUint ? (encode)",
+      "op": "encode",
+      "input": [
+        [0]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "?",
+      "note": "The source decodes an unsigned value; polytini values are signed, so the expected value is the zigzag-decoded source value."
+    },
+    {
+      "name": "TestUint a?",
+      "op": "decode",
+      "input": "a?",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [1]
+      ],
+      "note": "The source decodes an unsigned value; polytini values are signed, so the expected value is the zigzag-decoded source value. \"a?\" is a noncanonical (overlong) spelling; both accept it."
+    },
+    {
+      "name": "TestUint A",
+      "op": "decode",
+      "input": "A",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [1]
+      ],
+      "note": "The source decodes an unsigned value; polytini values are signed, so the expected value is the zigzag-decoded source value."
+    },
+    {
+      "name": "TestUint A (encode)",
+      "op": "encode",
+      "input": [
+        [1]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "A",
+      "note": "The source decodes an unsigned value; polytini values are signed, so the expected value is the zigzag-decoded source value."
+    },
+    {
+      "name": "TestUint ^",
+      "op": "decode",
+      "input": "^",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [-16]
+      ],
+      "note": "The source decodes an unsigned value; polytini values are signed, so the expected value is the zigzag-decoded source value."
+    },
+    {
+      "name": "TestUint ^ (encode)",
+      "op": "encode",
+      "input": [
+        [-16]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "^",
+      "note": "The source decodes an unsigned value; polytini values are signed, so the expected value is the zigzag-decoded source value."
+    },
+    {
+      "name": "TestUint _@",
+      "op": "decode",
+      "input": "_@",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [16]
+      ],
+      "note": "The source decodes an unsigned value; polytini values are signed, so the expected value is the zigzag-decoded source value."
+    },
+    {
+      "name": "TestUint _@ (encode)",
+      "op": "encode",
+      "input": [
+        [16]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "_@",
+      "note": "The source decodes an unsigned value; polytini values are signed, so the expected value is the zigzag-decoded source value."
+    },
+    {
+      "name": "TestUint mD",
+      "op": "decode",
+      "input": "mD",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [87]
+      ],
+      "note": "The source decodes an unsigned value; polytini values are signed, so the expected value is the zigzag-decoded source value."
+    },
+    {
+      "name": "TestUint mD (encode)",
+      "op": "encode",
+      "input": [
+        [87]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "mD",
+      "note": "The source decodes an unsigned value; polytini values are signed, so the expected value is the zigzag-decoded source value."
+    },
+    {
+      "name": "TestUint 18446744073709551614",
+      "op": "decode",
+      "input": "}~~~~~~~~~~~N",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [9223372036854776000]
+      ],
+      "note": "The source decodes an unsigned value; polytini values are signed, so the expected value is the zigzag-decoded source value. Uses 64-bit integers. polytini works with exact Numbers and throws overflow past 2^53; the source value is kept in expected (as the nearest double).",
+      "polytini": {
+        "throws": "overflow"
+      }
+    },
+    {
+      "name": "TestUint 18446744073709551615",
+      "op": "decode",
+      "input": "~~~~~~~~~~~~N",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [-9223372036854776000]
+      ],
+      "note": "The source decodes an unsigned value; polytini values are signed, so the expected value is the zigzag-decoded source value. Uses 64-bit integers. polytini works with exact Numbers and throws overflow past 2^53; the source value is kept in expected (as the nearest double).",
+      "polytini": {
+        "throws": "overflow"
+      }
+    },
+    {
+      "name": "TestInt 3850000",
+      "op": "decode",
+      "input": "_p~iF",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [3850000]
+      ]
+    },
+    {
+      "name": "TestInt 3850000 (encode)",
+      "op": "encode",
+      "input": [
+        [3850000]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "_p~iF"
+    },
+    {
+      "name": "TestInt -12020000",
+      "op": "decode",
+      "input": "~ps|U",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [-12020000]
+      ]
+    },
+    {
+      "name": "TestInt -12020000 (encode)",
+      "op": "encode",
+      "input": [
+        [-12020000]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "~ps|U"
+    },
+    {
+      "name": "TestInt -17998321",
+      "op": "decode",
+      "input": "`~oia@",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [-17998321]
+      ]
+    },
+    {
+      "name": "TestInt -17998321 (encode)",
+      "op": "encode",
+      "input": [
+        [-17998321]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "`~oia@"
+    },
+    {
+      "name": "TestInt 220000",
+      "op": "decode",
+      "input": "_ulL",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [220000]
+      ]
+    },
+    {
+      "name": "TestInt 220000 (encode)",
+      "op": "encode",
+      "input": [
+        [220000]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "_ulL"
+    },
+    {
+      "name": "TestInt -75000",
+      "op": "decode",
+      "input": "nnqC",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [-75000]
+      ]
+    },
+    {
+      "name": "TestInt -75000 (encode)",
+      "op": "encode",
+      "input": [
+        [-75000]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "nnqC"
+    },
+    {
+      "name": "TestInt 255200",
+      "op": "decode",
+      "input": "_mqN",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [255200]
+      ]
+    },
+    {
+      "name": "TestInt 255200 (encode)",
+      "op": "encode",
+      "input": [
+        [255200]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "_mqN"
+    },
+    {
+      "name": "TestInt -550300",
+      "op": "decode",
+      "input": "vxq`@",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [-550300]
+      ]
+    },
+    {
+      "name": "TestInt -550300 (encode)",
+      "op": "encode",
+      "input": [
+        [-550300]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "vxq`@"
+    },
+    {
+      "name": "TestInt 9223372036854775807",
+      "op": "decode",
+      "input": "}~~~~~~~~~~~N",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [9223372036854776000]
+      ],
+      "note": "Uses 64-bit integers. polytini works with exact Numbers and throws overflow past 2^53; the source value is kept in expected (as the nearest double).",
+      "polytini": {
+        "throws": "overflow"
+      }
+    },
+    {
+      "name": "TestInt 9223372036854775807 (encode)",
+      "op": "encode",
+      "input": [
+        [9223372036854776000]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "}~~~~~~~~~~~N",
+      "note": "Uses 64-bit integers. polytini works with exact Numbers and throws overflow past 2^53; the source value is kept in expected (as the nearest double).",
+      "polytini": {
+        "throws": "overflow"
+      }
+    },
+    {
+      "name": "TestInt 9223372036854775806",
+      "op": "decode",
+      "input": "{~~~~~~~~~~~N",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [9223372036854776000]
+      ],
+      "note": "Uses 64-bit integers. polytini works with exact Numbers and throws overflow past 2^53; the source value is kept in expected (as the nearest double).",
+      "polytini": {
+        "throws": "overflow"
+      }
+    },
+    {
+      "name": "TestInt 9223372036854775806 (encode)",
+      "op": "encode",
+      "input": [
+        [9223372036854776000]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "{~~~~~~~~~~~N",
+      "note": "Uses 64-bit integers. polytini works with exact Numbers and throws overflow past 2^53; the source value is kept in expected (as the nearest double).",
+      "polytini": {
+        "throws": "overflow"
+      }
+    },
+    {
+      "name": "TestInt -9223372036854775807",
+      "op": "decode",
+      "input": "|~~~~~~~~~~~N",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [-9223372036854776000]
+      ],
+      "note": "Uses 64-bit integers. polytini works with exact Numbers and throws overflow past 2^53; the source value is kept in expected (as the nearest double).",
+      "polytini": {
+        "throws": "overflow"
+      }
+    },
+    {
+      "name": "TestInt -9223372036854775807 (encode)",
+      "op": "encode",
+      "input": [
+        [-9223372036854776000]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "|~~~~~~~~~~~N",
+      "note": "Uses 64-bit integers. polytini works with exact Numbers and throws overflow past 2^53; the source value is kept in expected (as the nearest double).",
+      "polytini": {
+        "throws": "overflow"
+      }
+    },
+    {
+      "name": "TestInt -9223372036854775808",
+      "op": "decode",
+      "input": "~~~~~~~~~~~~N",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": [
+        [-9223372036854776000]
+      ],
+      "note": "Uses 64-bit integers. polytini works with exact Numbers and throws overflow past 2^53; the source value is kept in expected (as the nearest double).",
+      "polytini": {
+        "throws": "overflow"
+      }
+    },
+    {
+      "name": "TestInt -9223372036854775808 (encode)",
+      "op": "encode",
+      "input": [
+        [-9223372036854776000]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "~~~~~~~~~~~~N",
+      "note": "Uses 64-bit integers. polytini works with exact Numbers and throws overflow past 2^53; the source value is kept in expected (as the nearest double).",
+      "polytini": {
+        "throws": "overflow"
+      }
+    },
+    {
+      "name": "TestCoord _p~iF~ps|U",
+      "op": "decode",
+      "input": "_p~iF~ps|U",
+      "expected": [
+        [38.5, -120.2]
+      ]
+    },
+    {
+      "name": "TestCoord _p~iF~ps|U (encode)",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2]
+      ],
+      "expected": "_p~iF~ps|U"
+    },
+    {
+      "name": "TestCoord a?Z (noncanonical)",
+      "op": "decode",
+      "input": "a?Z",
+      "expected": [
+        [0.00001, -0.00014]
+      ],
+      "note": "\"a?\" is an overlong spelling of 1. Both accept it when decoding."
+    },
+    {
+      "name": "TestCoords",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "TestCoords (encode)",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "TestCodec 1e5",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "options": {
+        "factor": 100000
+      },
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "TestCodec 1e5 (encode)",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "options": {
+        "factor": 100000
+      },
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "TestCodec 1e6",
+      "op": "decode",
+      "input": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI",
+      "options": {
+        "factor": 1000000
+      },
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "TestCodec 1e6 (encode)",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "options": {
+        "factor": 1000000
+      },
+      "expected": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI"
+    },
+    {
+      "name": "TestFlatCoordsEmpty",
+      "op": "decode",
+      "input": "",
+      "expected": []
+    },
+    {
+      "name": "TestFlatCoordsEmpty (encode)",
+      "op": "encode",
+      "input": [],
+      "expected": ""
+    },
+    {
+      "name": "TestDecodeErrors: empty string (DecodeCoords)",
+      "op": "decode",
+      "input": "",
+      "expected": [],
+      "note": "DecodeUint returns ErrEmpty, DecodeCoords returns no points and no error. polytini decode works on coordinates."
+    },
+    {
+      "name": "TestDecodeErrors: \">\"",
+      "op": "decode",
+      "input": ">",
+      "expected": null,
+      "throws": "char",
+      "note": "ErrInvalidByte"
+    },
+    {
+      "name": "TestDecodeErrors: byte 0x80",
+      "op": "decode",
+      "input": "",
+      "expected": null,
+      "throws": "char",
+      "note": "ErrInvalidByte (the source uses the byte 0x80; here it is the character U+0080)."
+    },
+    {
+      "name": "TestDecodeErrors: \"_\"",
+      "op": "decode",
+      "input": "_",
+      "expected": null,
+      "throws": "truncated",
+      "note": "ErrUnterminatedSequence"
+    },
+    {
+      "name": "TestDecodeErrors: 12 x \"~\"",
+      "op": "decode",
+      "input": "~~~~~~~~~~~~",
+      "expected": null,
+      "throws": "overflow",
+      "note": "The source returns ErrUnterminatedSequence; polytini sees the value pass 2^53 at index 10 first."
+    },
+    {
+      "name": "TestDecodeErrors: 12 x \"~\" then \">\"",
+      "op": "decode",
+      "input": "~~~~~~~~~~~~>",
+      "expected": null,
+      "throws": "overflow",
+      "note": "The source returns ErrInvalidByte; polytini throws overflow at index 10 first."
+    },
+    {
+      "name": "TestDecodeErrors: 12 x \"~\" then \"O\"",
+      "op": "decode",
+      "input": "~~~~~~~~~~~~O",
+      "expected": null,
+      "throws": "overflow",
+      "note": "ErrOverflow"
+    },
+    {
+      "name": "TestDecodeErrors: 12 x \"~\" then \"_\"",
+      "op": "decode",
+      "input": "~~~~~~~~~~~~_",
+      "expected": null,
+      "throws": "overflow",
+      "note": "ErrOverflow"
+    },
+    {
+      "name": "TestDecodeErrors: 12 x \"~\" then 0x80",
+      "op": "decode",
+      "input": "~~~~~~~~~~~~",
+      "expected": null,
+      "throws": "overflow",
+      "note": "The source returns ErrInvalidByte; polytini throws overflow at index 10 first."
+    },
+    {
+      "name": "TestMultidimensionalDecodeErrors: \">\"",
+      "op": "decode",
+      "input": "_p~iF~ps|U_p~iF>",
+      "expected": null,
+      "throws": "char",
+      "note": "ErrInvalidByte"
+    },
+    {
+      "name": "TestMultidimensionalDecodeErrors: 0x80",
+      "op": "decode",
+      "input": "_p~iF~ps|U_p~iF",
+      "expected": null,
+      "throws": "char",
+      "note": "ErrInvalidByte"
+    },
+    {
+      "name": "TestMultidimensionalDecodeErrors: unterminated",
+      "op": "decode",
+      "input": "_p~iF~ps|U_p~iF~ps|",
+      "expected": null,
+      "throws": "truncated",
+      "note": "ErrUnterminatedSequence"
+    },
+    {
+      "name": "TestDecodeFlatCoordsErrors: half a point",
+      "op": "decode",
+      "input": "_p~iF",
+      "expected": null,
+      "throws": "truncated",
+      "note": "The source returns ErrEmpty when the longitude is missing."
+    },
+    {
+      "name": "TestDecodeFlatCoordsErrors: one and a half points",
+      "op": "decode",
+      "input": "_p~iF~ps|U_p~iF",
+      "expected": null,
+      "throws": "truncated",
+      "note": "The source returns ErrEmpty when the longitude is missing."
+    },
+    {
+      "name": "ExampleDecodeCoords",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "ExampleEncodeCoords",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    }
+  ]
+}

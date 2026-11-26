@@ -1,0 +1,250 @@
+{
+  "source": {
+    "name": "OSRM (osrm-backend polyline compressor)",
+    "url": "https://github.com/Project-OSRM/osrm-backend",
+    "version": "commit 578a12065917e02bf14bb4568f12a2d3c388ba15 (latest tag v26.11.0)",
+    "license": "BSD-2-Clause",
+    "files": [
+      "unit_tests/engine/polyline_compressor.cpp"
+    ]
+  },
+  "cases": [
+    {
+      "name": "polyline5_test_case",
+      "op": "encode",
+      "input": [
+        [-73.990171, 40.714701],
+        [-73.991801, 40.717571],
+        [-73.985751, 40.715651]
+      ],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": "{aowFperbM}PdI~Jyd@",
+      "note": "OSRM coordinates are (lon, lat), so these cases use order lnglat."
+    },
+    {
+      "name": "polyline5_test_case: decode",
+      "op": "decode",
+      "input": "{aowFperbM}PdI~Jyd@",
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": [
+        [-73.99017, 40.7147],
+        [-73.9918, 40.71757],
+        [-73.98575, 40.71565]
+      ],
+      "note": "The source expects coords_truncated (six-digit values ending in 0)."
+    },
+    {
+      "name": "polyline6_test_case",
+      "op": "encode",
+      "input": [
+        [-73.990171, 40.714701],
+        [-73.991801, 40.717571],
+        [-73.985751, 40.715651]
+      ],
+      "options": {
+        "precision": 6,
+        "order": "lnglat"
+      },
+      "expected": "y{_tlAt`_clCkrDzdB~vBcyJ"
+    },
+    {
+      "name": "polyline6_test_case: decode",
+      "op": "decode",
+      "input": "y{_tlAt`_clCkrDzdB~vBcyJ",
+      "options": {
+        "precision": 6,
+        "order": "lnglat"
+      },
+      "expected": [
+        [-73.990171, 40.714701],
+        [-73.991801, 40.717571],
+        [-73.985751, 40.715651]
+      ]
+    },
+    {
+      "name": "empty_polyline_test",
+      "op": "encode",
+      "input": [],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": ""
+    },
+    {
+      "name": "empty_polyline_test: decode",
+      "op": "decode",
+      "input": "",
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": []
+    },
+    {
+      "name": "polyline_single_point_test",
+      "op": "encode",
+      "input": [
+        [-122.414, 37.776]
+      ],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": "_cqeFn~cjV"
+    },
+    {
+      "name": "polyline_single_point_test: decode",
+      "op": "decode",
+      "input": "_cqeFn~cjV",
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": [
+        [-122.414, 37.776]
+      ]
+    },
+    {
+      "name": "polyline_multiple_points_test",
+      "op": "encode",
+      "input": [
+        [-122.414, 37.776],
+        [-122.42, 37.779],
+        [-122.421, 37.78]
+      ],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": "_cqeFn~cjVwQnd@gEfE"
+    },
+    {
+      "name": "polyline_multiple_points_test: decode",
+      "op": "decode",
+      "input": "_cqeFn~cjVwQnd@gEfE",
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": [
+        [-122.414, 37.776],
+        [-122.42, 37.779],
+        [-122.421, 37.78]
+      ]
+    },
+    {
+      "name": "polyline_large_coordinate_difference_test",
+      "op": "encode",
+      "input": [
+        [-179, -89],
+        [179, 89]
+      ],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": "~xe~O~|oca@_sl}`@_{`hcA"
+    },
+    {
+      "name": "polyline_large_coordinate_difference_test: decode",
+      "op": "decode",
+      "input": "~xe~O~|oca@_sl}`@_{`hcA",
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": [
+        [-179, -89],
+        [179, 89]
+      ]
+    },
+    {
+      "name": "roundtrip 1: decode",
+      "op": "decode",
+      "input": "_chxEn`zvN\\\\]]",
+      "expected": [
+        [35.6, -82.55],
+        [35.59985, -82.55015],
+        [35.6, -82.55]
+      ],
+      "note": "Expected value derived with test/reference.js; the source checks encode(decode(s)) == s."
+    },
+    {
+      "name": "roundtrip 1: encode",
+      "op": "encode",
+      "input": [
+        [35.6, -82.55],
+        [35.59985, -82.55015],
+        [35.6, -82.55]
+      ],
+      "expected": "_chxEn`zvN\\\\]]"
+    },
+    {
+      "name": "roundtrip 2: decode",
+      "op": "decode",
+      "input": "gcneIpgxzRcDnBoBlEHzKjBbHlG`@`IkDxIiKhKoMaLwTwHeIqHuAyGXeB~Ew@fFjAtIzExF",
+      "expected": [
+        [53.48932, -104.16777],
+        [53.49014, -104.16833],
+        [53.4907, -104.16936],
+        [53.49065, -104.17142],
+        [53.49011, -104.17288],
+        [53.48876, -104.17305],
+        [53.48715, -104.17219],
+        [53.48542, -104.17022],
+        [53.48345, -104.1679],
+        [53.48554, -104.16442],
+        [53.4871, -104.16279],
+        [53.48863, -104.16236],
+        [53.49004, -104.16249],
+        [53.49055, -104.16361],
+        [53.49083, -104.16477],
+        [53.49045, -104.16648],
+        [53.48935, -104.16773]
+      ],
+      "note": "Expected value derived with test/reference.js; the source checks encode(decode(s)) == s."
+    },
+    {
+      "name": "roundtrip 2: encode",
+      "op": "encode",
+      "input": [
+        [53.48932, -104.16777],
+        [53.49014, -104.16833],
+        [53.4907, -104.16936],
+        [53.49065, -104.17142],
+        [53.49011, -104.17288],
+        [53.48876, -104.17305],
+        [53.48715, -104.17219],
+        [53.48542, -104.17022],
+        [53.48345, -104.1679],
+        [53.48554, -104.16442],
+        [53.4871, -104.16279],
+        [53.48863, -104.16236],
+        [53.49004, -104.16249],
+        [53.49055, -104.16361],
+        [53.49083, -104.16477],
+        [53.49045, -104.16648],
+        [53.48935, -104.16773]
+      ],
+      "expected": "gcneIpgxzRcDnBoBlEHzKjBbHlG`@`IkDxIiKhKoMaLwTwHeIqHuAyGXeB~Ew@fFjAtIzExF"
+    },
+    {
+      "name": "roundtrip 3: decode",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "note": "Expected value derived with test/reference.js; the source checks encode(decode(s)) == s."
+    },
+    {
+      "name": "roundtrip 3: encode",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    }
+  ]
+}

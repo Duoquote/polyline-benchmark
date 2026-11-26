@@ -1,0 +1,338 @@
+{
+  "source": {
+    "name": "Cases written for polytini from bug reports and behavior differences in other libraries",
+    "url": "https://github.com/georust/polyline/issues/55",
+    "version": "issues read 2026-11-26",
+    "license": "MIT (written for polytini; no issue text or data copied)",
+    "files": [
+      "https://github.com/georust/polyline/issues/55",
+      "https://github.com/georust/polyline/issues/27",
+      "https://github.com/georust/polyline/issues/39",
+      "https://github.com/mapbox/polyline/issues/38",
+      "https://github.com/mapbox/polyline/issues/80",
+      "https://github.com/frederickjansen/polyline/issues/4",
+      "https://github.com/jieter/Leaflet.encoded/issues/5"
+    ]
+  },
+  "cases": [
+    {
+      "name": "truncated last value (georust 55)",
+      "op": "decode",
+      "input": "_p~iF~ps|",
+      "expected": null,
+      "throws": "truncated",
+      "note": "The crate returned a coordinate built from the partial value."
+    },
+    {
+      "name": "truncated last value, lenient",
+      "op": "decode",
+      "input": "_p~iF~ps|",
+      "options": {
+        "strict": false
+      },
+      "expected": [],
+      "note": "strict: false drops the incomplete point."
+    },
+    {
+      "name": "truncated after a continuation character (georust 55)",
+      "op": "decode",
+      "input": "?_",
+      "expected": null,
+      "throws": "truncated"
+    },
+    {
+      "name": "trailing line feed (georust 27)",
+      "op": "decode",
+      "input": "_p~iF~ps|U\n",
+      "expected": null,
+      "throws": "char",
+      "note": "Python polyline ignores the line feed; the crate failed. polytini reports it in strict mode."
+    },
+    {
+      "name": "trailing line feed, lenient",
+      "op": "decode",
+      "input": "_p~iF~ps|U\n",
+      "options": {
+        "strict": false
+      },
+      "expected": [
+        [38.5, -120.2]
+      ]
+    },
+    {
+      "name": "all continuation characters (georust 39)",
+      "op": "decode",
+      "input": "ugh_ugh",
+      "options": {
+        "strict": false
+      },
+      "expected": [],
+      "note": "strict: false drops the incomplete value; strict mode throws truncated (see georust-polyline.json)."
+    },
+    {
+      "name": "string ending in a continuation character (python 4)",
+      "op": "decode",
+      "input": "_p~iF~ps|U_",
+      "expected": null,
+      "throws": "truncated",
+      "note": "Python polyline raised IndexError."
+    },
+    {
+      "name": "URL-encoded characters (python 4)",
+      "op": "decode",
+      "input": "zC%5BpCU",
+      "expected": null,
+      "throws": "char",
+      "note": "\"%\" is code 37, below \"?\"."
+    },
+    {
+      "name": "JSON quotes around the string (mapbox 38)",
+      "op": "decode",
+      "input": "\"_p~iF~ps|U\"",
+      "expected": null,
+      "throws": "char",
+      "note": "The mapbox CLI printed the string with JSON quotes."
+    },
+    {
+      "name": "JSON quotes around the string, lenient",
+      "op": "decode",
+      "input": "\"_p~iF~ps|U\"",
+      "options": {
+        "strict": false
+      },
+      "expected": [
+        [38.5, -120.2]
+      ]
+    },
+    {
+      "name": "precision 7, large longitude (mapbox 80)",
+      "op": "encode",
+      "input": [
+        [0, -108]
+      ],
+      "options": 7,
+      "expected": "?~~}|j_A",
+      "note": "Expected value derived with test/reference.js. 32-bit code returned -0.0000016."
+    },
+    {
+      "name": "precision 7, large longitude, decode (mapbox 80)",
+      "op": "decode",
+      "input": "?~~}|j_A",
+      "options": 7,
+      "expected": [
+        [0, -108]
+      ]
+    },
+    {
+      "name": "precision 7, jump from -180 to 180 (mapbox 80)",
+      "op": "encode",
+      "input": [
+        [0, -180],
+        [0, 180]
+      ],
+      "options": 7,
+      "expected": "?~~gfhjB?__qmquE",
+      "note": "Expected value derived with test/reference.js. The delta 3.6e9 needs 33 bits; 32-bit code decoded the second point as -34.7483648."
+    },
+    {
+      "name": "precision 7, jump from -180 to 180, decode (mapbox 80)",
+      "op": "decode",
+      "input": "?~~gfhjB?__qmquE",
+      "options": 7,
+      "expected": [
+        [0, -180],
+        [0, 180]
+      ]
+    },
+    {
+      "name": "NaN coordinate (Leaflet.encoded 5)",
+      "op": "encode",
+      "input": [
+        [
+          38.5,
+          "NaN"
+        ]
+      ],
+      "expected": null,
+      "throws": "coordinate",
+      "note": "The string \"NaN\" stands for the number NaN (JSON has no NaN); the test converts it."
+    },
+    {
+      "name": "NaN coordinate, lenient",
+      "op": "encode",
+      "input": [
+        [
+          38.5,
+          "NaN"
+        ]
+      ],
+      "options": {
+        "strict": false
+      },
+      "expected": "_p~iF?",
+      "note": "strict: false encodes non-finite values as 0."
+    },
+    {
+      "name": "Infinity coordinate",
+      "op": "encode",
+      "input": [
+        [
+          "Infinity",
+          0
+        ]
+      ],
+      "expected": null,
+      "throws": "coordinate"
+    },
+    {
+      "name": "-Infinity coordinate",
+      "op": "encode",
+      "input": [
+        [
+          0,
+          "-Infinity"
+        ]
+      ],
+      "expected": null,
+      "throws": "coordinate"
+    },
+    {
+      "name": "missing longitude",
+      "op": "encode",
+      "input": [
+        [38.5]
+      ],
+      "expected": null,
+      "throws": "coordinate"
+    },
+    {
+      "name": "negative zero",
+      "op": "encode",
+      "input": [
+        [
+          "-0",
+          "-0"
+        ]
+      ],
+      "expected": "??",
+      "note": "-0 must encode as \"?\" and not as \">\" (~0 = -1 in code that tests the sign before rounding)."
+    },
+    {
+      "name": "values that round to negative zero",
+      "op": "encode",
+      "input": [
+        [-0.000001, -0.000004]
+      ],
+      "expected": "??"
+    },
+    {
+      "name": "zero decodes to positive zero",
+      "op": "decode",
+      "input": "??",
+      "expected": [
+        [0, 0]
+      ]
+    },
+    {
+      "name": "huge delta past 2^53",
+      "op": "encode",
+      "input": [
+        [100000000000, 0]
+      ],
+      "expected": null,
+      "throws": "overflow",
+      "note": "1e11 * 1e5 doubled is 2e16, more than 2^53."
+    },
+    {
+      "name": "huge delta at precision 15",
+      "op": "encode",
+      "input": [
+        [90, -90]
+      ],
+      "options": 15,
+      "expected": null,
+      "throws": "overflow"
+    },
+    {
+      "name": "large delta below 2^53 at precision 15",
+      "op": "encode",
+      "input": [
+        [1, -1]
+      ],
+      "options": 15,
+      "expected": "___ywct~yw@~~~xwct~yw@",
+      "note": "Expected value derived with test/reference.js."
+    },
+    {
+      "name": "large delta below 2^53 at precision 15, decode",
+      "op": "decode",
+      "input": "___ywct~yw@~~~xwct~yw@",
+      "options": 15,
+      "expected": [
+        [1, -1]
+      ]
+    },
+    {
+      "name": "value past 2^53",
+      "op": "decode",
+      "input": "~~~~~~~~~~~N",
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": null,
+      "throws": "overflow"
+    },
+    {
+      "name": "half ties round away from zero",
+      "op": "encode",
+      "input": [
+        [0.5],
+        [1.5],
+        [2.5],
+        [-0.5],
+        [-1.5],
+        [-2.5]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 0
+      },
+      "expected": "AAAF@@",
+      "note": "Expected value derived with an n-dimensional version of test/reference.js: 1, 2, 3, -1, -2, -3. Math.round or floor(x + 0.5) (GraphHopper, google-maps-services-java, google-polyline, @lp-labs/polyline-codec) gives 1, 2, 3, 0, -1, -2. Round half to even (Kotlin round in android-maps-utils, Python 3 round in google-maps-services-python) gives 0, 2, 2, 0, -2, -2. Truncation (google-maps-services-go Encode) gives 0, 1, 2, 0, -1, -2."
+    },
+    {
+      "name": "decimal near-ties: multiply then round",
+      "op": "encode",
+      "input": [
+        [0.000155, 0.000245]
+      ],
+      "expected": "_@q@",
+      "note": "Expected value derived with test/reference.js. 0.000155 * 1e5 gives exactly 15.5 in doubles (the product is rounded), which rounds half away from zero to 16, as the algorithm says (multiply, then round). polyline-encoded rounds with toFixed(5), which looks at the exact binary value (just below 0.000155) and gives 15; for 0.000245 it gives 24 where polytini gives 25."
+    },
+    {
+      "name": "precision 16 is rejected",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "options": 16,
+      "expected": null,
+      "throws": "option"
+    },
+    {
+      "name": "negative precision is rejected",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "options": -1,
+      "expected": null,
+      "throws": "option"
+    },
+    {
+      "name": "fractional precision is rejected",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "options": 5.5,
+      "expected": null,
+      "throws": "option"
+    }
+  ]
+}

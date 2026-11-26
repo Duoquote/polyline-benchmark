@@ -1,0 +1,306 @@
+{
+  "source": {
+    "name": "@placemarkio/polyline",
+    "url": "https://github.com/placemark/polyline",
+    "version": "commit 0a5e01120d6996d59e52bc8b06fea94e7986466c (npm 2.0.3 line)",
+    "license": "MIT",
+    "files": [
+      "__tests__/index.test.ts"
+    ]
+  },
+  "cases": [
+    {
+      "name": "decodes an empty Array",
+      "op": "decode",
+      "input": "",
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": []
+    },
+    {
+      "name": "decodes any string, but coordinates will be weird",
+      "op": "decode",
+      "input": "Hello, world!",
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": [
+        [70.84755, -0.00005],
+        [434.83615, -0.00006]
+      ],
+      "note": "placemark decodes any string without checking characters. polytini rejects characters outside ? to ~ in strict mode (the comma at index 5 is the first).",
+      "polytini": {
+        "throws": "char"
+      }
+    },
+    {
+      "name": "decodes any string, custom precision",
+      "op": "decode",
+      "input": "Hello, world!",
+      "options": {
+        "precision": 6,
+        "order": "lnglat"
+      },
+      "expected": [
+        [7.084755, -0.000005],
+        [43.483615, -0.000006]
+      ],
+      "note": "placemark decodes any string without checking characters. polytini rejects characters outside ? to ~ in strict mode (the comma at index 5 is the first).",
+      "polytini": {
+        "throws": "char"
+      }
+    },
+    {
+      "name": "decodes a String into an Array of lon/lat pairs",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": [
+        [-120.2, 38.5],
+        [-120.95, 40.7],
+        [-126.453, 43.252]
+      ]
+    },
+    {
+      "name": "decodes with custom precision",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "options": {
+        "precision": 6,
+        "order": "lnglat"
+      },
+      "expected": [
+        [-12.02, 3.85],
+        [-12.095, 4.07],
+        [-12.6453, 4.3252]
+      ]
+    },
+    {
+      "name": "identity: encode example_slashes",
+      "op": "encode",
+      "input": [
+        [-82.55, 35.6],
+        [-82.55015, 35.59985],
+        [-82.55, 35.6]
+      ],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": "_chxEn`zvN\\\\]]",
+      "note": "Expected value derived with test/reference.js; the source checks decode(encode(x)) == x."
+    },
+    {
+      "name": "identity: decode example_slashes",
+      "op": "decode",
+      "input": "_chxEn`zvN\\\\]]",
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": [
+        [-82.55, 35.6],
+        [-82.55015, 35.59985],
+        [-82.55, 35.6]
+      ]
+    },
+    {
+      "name": "identity: decode a string with backslashes",
+      "op": "decode",
+      "input": "_chxEn`zvN\\\\]]",
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": [
+        [-82.55, 35.6],
+        [-82.55015, 35.59985],
+        [-82.55, 35.6]
+      ],
+      "note": "Expected value derived with test/reference.js; the source checks encode(decode(s)) == s."
+    },
+    {
+      "name": "identity: re-encode a string with backslashes",
+      "op": "encode",
+      "input": [
+        [-82.55, 35.6],
+        [-82.55015, 35.59985],
+        [-82.55, 35.6]
+      ],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": "_chxEn`zvN\\\\]]"
+    },
+    {
+      "name": "encodes an empty Array",
+      "op": "encode",
+      "input": [],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": ""
+    },
+    {
+      "name": "encodes an Array of lon/lat pairs into a String",
+      "op": "encode",
+      "input": [
+        [-120.2, 38.5],
+        [-120.95, 40.7],
+        [-126.453, 43.252]
+      ],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "encodes with custom precision",
+      "op": "encode",
+      "input": [
+        [-120.2, 38.5],
+        [-120.95, 40.7],
+        [-126.453, 43.252]
+      ],
+      "options": {
+        "precision": 6,
+        "order": "lnglat"
+      },
+      "expected": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI"
+    },
+    {
+      "name": "encodes lon/lat/z like lon/lat",
+      "op": "encode",
+      "input": [
+        [-120.2, 38.5, 0],
+        [-120.95, 40.7, 0],
+        [-126.453, 43.252, 0]
+      ],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "encodes lon/lat/z like lon/lat, custom precision",
+      "op": "encode",
+      "input": [
+        [-120.2, 38.5, 0],
+        [-120.95, 40.7, 0],
+        [-126.453, 43.252, 0]
+      ],
+      "options": {
+        "precision": 6,
+        "order": "lnglat"
+      },
+      "expected": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI"
+    },
+    {
+      "name": "encodes with proper rounding",
+      "op": "encode",
+      "input": [
+        [0.000006, 0],
+        [0.000002, 0]
+      ],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": "?A?@"
+    },
+    {
+      "name": "encodes with proper rounding, custom precision",
+      "op": "encode",
+      "input": [
+        [0.000006, 0],
+        [0.000002, 0]
+      ],
+      "options": {
+        "precision": 6,
+        "order": "lnglat"
+      },
+      "expected": "?K?F"
+    },
+    {
+      "name": "encodes with proper negative rounding",
+      "op": "encode",
+      "input": [
+        [-112.084004, 36.05322],
+        [-112.083914, 36.053573],
+        [-112.083965, 36.053845]
+      ],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": "ss`{E~kbkTeAQw@J"
+    },
+    {
+      "name": "encodes with proper negative rounding, custom precision",
+      "op": "encode",
+      "input": [
+        [-112.084004, 36.05322],
+        [-112.083914, 36.053573],
+        [-112.083965, 36.053845]
+      ],
+      "options": {
+        "precision": 6,
+        "order": "lnglat"
+      },
+      "expected": "gmowcAfaaxtEaUsD_PdB"
+    },
+    {
+      "name": "geoJSONToPolyline",
+      "op": "encode",
+      "input": [
+        [-120.2, 38.5],
+        [-120.95, 40.7],
+        [-126.453, 43.252]
+      ],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "note": "The source calls geoJSONToPolyline; here that is encode with order lnglat."
+    },
+    {
+      "name": "geoJSONToPolyline, custom precision",
+      "op": "encode",
+      "input": [
+        [-12.02, 3.85],
+        [-12.095, 4.07],
+        [-12.6453, 4.3252]
+      ],
+      "options": {
+        "precision": 6,
+        "order": "lnglat"
+      },
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "polylineToGeoJSON",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": [
+        [-120.2, 38.5],
+        [-120.95, 40.7],
+        [-126.453, 43.252]
+      ]
+    },
+    {
+      "name": "polylineToGeoJSON, custom precision",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "options": {
+        "precision": 6,
+        "order": "lnglat"
+      },
+      "expected": [
+        [-12.02, 3.85],
+        [-12.095, 4.07],
+        [-12.6453, 4.3252]
+      ]
+    }
+  ]
+}

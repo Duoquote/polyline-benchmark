@@ -1,0 +1,237 @@
+{
+  "source": {
+    "name": "@googlemaps/polyline-codec",
+    "url": "https://github.com/googlemaps/js-polyline-codec",
+    "version": "commit d0b4f42f6409d7e4d68f317578cf23c61c5ed939 (npm 1.0.29 line)",
+    "license": "Apache-2.0",
+    "files": [
+      "src/index.test.ts",
+      "src/__snapshots__/index.test.ts.snap"
+    ]
+  },
+  "cases": [
+    {
+      "name": "decodes to an empty array",
+      "op": "decode",
+      "input": "",
+      "expected": []
+    },
+    {
+      "name": "decodes a string into an array of lat lng pairs",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "decodes with a custom precision",
+      "op": "decode",
+      "input": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI",
+      "options": 6,
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "decodes with precision 0",
+      "op": "decode",
+      "input": "mAnFC@CH",
+      "options": 0,
+      "expected": [
+        [39, -120],
+        [41, -121],
+        [43, -126]
+      ]
+    },
+    {
+      "name": "roundtrip: decode (snapshot)",
+      "op": "decode",
+      "input": "gcneIpgxzRcDnBoBlEHzKjBbHlG`@`IkDxIiKhKoMaLwTwHeIqHuAyGXeB~Ew@fFjAtIzExF",
+      "options": 5,
+      "expected": [
+        [53.48932, -104.16777],
+        [53.49014, -104.16833],
+        [53.4907, -104.16936],
+        [53.49065, -104.17142],
+        [53.49011, -104.17288],
+        [53.48876, -104.17305],
+        [53.48715, -104.17219],
+        [53.48542, -104.17022],
+        [53.48345, -104.1679],
+        [53.48554, -104.16442],
+        [53.4871, -104.16279],
+        [53.48863, -104.16236],
+        [53.49004, -104.16249],
+        [53.49055, -104.16361],
+        [53.49083, -104.16477],
+        [53.49045, -104.16648],
+        [53.48935, -104.16773]
+      ]
+    },
+    {
+      "name": "roundtrip: encode the snapshot points",
+      "op": "encode",
+      "input": [
+        [53.48932, -104.16777],
+        [53.49014, -104.16833],
+        [53.4907, -104.16936],
+        [53.49065, -104.17142],
+        [53.49011, -104.17288],
+        [53.48876, -104.17305],
+        [53.48715, -104.17219],
+        [53.48542, -104.17022],
+        [53.48345, -104.1679],
+        [53.48554, -104.16442],
+        [53.4871, -104.16279],
+        [53.48863, -104.16236],
+        [53.49004, -104.16249],
+        [53.49055, -104.16361],
+        [53.49083, -104.16477],
+        [53.49045, -104.16648],
+        [53.48935, -104.16773]
+      ],
+      "options": 5,
+      "expected": "gcneIpgxzRcDnBoBlEHzKjBbHlG`@`IkDxIiKhKoMaLwTwHeIqHuAyGXeB~Ew@fFjAtIzExF"
+    },
+    {
+      "name": "encode SLASHES",
+      "op": "encode",
+      "input": [
+        [35.6, -82.55],
+        [35.59985, -82.55015],
+        [35.6, -82.55]
+      ],
+      "expected": "_chxEn`zvN\\\\]]",
+      "note": "Expected value derived with test/reference.js; the source checks decode(encode(SLASHES)) == SLASHES."
+    },
+    {
+      "name": "decode SLASHES",
+      "op": "decode",
+      "input": "_chxEn`zvN\\\\]]",
+      "expected": [
+        [35.6, -82.55],
+        [35.59985, -82.55015],
+        [35.6, -82.55]
+      ],
+      "note": "Second half of the source round trip."
+    },
+    {
+      "name": "decode a string with backslashes",
+      "op": "decode",
+      "input": "_chxEn`zvN\\\\]]",
+      "expected": [
+        [35.6, -82.55],
+        [35.59985, -82.55015],
+        [35.6, -82.55]
+      ],
+      "note": "Expected value derived with test/reference.js; the source checks encode(decode(s)) == s."
+    },
+    {
+      "name": "re-encode a string with backslashes",
+      "op": "encode",
+      "input": [
+        [35.6, -82.55],
+        [35.59985, -82.55015],
+        [35.6, -82.55]
+      ],
+      "expected": "_chxEn`zvN\\\\]]"
+    },
+    {
+      "name": "encodes an empty Array",
+      "op": "encode",
+      "input": [],
+      "expected": ""
+    },
+    {
+      "name": "encodes an Array of lat/lon pairs into a String",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "encodes with proper rounding",
+      "op": "encode",
+      "input": [
+        [0, 0.000006],
+        [0, 0.000002]
+      ],
+      "expected": "?A?@"
+    },
+    {
+      "name": "encodes array having lat lng objects",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        {
+          "lat": 40.7,
+          "lng": -120.95
+        },
+        [43.252, -126.453]
+      ],
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "encodes with proper negative rounding",
+      "op": "encode",
+      "input": [
+        [36.05322, -112.084004],
+        [36.053573, -112.083914],
+        [36.053845, -112.083965]
+      ],
+      "expected": "ss`{E~kbkTeAQw@J"
+    },
+    {
+      "name": "encodes with a custom precision",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "options": 6,
+      "expected": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI"
+    },
+    {
+      "name": "encodes with precision 0",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "options": 0,
+      "expected": "mAnFC@CH"
+    },
+    {
+      "name": "encodes negative values correctly (precision 7)",
+      "op": "encode",
+      "input": [
+        {
+          "lng": -107.3741825,
+          "lat": 0
+        }
+      ],
+      "options": 7,
+      "expected": "?`_____A",
+      "note": "Expected value derived with test/reference.js; the source only checks that decoding the result at precision 7 gives a negative longitude. The library shifts with 32-bit operators, and -1073741825 doubled does not fit: its encoder returns \"?@\", which decodes to -0.0000001 and so passes the check. The expected value here is the exact encoding."
+    },
+    {
+      "name": "decodes negative values correctly (precision 7)",
+      "op": "decode",
+      "input": "?`_____A",
+      "options": 7,
+      "expected": [
+        [0, -107.3741825]
+      ]
+    }
+  ]
+}

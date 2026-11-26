@@ -1,0 +1,251 @@
+{
+  "source": {
+    "name": "polyline (Python)",
+    "url": "https://github.com/frederickjansen/polyline",
+    "version": "commit 5c5b063cdf0df884a3bb05d8cab492ae53c72e04 (PyPI 2.0.x line, latest tag v2.0.5)",
+    "license": "MIT",
+    "files": [
+      "tests/test_polyline.py"
+    ]
+  },
+  "cases": [
+    {
+      "name": "test_decode_multiple_points",
+      "op": "decode",
+      "input": "gu`wFnfys@???nKgE??gE?????oK????fE??fE",
+      "expected": [
+        [40.641, -8.654],
+        [40.641, -8.654],
+        [40.641, -8.656],
+        [40.642, -8.656],
+        [40.642, -8.655],
+        [40.642, -8.655],
+        [40.642, -8.655],
+        [40.642, -8.653],
+        [40.642, -8.653],
+        [40.642, -8.653],
+        [40.641, -8.653],
+        [40.641, -8.654]
+      ]
+    },
+    {
+      "name": "test_decode_multiple_points_precision",
+      "op": "decode",
+      "input": "_epolA~ieoOnF??~{Bo}@??o}@?????_|B????n}@??n}@",
+      "options": 6,
+      "expected": [
+        [40.64112, -8.654],
+        [40.641, -8.654],
+        [40.641, -8.656],
+        [40.642, -8.656],
+        [40.642, -8.655],
+        [40.642, -8.655],
+        [40.642, -8.655],
+        [40.642, -8.653],
+        [40.642, -8.653],
+        [40.642, -8.653],
+        [40.641, -8.653],
+        [40.641, -8.654]
+      ]
+    },
+    {
+      "name": "test_decode_official_example",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "test_decode_geojson",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": [
+        [-120.2, 38.5],
+        [-120.95, 40.7],
+        [-126.453, 43.252]
+      ],
+      "note": "geojson=True is order lnglat."
+    },
+    {
+      "name": "test_decode_official_example_precision",
+      "op": "decode",
+      "input": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI",
+      "options": 6,
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "test_decode_single_point",
+      "op": "decode",
+      "input": "gu`wFf`ys@",
+      "expected": [
+        [40.641, -8.653]
+      ]
+    },
+    {
+      "name": "test_decode_single_point_precision",
+      "op": "decode",
+      "input": "o}oolAnkcoO",
+      "options": 6,
+      "expected": [
+        [40.641, -8.653]
+      ]
+    },
+    {
+      "name": "test_encode_multiple_points",
+      "op": "encode",
+      "input": [
+        [40.641, -8.654],
+        [40.641, -8.654],
+        [40.641, -8.656],
+        [40.642, -8.656],
+        [40.642, -8.655],
+        [40.642, -8.655],
+        [40.642, -8.655],
+        [40.642, -8.653],
+        [40.642, -8.653],
+        [40.642, -8.653],
+        [40.641, -8.653],
+        [40.641, -8.654]
+      ],
+      "expected": "gu`wFnfys@???nKgE??gE?????oK????fE??fE"
+    },
+    {
+      "name": "test_encode_multiple_points_precision",
+      "op": "encode",
+      "input": [
+        [40.64112345, -8.654],
+        [40.641, -8.654],
+        [40.641, -8.656],
+        [40.642, -8.656],
+        [40.642, -8.655],
+        [40.642, -8.655],
+        [40.642, -8.655],
+        [40.642, -8.653],
+        [40.642, -8.653],
+        [40.642, -8.653],
+        [40.641, -8.653],
+        [40.641, -8.654]
+      ],
+      "options": 6,
+      "expected": "eepolA~ieoOtF??~{Bo}@??o}@?????_|B????n}@??n}@"
+    },
+    {
+      "name": "test_encode_official_example",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "test_encode_geojson",
+      "op": "encode",
+      "input": [
+        [-120.2, 38.5],
+        [-120.95, 40.7],
+        [-126.453, 43.252]
+      ],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "test_encode_official_example_precision",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "options": 6,
+      "expected": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI"
+    },
+    {
+      "name": "test_encode_single_point",
+      "op": "encode",
+      "input": [
+        [40.64155, -8.65344]
+      ],
+      "expected": "ux`wF~bys@"
+    },
+    {
+      "name": "test_encode_single_point (extra digits)",
+      "op": "encode",
+      "input": [
+        [40.641552, -8.653441]
+      ],
+      "expected": "ux`wF~bys@"
+    },
+    {
+      "name": "test_encode_empty",
+      "op": "encode",
+      "input": [],
+      "expected": ""
+    },
+    {
+      "name": "test_encode_empty (geojson)",
+      "op": "encode",
+      "input": [],
+      "options": {
+        "order": "lnglat"
+      },
+      "expected": ""
+    },
+    {
+      "name": "test_encode_empty (decode)",
+      "op": "decode",
+      "input": "",
+      "expected": []
+    },
+    {
+      "name": "test_encode_single_point_rounding",
+      "op": "encode",
+      "input": [
+        [0, 0.000006],
+        [0, 0.000002]
+      ],
+      "expected": "?A?@"
+    },
+    {
+      "name": "test_rounding_py3_match_py2",
+      "op": "encode",
+      "input": [
+        [36.05322, -112.084004],
+        [36.053573, -112.083914],
+        [36.053845, -112.083965]
+      ],
+      "expected": "ss`{E~kbkTeAQw@J"
+    },
+    {
+      "name": "test_encode_single_point_precision",
+      "op": "encode",
+      "input": [
+        [40.641123, -8.653321]
+      ],
+      "options": 6,
+      "expected": "eepolAp_doO"
+    },
+    {
+      "name": "test_encode_single_point_precision (extra digits)",
+      "op": "encode",
+      "input": [
+        [40.6411233123, -8.6533214234]
+      ],
+      "options": 6,
+      "expected": "eepolAp_doO"
+    }
+  ]
+}

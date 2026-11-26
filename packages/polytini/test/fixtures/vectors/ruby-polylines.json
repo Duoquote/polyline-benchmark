@@ -1,0 +1,188 @@
+{
+  "source": {
+    "name": "polylines (Ruby gem)",
+    "url": "https://github.com/joshuaclayton/polylines",
+    "version": "gem 0.4.0, commit 901c0d47baabc81725603d52fce8d95c0b76cca6",
+    "license": "MIT",
+    "files": [
+      "spec/polylines/decoder_spec.rb",
+      "spec/polylines/encoder_spec.rb"
+    ]
+  },
+  "cases": [
+    {
+      "name": "Decoder.decode: single value",
+      "op": "decode",
+      "input": "`~oia@",
+      "options": {
+        "dimensions": 1
+      },
+      "expected": [
+        [-179.9832104]
+      ],
+      "tolerance": 0.00001,
+      "note": "The source compares with be_within(0.00001) against the unrounded input value."
+    },
+    {
+      "name": "Decoder.decode: single value, 1e6",
+      "op": "decode",
+      "input": "ruhhvI",
+      "options": {
+        "dimensions": 1,
+        "precision": 6
+      },
+      "expected": [
+        [-179.9832104]
+      ],
+      "tolerance": 0.000001,
+      "note": "be_within(0.000001)"
+    },
+    {
+      "name": "Decoder.decode_polyline: default precision",
+      "op": "decode",
+      "input": "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "Decoder.decode_polyline: 1e6 precision",
+      "op": "decode",
+      "input": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI",
+      "options": 6,
+      "expected": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ]
+    },
+    {
+      "name": "Decoder: points that were close together",
+      "op": "decode",
+      "input": "krk{FdxdlO?e@",
+      "expected": [
+        [41.35222, -86.04563],
+        [41.35222, -86.04544]
+      ]
+    },
+    {
+      "name": "Decoder: points that were close together, 1e6",
+      "op": "decode",
+      "input": "q`}zmAzzxbcD?aK",
+      "options": 6,
+      "expected": [
+        [41.352217, -86.04563],
+        [41.352217, -86.045437]
+      ]
+    },
+    {
+      "name": "Decoder: a value that previously broke",
+      "op": "decode",
+      "input": "kbdoH{ioqCoF_j@Lwc@lC{BhNoMzCuJbEm]?wKkBaQmD}EqM_GwFiBfCge@zE_K~SaTdT`L|Da\\xJsX|EyJtQgPpXuRjKAtJqBfM[pn@g^nF}G??",
+      "expected": [
+        [49.8335, 24.0043],
+        [49.8347, 24.01118],
+        [49.83463, 24.01706],
+        [49.83392, 24.01768],
+        [49.83147, 24.02],
+        [49.83069, 24.02187],
+        [49.82971, 24.02674],
+        [49.82971, 24.02878],
+        [49.83025, 24.03167],
+        [49.83112, 24.03278],
+        [49.83345, 24.03406],
+        [49.83469, 24.03459],
+        [49.83401, 24.04071],
+        [49.83291, 24.04263],
+        [49.82955, 24.046],
+        [49.82616, 24.04391],
+        [49.82521, 24.04856],
+        [49.82332, 24.05266],
+        [49.82221, 24.05455],
+        [49.81922, 24.05731],
+        [49.81513, 24.06046],
+        [49.81315, 24.06047],
+        [49.81128, 24.06104],
+        [49.809, 24.06118],
+        [49.80139, 24.06618],
+        [49.80019, 24.06761],
+        [49.80019, 24.06761]
+      ],
+      "note": "Expected value derived with test/reference.js; the source checks only that it decodes to 27 points."
+    },
+    {
+      "name": "Encoder.encode: single value",
+      "op": "encode",
+      "input": [
+        [-179.9832104]
+      ],
+      "options": {
+        "dimensions": 1
+      },
+      "expected": "`~oia@"
+    },
+    {
+      "name": "Encoder.encode: single value, 1e6",
+      "op": "encode",
+      "input": [
+        [-179.9832104]
+      ],
+      "options": {
+        "dimensions": 1,
+        "precision": 6
+      },
+      "expected": "ruhhvI"
+    },
+    {
+      "name": "Encoder.encode_points: default precision",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "expected": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+    },
+    {
+      "name": "Encoder.encode_points: 1e6 precision",
+      "op": "encode",
+      "input": [
+        [38.5, -120.2],
+        [40.7, -120.95],
+        [43.252, -126.453]
+      ],
+      "options": 6,
+      "expected": "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI"
+    },
+    {
+      "name": "Encoder: points that are very close together",
+      "op": "encode",
+      "input": [
+        [41.3522171071184, -86.0456299662023],
+        [41.3522171071183, -86.0454368471533]
+      ],
+      "expected": "krk{FdxdlO?e@"
+    },
+    {
+      "name": "Encoder: points that are very close together, 1e6",
+      "op": "encode",
+      "input": [
+        [41.3522171071184, -86.0456299662023],
+        [41.3522171071183, -86.0454368471533]
+      ],
+      "options": 6,
+      "expected": "q`}zmAzzxbcD?aK"
+    },
+    {
+      "name": "Encoder: same results as google's api",
+      "op": "encode",
+      "input": [
+        [39.13594499, -94.4243478],
+        [39.13558757, -94.4243471]
+      ],
+      "expected": "svzmFdgi_QdA?"
+    }
+  ]
+}
