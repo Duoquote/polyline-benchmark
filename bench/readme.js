@@ -1,42 +1,130 @@
-// Fills the result tables in README.md from results/*.md and *.json, so no
-// number in the README is typed by hand. Each block sits between markers:
-//
-//   <!-- results:bun -->  ...  <!-- /results:bun -->
-//   <!-- results:size --> ...  <!-- /results:size -->
+// Fills README.md, docs/results.md, docs/charts.md and docs/methodology.md
+// from results/*.json, so no number in them is typed by hand.
 //
 //   node bench/readme.js
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+//
+// README.md and docs/methodology.md have markers, <!-- name --> ...
+// <!-- /name -->; docs/results.md and docs/charts.md are written whole.
+import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { tables } from './measure.js';
+import { opsTable, speedTables, memoryTable, groups, cell, ops } from './report.js';
+import { bestTable } from './best.js';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
-const readme = `${root}README.md`;
-const cols = (p) => ['10 pts', '100 pts', '1,000 pts', '10,000 pts', '100,000 pts', ...(p === 5 ? ['real-world'] : [])];
-// polytini's rows in bold, so they're easy to find.
-const mark = (md) => md.replace(/^\| (@duoquote\/polytini@[^|]*?) \|/gm, '| **$1** |');
+const R = `${root}results/`;
+const has = (f) => existsSync(`${R}${f}.json`);
+const load = (f) => JSON.parse(readFileSync(`${R}${f}.json`, 'utf8'));
+const RUNTIMES = [
+  ['bun', 'Bun'], ['node-22', 'Node 22'], ['node-23', 'Node 23'], ['node-24', 'Node 24'], ['node-25', 'Node 25'], ['node-26', 'Node 26'], ['deno', 'Deno'], ['browser', 'Chrome'],
+].filter(([f]) => has(f));
+const pct = (x) => `${Math.round(x * 100)}%`;
+const median = (xs) => [...xs].sort((a, b) => a - b)[(xs.length - 1) >> 1];
 
-// The browser results don't list the typed-array group, so fall back to the
-// variant names the adapters give those rows.
-const flatRows = (d) => new Set(d.groups?.flat ?? d.results.map((r) => r.impl).filter((n) => /Float64Array|encodeDeltas/.test(n)));
-
-function block(name) {
-  if (name === 'size') {
-    const md = readFileSync(`${root}results/size.md`, 'utf8');
-    return mark(md.slice(md.indexOf('| Package')).trim());
-  }
-  const file = `${root}results/${name}.json`;
-  if (!existsSync(file)) throw new Error(`no ${file}: run the benchmark first`);
-  const d = JSON.parse(readFileSync(file, 'utf8'));
+function meta(d) {
   const spreads = d.results.map((r) => r.spread).sort((a, b) => a - b);
-  const pct = (x) => `${(x * 100).toFixed(0)}%`;
-  const meta = [
-    `${d.env.runtimeLabel}, ${d.env.date}. \`@duoquote/polytini\` resolved to \`${d.polytiniEntry}\`.`,
-    `Between rounds, a cell moved by a median of ${pct(spreads[(spreads.length - 1) >> 1])}, and ${pct(spreads.at(-1))} at worst.`,
-  ].join(' ');
-  return `${meta}\n\n${mark(tables(d.results, cols(d.precision), flatRows(d)))}`;
+  return `${d.env.runtimeLabel}, ${d.env.date}. \`@duoquote/polytini\` resolved to \`${d.polytiniEntry}\`. Between rounds a cell moved by a median of ${pct(median(spreads))}, ${pct(spreads.at(-1))} at worst.`;
 }
 
-let s = readFileSync(readme, 'utf8');
-s = s.replace(/<!-- results:([\w-]+) -->[\s\S]*?<!-- \/results:\1 -->/g, (_, name) => `<!-- results:${name} -->\n${block(name)}\n<!-- /results:${name} -->`);
-writeFileSync(readme, s);
-console.error('README.md tables updated');
+// A light and a dark chart; GitHub picks by the viewer's theme.
+const picture = (name, alt, prefix) =>
+  `<picture>\n  <source media="(prefers-color-scheme: dark)" srcset="${prefix}${name}-dark.svg">\n  <img alt="${alt}" src="${prefix}${name}-light.svg">\n</picture>`;
+const chartExists = (name) => existsSync(`${root}docs/charts/${name}-light.svg`);
+
+function fill(file, blocks) {
+  let s = readFileSync(file, 'utf8');
+  s = s.replace(/<!-- ([\w:-]+) -->[\s\S]*?<!-- \/\1 -->/g, (all, name) => (name in blocks ? `<!-- ${name} -->${blocks[name]}<!-- /${name} -->` : all));
+  writeFileSync(file, s);
+}
+
+// README.md: the best-at-what table, two charts, and each runtime's tables.
+const blocks = { best: `\n${bestTable()}\n` };
+for (const [f] of RUNTIMES) {
+  const d = load(f), { main } = groups(d);
+  blocks[`results:${f}`] = `\n${meta(d)}\n\n${opsTable(main, 'decode')}\n\n${opsTable(main, 'encode')}\n`;
+}
+const spreads = RUNTIMES.map(([f]) => median(load(f).results.map((r) => r.spread)));
+blocks.spread = `${pct(Math.min(...spreads))} to ${pct(Math.max(...spreads))}`;
+blocks['charts:top'] =
+  '\n' +
+  [
+    ['speed-bun-decode', 'Bun: decode speed of every library relative to @mapbox/polyline on the real-world lines'],
+    ['speed-bun-encode', 'Bun: encode speed of every library relative to @mapbox/polyline on the real-world lines'],
+  ]
+    .filter(([n]) => chartExists(n))
+    .map(([n, alt]) => picture(n, alt, 'docs/charts/'))
+    .join('\n') +
+  '\n';
+fill(`${root}README.md`, blocks);
+
+// docs/results.md: every table.
+const out = [
+  '# All results',
+  '',
+  "Generated by `node bench/readme.js` from `results/*.json`. Calls per second unless a table says otherwise. The fastest in each column is in bold, and so are polytini's rows. The relative tables divide by `@mapbox/polyline`.",
+  '',
+];
+for (const [f, name] of RUNTIMES) {
+  const d = load(f);
+  out.push(`## ${name}`, '', meta(d), '', speedTables(d), '');
+}
+const memFiles = readdirSync(R).filter((x) => /^memory-.*\.json$/.test(x));
+for (const f of memFiles) {
+  const m = JSON.parse(readFileSync(R + f, 'utf8'));
+  const worst = Math.max(...m.results.map((r) => r.spread));
+  out.push(
+    `## Memory, ${m.env.runtimeLabel}`,
+    '',
+    `Bytes per call: heap plus typed arrays and WASM memory, the median of ${m.rounds} rounds in fresh processes, which differed by ${pct(worst)} at most. Smallest first by the 10,000 point column; the least in each column is in bold. How it's measured: [methodology](methodology.md#memory).`,
+    '',
+  );
+  for (const op of ['decode', 'encode']) out.push(memoryTable(m, op, 'allocated'), '', memoryTable(m, op, 'retained'), '');
+}
+for (const f of ['bun-flexible', 'node-24-flexible', 'deno-flexible'].filter(has)) {
+  const d = load(f);
+  out.push(`## HERE Flexible Polyline, ${d.env.runtimeLabel}`, '', meta(d), '', opsTable(d.results, 'decode'), '', opsTable(d.results, 'encode'), '');
+}
+if (existsSync(`${R}size.md`)) {
+  const md = readFileSync(`${R}size.md`, 'utf8');
+  out.push('## Bundle size', '', md.slice(md.indexOf('esbuild')).trim(), '');
+}
+writeFileSync(`${root}docs/results.md`, out.join('\n'));
+
+// docs/charts.md: every chart.
+const charts = ['# Charts', '', 'Generated by `npm run charts` from `results/*.json`, each in a light and a dark version. The numbers behind them are in [results.md](results.md).', ''];
+for (const [f, name] of RUNTIMES) {
+  charts.push(`## ${name}`, '');
+  for (const op of ['decode', 'encode']) {
+    for (const [kind, alt] of [
+      ['speed', `${op} speed relative to @mapbox/polyline on the real-world lines`],
+      ['sizes', `${op} speed at every line length relative to @mapbox/polyline`],
+      ['ops', `${op} calls per second by line length, polytini and the two fastest other libraries`],
+    ]) {
+      const n = `${kind}-${f}-${op}`;
+      if (chartExists(n)) charts.push(picture(n, `${name}: ${alt}`, 'charts/'), '');
+    }
+  }
+}
+const memCharts = readdirSync(`${root}docs/charts`).filter((x) => /^memory-.*-light\.svg$/.test(x)).sort();
+if (memCharts.length) charts.push('## Memory', '');
+for (const f of memCharts) {
+  const n = f.replace(/-light\.svg$/, '');
+  charts.push(picture(n, `Memory allocated per call relative to @mapbox/polyline (${n.replace('memory-', '')})`, 'charts/'), '');
+}
+if (chartExists('size')) charts.push('## Bundle size', '', picture('size', 'Gzipped bundle size of every library', 'charts/'), '');
+writeFileSync(`${root}docs/charts.md`, charts.join('\n'));
+
+// docs/methodology.md: the Maps JavaScript API numbers.
+if (has('browser')) {
+  const d = load('browser'), { main } = groups(d);
+  const gm = [...new Set(main.map((r) => r.impl))].find((n) => n.startsWith('@googlemaps/polyline-codec@'));
+  if (gm && main.some((r) => r.impl === 'google.maps.geometry.encoding')) {
+    const sizes = ['10 pts', '100 pts', '1,000 pts', '10,000 pts', '100,000 pts', 'real-world'];
+    const ratio = (op) => sizes.map((c) => cell(main, gm, op, c)?.opsPerSec / cell(main, 'google.maps.geometry.encoding', op, c)?.opsPerSec).filter((x) => x > 0);
+    const range = (xs) => `${Math.min(...xs).toFixed(1)} to ${Math.max(...xs).toFixed(1)}`;
+    const rw = (op, n) => ops(cell(main, n, op, 'real-world')?.opsPerSec);
+    fill(`${root}docs/methodology.md`, {
+      google: `\nIn the ${d.env.date} run, \`@googlemaps/polyline-codec\` decoded ${range(ratio('decode'))} times as fast as \`google.maps.geometry.encoding.decodePath\` and encoded ${range(ratio('encode'))} times as fast as \`encodePath\`, depending on the line length. On the real-world lines that's ${rw('decode', gm)} against ${rw('decode', 'google.maps.geometry.encoding')} decodes per second. Part of the decode gap is the output: \`decodePath\` returns \`google.maps.LatLng\` objects, which cost more to create than arrays. If you only need the geometry functions, the npm package is faster and doesn't need the Maps script.\n`,
+    });
+  }
+}
+console.error('README.md, docs/results.md, docs/charts.md and docs/methodology.md updated');

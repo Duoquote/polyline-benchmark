@@ -26,7 +26,8 @@ import { createRequire } from 'node:module';
 import { realWorldLines } from '../src/fixtures.js';
 import { defs } from '../src/adapters.js';
 import { version } from '../src/implementations.js';
-import { summarize, tables, roundOrder } from './measure.js';
+import { summarize, roundOrder } from './measure.js';
+import { speedTables } from './report.js';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright-core');
@@ -198,7 +199,9 @@ const env = {
   os: `${os.type()} ${os.release()} ${os.arch()}`,
   date: new Date().toISOString().slice(0, 10),
 };
-const flatNames = new Set(defs.filter((d) => d.group === 'flat').map((d) => `${d.pkg}@${versions[d.pkg]} (${d.variant})`));
+const label = (d) => `${d.pkg}@${versions[d.pkg]} (${d.variant})`;
+const flatNames = new Set(defs.filter((d) => d.group === 'flat').map(label));
+const batchNames = new Set(defs.filter((d) => d.group === 'batch').map(label));
 const cols = ['10 pts', '100 pts', '1,000 pts', '10,000 pts', '100,000 pts', ...(precision === 5 ? ['real-world'] : [])];
 const md = [
   `## ${env.runtimeLabel}, precision ${precision}`,
@@ -210,11 +213,11 @@ const md = [
   `- \`@duoquote/polytini\` resolved to \`${polytiniEntry}\` (esbuild, browser conditions)`,
   `- google.maps.geometry.encoding: ${KEY ? `included, Maps JavaScript API loaded once, its ${rounds} rounds ran in one page` : 'not included (needs GOOGLE_MAPS_API_KEY)'}`,
   '',
-  `Million points per second. Each cell is the median of ${rounds} rounds, and each round is the median sample of a ${time} ms tinybench run in a fresh browser process. Higher is better. Rows are sorted by the 10,000 point column.`,
+  `Calls per second: whole encode() or decode() calls, one line each, so higher is better. Each cell is the median of ${rounds} rounds, and each round is the median sample of a ${time} ms tinybench run in a fresh browser context. Rows are fastest first (geometric mean over the columns, relative to each column's fastest), and the fastest in each column is in bold. The relative tables divide by @mapbox/polyline. The typed-array tables use flat arrays instead of [lat, lng] arrays, and the batch tables decode all 1000 real-world lines in one call, so they aren't comparable with the main tables. Million points per second is at the end.`,
   '',
   `Spread between the fastest and slowest round of a cell: median ${(medianSpread * 100).toFixed(0)}%, worst ${(worstSpread * 100).toFixed(0)}%.`,
   '',
-  tables(results, cols, flatNames),
+  speedTables({ results, groups: { flat: [...flatNames], batch: [...batchNames] } }),
   '',
 ].join('\n');
 console.log('\n' + scrub(md));
@@ -224,7 +227,7 @@ if (write) {
   mkdirSync(dir, { recursive: true });
   const base = `${dir}browser${precision === 5 ? '' : `-p${precision}`}`;
   writeFileSync(`${base}.md`, md);
-  writeFileSync(`${base}.json`, JSON.stringify({ env, precision, time, rounds, polytiniEntry, googleMaps: !!KEY, results, runs }, null, 2) + '\n');
+  writeFileSync(`${base}.json`, JSON.stringify({ env, precision, time, rounds, polytiniEntry, googleMaps: !!KEY, groups: { flat: [...flatNames], batch: [...batchNames] }, results, runs }, null, 2) + '\n');
   // The key must never end up in a result file.
   for (const f of [`${base}.md`, `${base}.json`]) {
     if (KEY && readFileSync(f, 'utf8').includes(KEY)) {

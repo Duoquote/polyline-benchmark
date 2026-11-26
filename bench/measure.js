@@ -18,29 +18,44 @@ export async function measure(impl, fixtures, { Bench, precision, time, gc = () 
   for (const op of ['decode', 'encode']) {
     if (!impl[op]) continue;
     for (const fixture of fixtures) {
+      // Batch rows take every line of a fixture in one call, so they only
+      // run on the fixtures with many lines (the real-world set).
+      const batch = !!impl.batch, lines = fixture.encoded;
+      if (batch && lines.length < 2) continue;
       const reps = Math.max(1, Math.ceil(MIN_POINTS_PER_CALL / fixture.points));
-      const lines = fixture.encoded;
       const inputs = op === 'encode' ? fixture.coords.map((c) => impl.toNative(c)) : lines;
 
       // Check once outside the timed loop: the numbers mean nothing for an
       // implementation that returns the wrong answer.
-      inputs.forEach((input, i) => {
-        const out = impl[op](input, precision);
-        const n = op === 'decode' && (impl.count ? impl.count(out) : out.length);
-        const ok = op === 'encode' ? out === lines[i] : n === fixture.coords[i].length;
-        if (!ok) throw new Error(`${impl.name} ${op} gives a wrong result on ${fixture.name}, line ${i}`);
-      });
+      if (batch) {
+        const out = impl[op](inputs, precision);
+        const ok = op === 'encode' ? out.length === lines.length && out.every((s, i) => s === lines[i]) : impl.count(out) === fixture.points;
+        if (!ok) throw new Error(`${impl.name} ${op} gives a wrong result on ${fixture.name}`);
+      } else
+        inputs.forEach((input, i) => {
+          const out = impl[op](input, precision);
+          const n = op === 'decode' && (impl.count ? impl.count(out) : out.length);
+          const ok = op === 'encode' ? out === lines[i] : n === fixture.coords[i].length;
+          if (!ok) throw new Error(`${impl.name} ${op} gives a wrong result on ${fixture.name}, line ${i}`);
+        });
 
       const fn = impl[op];
       // tinybench's default floor of 64 timed and 16 warmup iterations, not
       // the time budget, decided how long big inputs and slow libraries ran.
       // 8 samples of a 100,000 point decode are enough for a median.
       const bench = new Bench({ time, iterations: 8, warmupTime: Math.min(250, time / 2), warmupIterations: 2, throws: true });
-      bench.add(impl.name, () => {
-        for (let r = 0; r < reps; r++) {
-          for (let i = 0; i < inputs.length; i++) sink += fn(inputs[i], precision).length;
-        }
-      });
+      bench.add(
+        impl.name,
+        batch
+          ? () => {
+              for (let r = 0; r < reps; r++) sink += fn(inputs, precision).length ?? 1;
+            }
+          : () => {
+              for (let r = 0; r < reps; r++) {
+                for (let i = 0; i < inputs.length; i++) sink += fn(inputs[i], precision).length;
+              }
+            },
+      );
       gc();
       await bench.run();
 
@@ -56,6 +71,9 @@ export async function measure(impl, fixtures, { Bench, precision, time, gc = () 
         meanMs: latency.mean,
         rme: latency.rme,
         mptsPerSec: (reps * fixture.points) / (latency.p50 / 1000) / 1e6,
+        // Whole encode() or decode() calls per second, one line each. Batch
+        // rows count lines too, so they compare with the per-line rows.
+        opsPerSec: (reps * lines.length) / (latency.p50 / 1000),
       });
     }
   }
@@ -72,9 +90,13 @@ const median = (xs) => {
 export function summarize(runs) {
   const results = [];
   for (const r of runs.filter((x) => x.round === 1)) {
-    const all = runs.filter((x) => x.op === r.op && x.fixture === r.fixture && x.impl === r.impl).map((x) => x.mptsPerSec);
-    const m = median(all);
-    results.push({ op: r.op, fixture: r.fixture, impl: r.impl, mptsPerSec: m, rounds: all, spread: (Math.max(...all) - Math.min(...all)) / m });
+    const same = runs.filter((x) => x.op === r.op && x.fixture === r.fixture && x.impl === r.impl);
+    const all = same.map((x) => x.mptsPerSec), m = median(all);
+    results.push({
+      op: r.op, fixture: r.fixture, impl: r.impl, points: r.points,
+      mptsPerSec: m, opsPerSec: median(same.map((x) => x.opsPerSec)),
+      rounds: all, spread: (Math.max(...all) - Math.min(...all)) / m,
+    });
   }
   const spreads = results.map((r) => r.spread);
   return { results, medianSpread: median(spreads), worstSpread: Math.max(...spreads) };

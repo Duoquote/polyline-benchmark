@@ -15,7 +15,8 @@ import { implementations as googleImpls, flexImplementations, polytiniEntry } fr
 import { benchFixtures, flexFixtures } from '../src/fixtures.js';
 import { encodeFlexible } from '../src/adapters.js';
 import { environment, environmentMarkdown } from '../src/environment.js';
-import { measure, summarize, tables, roundOrder } from './measure.js';
+import { measure, summarize, roundOrder } from './measure.js';
+import { speedTables } from './report.js';
 
 const args = process.argv.slice(2);
 const opt = (name, fallback) => {
@@ -81,17 +82,18 @@ async function main() {
   const entry = polytiniEntry();
   const fixtures = fixturesFor(precision).map((f) => f.name);
   const flatNames = new Set(impls.filter((i) => i.group === 'flat').map((i) => i.name));
+  const batchNames = new Set(impls.filter((i) => i.group === 'batch').map((i) => i.name));
   const md = [
     `## ${env.runtimeLabel}, ${format === 'flexible' ? 'HERE Flexible Polyline, ' : ''}precision ${precision}`,
     '',
     environmentMarkdown(env),
     `- \`@duoquote/polytini\` resolved to \`${entry}\``,
     '',
-    `Million points per second. Each cell is the median of ${rounds} rounds, and each round is the median sample of a ${time} ms tinybench run in a fresh process. Higher is better. Rows are sorted by the 10,000 point column. The typed-array tables use flat arrays of numbers instead of [lat, lng] arrays, so they aren't comparable with the main tables.`,
+    `Calls per second: whole encode() or decode() calls, one line each, so higher is better. Each cell is the median of ${rounds} rounds, and each round is the median sample of a ${time} ms tinybench run in a fresh process. Rows are fastest first (geometric mean over the columns, relative to each column's fastest), and the fastest in each column is in bold. The relative tables divide by @mapbox/polyline. The typed-array tables use flat arrays instead of [lat, lng] arrays, and the batch tables decode all 1000 real-world lines in one call, so they aren't comparable with the main tables. Million points per second is at the end.`,
     '',
     `Spread between the fastest and slowest round of a cell: median ${(medianSpread * 100).toFixed(0)}%, worst ${(worstSpread * 100).toFixed(0)}%.`,
     '',
-    tables(results, fixtures, flatNames),
+    speedTables({ results, groups: { flat: [...flatNames], batch: [...batchNames] } }),
     '',
   ].join('\n');
 
@@ -103,7 +105,7 @@ async function main() {
     const name = env.runtime === 'node' ? `node-${env.runtimeVersion.slice(1).split('.')[0]}` : env.runtime;
     const base = `${dir}${name}${format === 'flexible' ? '-flexible' : ''}${precision === 5 ? '' : `-p${precision}`}`;
     writeFileSync(`${base}.md`, md);
-    writeFileSync(`${base}.json`, JSON.stringify({ env, precision, time, rounds, polytiniEntry: entry, groups: { flat: [...flatNames] }, results, runs }, null, 2) + '\n');
+    writeFileSync(`${base}.json`, JSON.stringify({ env, precision, time, rounds, polytiniEntry: entry, groups: { flat: [...flatNames], batch: [...batchNames] }, results, runs }, null, 2) + '\n');
     console.error(`wrote ${base}.md and .json`);
   }
 }
