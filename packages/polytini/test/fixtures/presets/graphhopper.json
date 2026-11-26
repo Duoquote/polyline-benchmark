@@ -1,0 +1,24 @@
+{
+  "source": "graphhopper/graphhopper at ce72e96197eb16fcc3ab4f18fdd543fa270be9d5, Apache-2.0. Points are [lat, lng] or [lat, lng, ele], as in the Java tests.",
+  "tests": {
+    "file": "web-api/src/test/java/com/graphhopper/jackson/ResponsePathRepresentationTest.java",
+    "decode2d": [
+      { "points": "_p~iF~ps|U", "multiplier": 1e5, "latLng": [[38.5, -120.2]] },
+      { "points": "_p~iF~ps|U_ulLnnqC_mqNvxq`@", "multiplier": 1e5, "latLng": [[38.5, -120.2], [40.7, -120.95], [43.252, -126.453]] }
+    ],
+    "decode3d": [
+      { "points": "_p~iF~ps|Uo}@", "multiplier": 1e5, "latLng": [[38.5, -120.2, 10]] },
+      { "points": "_p~iF~ps|Uo}@_ulLnnqC_anF_mqNvxq`@?", "multiplier": 1e5, "latLng": [[38.5, -120.2, 10], [40.7, -120.95, 1234], [43.252, -126.453, 1234]] }
+    ],
+    "encode1e6": { "points": "ohdfzAgt}bVoEL", "multiplier": 1e6, "latLng": [[47.827608, 12.123476], [47.827712, 12.123469]] },
+    "roundTrip": [
+      [[38.5, -120.2], [43.252, -126.453], [40.7, -120.95], [50.3139, 10.61279], [50.04303, 9.49768]],
+      [[38.5, -120.2], [43.252, -126.453], [40.7, -120.95], [40.70001, -120.95001]]
+    ]
+  },
+  "docsExample": {
+    "file": "docs/web/api-doc.md",
+    "bbox": [13.362853824187303, 52.469481955531585, 13.385836736460217, 52.473849308838446],
+    "points": "oxg_Iy|ppAl@wCdE}LfFsN|@_Ej@eEtAaMh@sGVuDNcDb@{PFyGdAi]FoC?q@sXQ_@?"
+  }
+}
