@@ -11,6 +11,7 @@
 // - HERE Flexible Polyline (bench/run.js --format flexible) on Bun, Node 24 and Deno
 // - headless Chrome: bench/browser.js (with google.maps.geometry if
 //   GOOGLE_MAPS_API_KEY is set)
+// - memory per call on Node 24 and Deno: bench/memory.js
 // - bundle sizes: bench/size.js
 //
 // Up to --jobs steps run at once, each a single-threaded process on its own
@@ -58,6 +59,9 @@ const steps = [
   ['flexible-bun', bun, ['bench/run.js', '--format', 'flexible', ...common]],
   ['flexible-node24', node('24'), ['--expose-gc', 'bench/run.js', '--format', 'flexible', ...common]],
   ['flexible-deno', deno, [...denoFlags, 'bench/run.js', '--format', 'flexible', ...common]],
+  // Memory: V8 only (see bench/memory.js), one Node is enough.
+  ['memory-node24', node('24'), ['--expose-gc', '--max-semi-space-size=128', 'bench/memory.js', ...(quick ? ['--rounds', '1', '--no-write'] : [])]],
+  ['memory-deno', deno, ['run', '-A', '--v8-flags=--expose-gc,--max-semi-space-size=128', 'bench/memory.js', ...(quick ? ['--rounds', '1', '--no-write'] : [])]],
   ['size', [process.execPath], ['bench/size.js', ...(quick ? [] : ['--write'])]],
 ].filter(([name]) => !skip.has(name));
 
