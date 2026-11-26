@@ -32,7 +32,10 @@ export async function measure(impl, fixtures, { Bench, precision, time, gc = () 
       });
 
       const fn = impl[op];
-      const bench = new Bench({ time, warmupTime: Math.min(250, time), throws: true });
+      // tinybench's default floor of 64 timed and 16 warmup iterations, not
+      // the time budget, decided how long big inputs and slow libraries ran.
+      // 8 samples of a 100,000 point decode are enough for a median.
+      const bench = new Bench({ time, iterations: 8, warmupTime: Math.min(250, time / 2), warmupIterations: 2, throws: true });
       bench.add(impl.name, () => {
         for (let r = 0; r < reps; r++) {
           for (let i = 0; i < inputs.length; i++) sink += fn(inputs[i], precision).length;

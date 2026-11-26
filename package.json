@@ -19,7 +19,8 @@
     "bench:browser": "node bench/browser.js",
     "bench:flexible": "node --expose-gc bench/run.js --format flexible",
     "bench:all": "node bench/matrix.js",
-    "size": "node bench/size.js"
+    "size": "node bench/size.js",
+    "bench:quick": "node bench/matrix.js --quick"
   },
   "dependencies": {
     "@duoquote/polytini": "file:packages/polytini",

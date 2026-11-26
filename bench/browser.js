@@ -2,7 +2,7 @@
 // browser process per round, through the same measure() loop as
 // bench/run.js, on the same fixtures.
 //
-//   node bench/browser.js [--precision 5] [--time 1000] [--rounds 5] [--only x] [--no-write]
+//   node bench/browser.js [--precision 5] [--time 120] [--rounds 5] [--only x] [--no-write]
 //
 // Uses the locally installed Chrome through playwright-core (no browser
 // download). Bundles src/adapters.js with esbuild for the browser, so
@@ -37,7 +37,7 @@ const opt = (name, fallback) => {
   return i === -1 ? fallback : args[i + 1];
 };
 const precision = Number(opt('precision', 5));
-const time = Number(opt('time', 1000));
+const time = Number(opt('time', 120));
 const rounds = Number(opt('rounds', 5));
 const only = opt('only', '');
 const write = !args.includes('--no-write');
@@ -136,10 +136,15 @@ const server = createServer((req, res) => {
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const port = server.address().port;
 
+// One Chrome for the whole run, and a fresh browser context for every page,
+// so each library still starts in a new renderer process with a cold JIT.
+// Launching Chrome every time took a minute and a half of the run.
+let browser;
 async function runPage(impl, roundsInPage) {
-  const browser = await chromium.launch({ channel: 'chrome', headless: true, args: ['--js-flags=--expose-gc'] });
+  browser ??= await chromium.launch({ channel: 'chrome', headless: true, args: ['--js-flags=--expose-gc'] });
+  const context = await browser.newContext();
   try {
-    const page = await browser.newPage();
+    const page = await context.newPage();
     const errors = [];
     page.on('pageerror', (e) => errors.push(scrub(e.message)));
     const qs = new URLSearchParams({ impl, precision, time, rounds: roundsInPage });
@@ -150,7 +155,7 @@ async function runPage(impl, roundsInPage) {
     });
     return { results: out, version: browser.version() };
   } finally {
-    await browser.close();
+    await context.close();
   }
 }
 
@@ -177,6 +182,7 @@ try {
     process.stderr.write('done\n');
   } else if (!KEY) process.stderr.write('GOOGLE_MAPS_API_KEY not set: skipping google.maps.geometry.encoding\n');
 } finally {
+  await browser?.close();
   server.close();
 }
 

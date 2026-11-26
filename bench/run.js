@@ -1,6 +1,6 @@
 // Benchmark every implementation on every fixture, for decode and encode.
 //
-//   node --expose-gc bench/run.js [--precision 5|6] [--time 1000] [--rounds 5] [--only mapbox] [--no-write]
+//   node --expose-gc bench/run.js [--precision 5|6] [--time 120] [--rounds 5] [--only mapbox] [--no-write]
 //
 // Each implementation runs in its own child process, so the JIT and GC state
 // one library leaves behind can't change the numbers of the next one.
@@ -23,7 +23,7 @@ const opt = (name, fallback) => {
   return i === -1 ? fallback : args[i + 1];
 };
 const precision = Number(opt('precision', 5));
-const time = Number(opt('time', 1000));
+const time = Number(opt('time', 120));
 const only = opt('only', '');
 const write = !args.includes('--no-write');
 const rounds = Number(opt('rounds', 5));
