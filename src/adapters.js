@@ -23,6 +23,7 @@ import * as polytiniWeb from '@duoquote/polytini/web';
 import * as polytiniWasm from '@duoquote/polytini/wasm';
 import hereFlex from '@here/flexpolyline';
 import * as polytiniFlex from '@duoquote/polytini/flexible';
+import { binaryPaths } from '@duoquote/polytini/deckgl';
 
 // Node loads @googlemaps/polyline-codec's UMD build (one default export),
 // bundlers its ESM build (named exports only). Same functions either way.
@@ -155,6 +156,33 @@ export const defs = [
     encode: (values, p) => polytiniWasm.encodeFlat(values, p),
     decode: (str, p) => polytiniWasm.decodeFlat(str, p),
   },
+  // Batch rows: every line of the real-world set in one call, into one
+  // typed array. Other libraries have no batch API; their per-line
+  // numbers on the same set are in the main tables.
+  {
+    pkg: '@duoquote/polytini',
+    variant: 'wasm decodeMany/encodeMany',
+    group: 'batch',
+    batch: true,
+    shape: 'latlng',
+    precisions: [5],
+    count: (out) => out.starts[out.starts.length - 1],
+    fromNative: (out) => pairs(out.coords),
+    encode: (lines, p) => polytiniWasm.encodeMany(lines, p),
+    decode: (lines, p) => polytiniWasm.decodeMany(lines, p),
+  },
+  {
+    pkg: '@duoquote/polytini',
+    variant: 'deck.gl binaryPaths',
+    group: 'batch',
+    batch: true,
+    shape: 'latlng',
+    precisions: [5],
+    count: (out) => out.startIndices[out.length],
+    // deck.gl positions are [lng, lat].
+    fromNative: (out) => pairs(out.attributes.getPath.value).map(([lng, lat]) => [lat, lng]),
+    decode: (lines, p) => binaryPaths(lines, { precision: p }),
+  },
   {
     pkg: 'ol',
     variant: 'encodeDeltas/decodeDeltas',
@@ -194,5 +222,6 @@ export const encodeFlexible = (points, precision) => hereFlex.encode({ polyline:
 
 export function withShapes(def, version) {
   const label = def.variant ? `${def.pkg}@${version} (${def.variant})` : `${def.pkg}@${version}`;
-  return { ...def, ...shapes[def.shape], version, name: label };
+  // A row's own count and fromNative win over its shape's.
+  return { ...def, ...shapes[def.shape], ...(def.count && { count: def.count }), ...(def.fromNative && { fromNative: def.fromNative }), version, name: label };
 }

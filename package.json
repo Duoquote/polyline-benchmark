@@ -11,7 +11,6 @@
     "test": "node test/correctness.js",
     "test:bun": "bun test/correctness.js",
     "test:deno": "deno run --allow-read test/correctness.js",
-    "test:polytini": "cd packages/polytini && node test/run.js",
     "behavior": "node test/behavior.js",
     "bench": "node --expose-gc bench/run.js",
     "bench:bun": "bun bench/run.js",
@@ -20,10 +19,12 @@
     "bench:flexible": "node --expose-gc bench/run.js --format flexible",
     "bench:all": "node bench/matrix.js",
     "size": "node bench/size.js",
-    "bench:quick": "node bench/matrix.js --quick"
+    "bench:quick": "node bench/matrix.js --quick",
+    "charts": "node bench/charts.js",
+    "memory": "node --expose-gc --max-semi-space-size=128 bench/memory.js"
   },
   "dependencies": {
-    "@duoquote/polytini": "file:packages/polytini",
+    "@duoquote/polytini": "github:Duoquote/polytini#9b760a323c3902e57d4009cfc2be5b6850516ee4",
     "@googlemaps/polyline-codec": "1.0.28",
     "@here/flexpolyline": "0.1.0",
     "@lp-labs/polyline-codec": "0.1.0",

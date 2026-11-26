@@ -126,12 +126,13 @@ for (const p of [5, 6]) {
         let detail = null;
         for (let i = 0; i < c.lines.length && !detail; i++) {
           detail = attempt(() => {
+            // Batch rows take an array of lines: check them one line at a time.
             if (op === 'encode') {
               const native = impl.toNative(c.lines[i].map((pt) => pt.slice()));
-              const out = impl.encode(native, p);
+              const out = impl.batch ? impl.encode([native], p)[0] : impl.encode(native, p);
               return out === encoded[i] ? null : `line ${i}: got ${JSON.stringify(String(out).slice(0, 40))}, expected ${JSON.stringify(encoded[i].slice(0, 40))}`;
             }
-            return sameCoords(impl.fromNative(impl.decode(encoded[i], p)), expectedCoords[i]);
+            return sameCoords(impl.fromNative(impl.decode(impl.batch ? [encoded[i]] : encoded[i], p)), expectedCoords[i]);
           });
           if (detail && c.lines.length > 1) detail = `line ${i}: ${detail}`;
         }
