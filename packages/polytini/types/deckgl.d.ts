@@ -1,7 +1,7 @@
 // Types for @duoquote/polytini/deckgl. The results are plain objects in
 // deck.gl's binary data shape, so they need no deck.gl types: they can be
 // passed as `data` to PathLayer, TripsLayer and SolidPolygonLayer.
-import type { Options } from './index.js';
+import type { Options } from './index.d.ts';
 
 export interface BinaryOptions extends Options {
   /** Float32Array instead of Float64Array. Smaller, and enough for most maps; deck.gl uses 64-bit positions only when given them. Default false. */

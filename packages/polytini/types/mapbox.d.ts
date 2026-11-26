@@ -3,7 +3,7 @@
 // types use the GeoJSON namespace from @types/geojson.
 import type { Map, GeoJSONSource, GeoJSONSourceSpecification, LineLayerSpecification } from 'mapbox-gl';
 import type { FeatureCollection, LineString, GeoJsonProperties } from 'geojson';
-import type { Options } from './index.js';
+import type { Options } from './index.d.ts';
 
 export type { GeoJSONSourceSpecification, LineLayerSpecification };
 

@@ -70,6 +70,8 @@ jobs:
         run: node scripts/build-wasm.js && git diff --exit-code -- wasm/polytini.wasm src/wasm-bytes.js
       - name: Coverage
         run: npx c8 --reporter=text-summary --include='src/**' node test/run.js
+      - name: Integration types against the real libraries
+        run: for c in test/fixtures/*/tsconfig.json; do echo "$c"; npx tsc -p "$c" || exit 1; done
       - name: npm publish dry run
         run: npm publish --dry-run
 

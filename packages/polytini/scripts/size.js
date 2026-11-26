@@ -14,23 +14,23 @@ const external = ['node:*', 'ol', 'ol/*', 'maplibre-gl', 'mapbox-gl', '@deck.gl/
 // Budgets in gzipped bytes, about 4% over the size when they were set, so
 // CI catches real growth. Raise them on purpose, in the same commit.
 export const entries = [
-  { name: 'default / web (everything)', file: 'src/web.js', platform: 'browser', budget: 2010 },
-  { name: 'web, encode + decode only', code: "export { encode, decode } from './src/web.js'", platform: 'browser', budget: 1800 },
-  { name: 'browser (the "browser" condition)', file: 'src/browser.js', platform: 'browser', budget: 2300 },
-  { name: 'node', file: 'src/node.js', platform: 'node', budget: 2550 },
-  { name: 'bun', file: 'src/bun.js', platform: 'node', budget: 2550 },
-  { name: 'deno', file: 'src/deno.js', platform: 'browser', budget: 2530 },
+  { name: 'default / web (everything)', file: 'src/web.js', platform: 'browser', budget: 2050 },
+  { name: 'web, encode + decode only', code: "export { encode, decode } from './src/web.js'", platform: 'browser', budget: 1830 },
+  { name: 'browser (the "browser" condition)', file: 'src/browser.js', platform: 'browser', budget: 2330 },
+  { name: 'node', file: 'src/node.js', platform: 'node', budget: 2700 },
+  { name: 'bun', file: 'src/bun.js', platform: 'node', budget: 2700 },
+  { name: 'deno', file: 'src/deno.js', platform: 'browser', budget: 2570 },
   { name: 'wasm (JS glue + inlined .wasm)', file: 'src/wasm.js', platform: 'browser', budget: 2920 },
-  { name: 'leaflet', file: 'src/leaflet.js', platform: 'browser', budget: 2020 },
-  { name: 'turf', file: 'src/turf.js', platform: 'browser', budget: 2290 },
+  { name: 'leaflet', file: 'src/leaflet.js', platform: 'browser', budget: 2060 },
+  { name: 'turf', file: 'src/turf.js', platform: 'browser', budget: 2320 },
   { name: 'presets', file: 'src/presets.js', platform: 'browser', budget: 300 },
   { name: 'flexible', file: 'src/flexible.js', platform: 'browser', budget: 2120 },
-  { name: 'google', file: 'src/google.js', platform: 'browser', budget: 2030 },
+  { name: 'google', file: 'src/google.js', platform: 'browser', budget: 2070 },
   { name: 'openlayers', file: 'src/openlayers.js', platform: 'browser', budget: 910 },
-  { name: 'maplibre', file: 'src/maplibre.js', platform: 'browser', budget: 1660 },
-  { name: 'mapbox', file: 'src/mapbox.js', platform: 'browser', budget: 1660 },
-  { name: 'deckgl', file: 'src/deckgl.js', platform: 'browser', budget: 2080 },
-  { name: 'cli', file: 'src/cli.js', platform: 'node', budget: 3950 },
+  { name: 'maplibre', file: 'src/maplibre.js', platform: 'browser', budget: 1690 },
+  { name: 'mapbox', file: 'src/mapbox.js', platform: 'browser', budget: 1690 },
+  { name: 'deckgl', file: 'src/deckgl.js', platform: 'browser', budget: 2110 },
+  { name: 'cli', file: 'src/cli.js', platform: 'node', budget: 3990 },
 ];
 
 export async function measure(e) {

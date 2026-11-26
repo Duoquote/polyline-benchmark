@@ -4,7 +4,7 @@
 // installed maplibre-gl version.
 import type { Map, GeoJSONSource } from 'maplibre-gl';
 import type { FeatureCollection, LineString, GeoJsonProperties } from 'geojson';
-import type { Options } from './index.js';
+import type { Options } from './index.d.ts';
 
 /** MapLibre's GeoJSON source specification. */
 export type GeoJSONSourceSpecification = Extract<Parameters<Map['addSource']>[1], { type: 'geojson' }>;
