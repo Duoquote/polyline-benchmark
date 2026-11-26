@@ -96,3 +96,25 @@ export function tables(results, cols, flatNames) {
   const main = results.filter((r) => !flatNames.has(r.impl)), flat = results.filter((r) => flatNames.has(r.impl));
   return [table(main, cols, 'decode'), table(main, cols, 'encode'), table(flat, cols, 'decode', 'decode, typed arrays'), table(flat, cols, 'encode', 'encode, typed arrays')].filter(Boolean).join('\n\n');
 }
+
+/**
+ * The order libraries run in for one round: a seeded shuffle, different for
+ * every round and the same on every run. With a fixed order, a library that
+ * always ran last took every slow minute at the end of a round, which showed
+ * up as a 30% drop in rounds 2 and 3 for the last rows on a busy machine.
+ */
+export function roundOrder(list, round) {
+  let s = (round * 0x9e3779b1) >>> 0;
+  const rnd = () => {
+    s = (s + 0x6d2b79f5) >>> 0;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 2 ** 32;
+  };
+  const out = [...list];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}

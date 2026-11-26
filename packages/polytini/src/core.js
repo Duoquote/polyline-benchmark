@@ -157,7 +157,7 @@ export function decodeLoop(str, f, sw, flat) {
   } else out = len < 64 ? [] : Array(len >> 1);
   // One value is one or more 5-bit chunks. `bad` collects every character
   // code: anything outside 0..63 after the -63 shift sets a high bit, and
-  // so does a value of more than 6 chunks (30 - s < 0). NaN past the end of
+  // so does a 7th chunk in one value (25 - s < 0). NaN past the end of
   // a truncated string ends the value and leaves i past len.
   while (i < len) {
     c = str.charCodeAt(i++) - 63;

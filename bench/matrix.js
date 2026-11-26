@@ -1,7 +1,7 @@
 // Runs the whole benchmark matrix, one runtime after another, so runs never
 // overlap:
 //
-//   node bench/matrix.js [--time 1000] [--rounds 3] [--skip node22,browser]
+//   node bench/matrix.js [--time 1000] [--rounds 5] [--skip node22,browser]
 //
 // - Bun, then Node 22, 23, 24, 25 and 26, then Deno: bench/run.js
 // - HERE Flexible Polyline (bench/run.js --format flexible) on Bun, Node 24 and Deno
@@ -23,7 +23,7 @@ const opt = (name, fallback) => {
   return i === -1 ? fallback : args[i + 1];
 };
 const time = opt('time', '1000');
-const rounds = opt('rounds', '3');
+const rounds = opt('rounds', '5');
 const skip = new Set(opt('skip', '').split(',').filter(Boolean));
 const root = fileURLToPath(new URL('..', import.meta.url));
 const common = ['--time', time, '--rounds', rounds];

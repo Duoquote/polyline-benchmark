@@ -2,7 +2,7 @@
 // browser process per round, through the same measure() loop as
 // bench/run.js, on the same fixtures.
 //
-//   node bench/browser.js [--precision 5] [--time 1000] [--rounds 3] [--only x] [--no-write]
+//   node bench/browser.js [--precision 5] [--time 1000] [--rounds 5] [--only x] [--no-write]
 //
 // Uses the locally installed Chrome through playwright-core (no browser
 // download). Bundles src/adapters.js with esbuild for the browser, so
@@ -26,7 +26,7 @@ import { createRequire } from 'node:module';
 import { realWorldLines } from '../src/fixtures.js';
 import { defs } from '../src/adapters.js';
 import { version } from '../src/implementations.js';
-import { summarize, tables } from './measure.js';
+import { summarize, tables, roundOrder } from './measure.js';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright-core');
@@ -38,7 +38,7 @@ const opt = (name, fallback) => {
 };
 const precision = Number(opt('precision', 5));
 const time = Number(opt('time', 1000));
-const rounds = Number(opt('rounds', 3));
+const rounds = Number(opt('rounds', 5));
 const only = opt('only', '');
 const write = !args.includes('--no-write');
 const KEY = process.env.GOOGLE_MAPS_API_KEY || '';
@@ -162,7 +162,7 @@ const runs = [];
 let chrome = '';
 try {
   for (let round = 1; round <= rounds; round++) {
-    for (const name of names) {
+    for (const name of roundOrder(names, round)) {
       process.stderr.write(`round ${round}/${rounds} ${name} ... `);
       const { results, version } = await runPage(name, 1);
       chrome = version;

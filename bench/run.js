@@ -1,6 +1,6 @@
 // Benchmark every implementation on every fixture, for decode and encode.
 //
-//   node --expose-gc bench/run.js [--precision 5|6] [--time 1000] [--rounds 3] [--only mapbox] [--no-write]
+//   node --expose-gc bench/run.js [--precision 5|6] [--time 1000] [--rounds 5] [--only mapbox] [--no-write]
 //
 // Each implementation runs in its own child process, so the JIT and GC state
 // one library leaves behind can't change the numbers of the next one.
@@ -15,7 +15,7 @@ import { implementations as googleImpls, flexImplementations, polytiniEntry } fr
 import { benchFixtures, flexFixtures } from '../src/fixtures.js';
 import { encodeFlexible } from '../src/adapters.js';
 import { environment, environmentMarkdown } from '../src/environment.js';
-import { measure, summarize, tables } from './measure.js';
+import { measure, summarize, tables, roundOrder } from './measure.js';
 
 const args = process.argv.slice(2);
 const opt = (name, fallback) => {
@@ -26,7 +26,7 @@ const precision = Number(opt('precision', 5));
 const time = Number(opt('time', 1000));
 const only = opt('only', '');
 const write = !args.includes('--no-write');
-const rounds = Number(opt('rounds', 3));
+const rounds = Number(opt('rounds', 5));
 const worker = opt('worker', null); // internal: benchmark one implementation and print JSON
 // google (default) or flexible: HERE's Flexible Polyline, a different format.
 const format = opt('format', 'google');
@@ -58,10 +58,11 @@ async function main() {
   const impls = implementations.filter((i) => i.precisions.includes(precision) && i.name.includes(only));
   const [cmd, baseArgs] = selfCommand();
   const runs = []; // one array of worker results per (round, implementation)
-  // Rounds are interleaved, so a slow minute on the machine hits every
-  // library a little instead of one library a lot.
+  // Rounds are interleaved, and each round runs the libraries in a
+  // different order, so a slow minute on the machine hits every library a
+  // little instead of one library a lot.
   for (let round = 1; round <= rounds; round++) {
-    for (const impl of impls) {
+    for (const impl of roundOrder(impls, round)) {
       process.stderr.write(`round ${round}/${rounds} ${impl.name} ... `);
       const child = spawnSync(cmd, [...baseArgs, '--worker', impl.name, '--format', format, '--precision', String(precision), '--time', String(time)], {
         encoding: 'utf8',
