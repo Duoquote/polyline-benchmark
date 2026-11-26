@@ -1,5 +1,9 @@
 # Correctness only. Timings from shared CI runners are too noisy to mean
 # anything, so the benchmark itself is never run here.
+#
+# Every job checks the benchmark (test/correctness.js) and the polytini
+# package in packages/polytini (its own test suite, with its own lockfile
+# and dev dependencies).
 name: correctness
 
 on:
@@ -23,8 +27,16 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            packages/polytini/package-lock.json
       - run: npm ci --ignore-scripts
+      - run: npm ci --ignore-scripts
+        working-directory: packages/polytini
       - run: npm test
+      - name: polytini tests
+        run: node test/run.js
+        working-directory: packages/polytini
 
   bun:
     runs-on: ubuntu-latest
@@ -37,6 +49,9 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: npm ci --ignore-scripts
       - run: bun test/correctness.js
+      - name: polytini tests
+        run: bun test/run.js
+        working-directory: packages/polytini
 
   deno:
     runs-on: ubuntu-latest
@@ -51,3 +66,49 @@ jobs:
           deno-version: v2.x
       - run: npm ci --ignore-scripts
       - run: deno run --allow-read test/correctness.js
+      - name: polytini tests
+        run: deno run -A test/run.js
+        working-directory: packages/polytini
+      - name: JSR dry run
+        run: deno publish --dry-run --allow-dirty
+        working-directory: packages/polytini
+
+  polytini-size:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            packages/polytini/package-lock.json
+      - run: npm ci --ignore-scripts
+      - run: npm ci --ignore-scripts
+        working-directory: packages/polytini
+      - name: Size budgets
+        run: node scripts/size.js
+        working-directory: packages/polytini
+
+  # Packs polytini and installs the tarball with npm, pnpm, Yarn 4 (PnP),
+  # Yarn 1, Bun and Deno, then runs ESM, CJS, the CLI, TypeScript and a
+  # browser bundle against each install.
+  polytini-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: oven-sh/setup-bun@v2
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - run: npm ci --ignore-scripts
+      - run: node test/smoke.js
+        working-directory: packages/polytini
