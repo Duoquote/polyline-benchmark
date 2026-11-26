@@ -1,0 +1,234 @@
+{
+  "name": "@duoquote/polytini",
+  "version": "0.1.0",
+  "description": "Encode and decode Google encoded polylines. Small, strict by default, with fast paths for Node, Bun and Deno.",
+  "keywords": [
+    "polyline",
+    "encoded polyline",
+    "google maps",
+    "geojson",
+    "osrm",
+    "valhalla",
+    "leaflet",
+    "turf"
+  ],
+  "license": "MIT",
+  "author": "Güven Değirmenci",
+  "homepage": "https://github.com/Duoquote/polytini#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Duoquote/polytini.git"
+  },
+  "bugs": "https://github.com/Duoquote/polytini/issues",
+  "type": "module",
+  "sideEffects": [
+    "./src/leaflet-auto.js",
+    "./dist/leaflet-auto.cjs"
+  ],
+  "exports": {
+    ".": {
+      "browser": {
+        "types": "./types/index.d.ts",
+        "default": "./src/browser.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.cts",
+        "default": "./dist/node.cjs"
+      },
+      "types": "./types/index.d.ts",
+      "bun": "./src/bun.js",
+      "deno": "./src/deno.js",
+      "node": "./src/node.js",
+      "default": "./src/web.js"
+    },
+    "./web": {
+      "require": {
+        "types": "./dist/types/index.d.cts",
+        "default": "./dist/web.cjs"
+      },
+      "types": "./types/index.d.ts",
+      "default": "./src/web.js"
+    },
+    "./node": {
+      "require": {
+        "types": "./dist/types/index.d.cts",
+        "default": "./dist/node.cjs"
+      },
+      "types": "./types/index.d.ts",
+      "default": "./src/node.js"
+    },
+    "./browser": {
+      "types": "./types/index.d.ts",
+      "default": "./src/browser.js"
+    },
+    "./wasm": {
+      "types": "./types/wasm.d.ts",
+      "default": "./src/wasm.js"
+    },
+    "./turf": {
+      "require": {
+        "types": "./dist/types/turf.d.cts",
+        "default": "./dist/turf.cjs"
+      },
+      "types": "./types/turf.d.ts",
+      "default": "./src/turf.js"
+    },
+    "./leaflet": {
+      "require": {
+        "types": "./dist/types/leaflet.d.cts",
+        "default": "./dist/leaflet.cjs"
+      },
+      "types": "./types/leaflet.d.ts",
+      "default": "./src/leaflet.js"
+    },
+    "./presets": {
+      "require": {
+        "types": "./dist/types/presets.d.cts",
+        "default": "./dist/presets.cjs"
+      },
+      "types": "./types/presets.d.ts",
+      "default": "./src/presets.js"
+    },
+    "./flexible": {
+      "require": {
+        "types": "./dist/types/flexible.d.cts",
+        "default": "./dist/flexible.cjs"
+      },
+      "types": "./types/flexible.d.ts",
+      "default": "./src/flexible.js"
+    },
+    "./google": {
+      "require": {
+        "types": "./dist/types/google.d.cts",
+        "default": "./dist/google.cjs"
+      },
+      "types": "./types/google.d.ts",
+      "default": "./src/google.js"
+    },
+    "./maplibre": {
+      "require": {
+        "types": "./dist/types/maplibre.d.cts",
+        "default": "./dist/maplibre.cjs"
+      },
+      "types": "./types/maplibre.d.ts",
+      "default": "./src/maplibre.js"
+    },
+    "./mapbox": {
+      "require": {
+        "types": "./dist/types/mapbox.d.cts",
+        "default": "./dist/mapbox.cjs"
+      },
+      "types": "./types/mapbox.d.ts",
+      "default": "./src/mapbox.js"
+    },
+    "./deckgl": {
+      "require": {
+        "types": "./dist/types/deckgl.d.cts",
+        "default": "./dist/deckgl.cjs"
+      },
+      "types": "./types/deckgl.d.ts",
+      "default": "./src/deckgl.js"
+    },
+    "./leaflet/auto": {
+      "require": {
+        "types": "./dist/types/leaflet-auto.d.cts",
+        "default": "./dist/leaflet-auto.cjs"
+      },
+      "types": "./types/leaflet-auto.d.ts",
+      "default": "./src/leaflet-auto.js"
+    },
+    "./openlayers": {
+      "types": "./types/openlayers.d.ts",
+      "default": "./src/openlayers.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "./types/index.d.ts",
+  "main": "./dist/node.cjs",
+  "bin": {
+    "polytini": "src/cli.js"
+  },
+  "files": [
+    "src",
+    "types",
+    "dist",
+    "wasm/polytini.wasm"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "build:wasm": "node scripts/build-wasm.js",
+    "prepack": "node scripts/build.js",
+    "test": "node test/run.js",
+    "test:bun": "bun test/run.js",
+    "test:deno": "deno run --allow-read --allow-env --allow-run --allow-write test/run.js",
+    "test:browser": "node test/browser.js",
+    "size": "node scripts/size.js",
+    "smoke": "node test/smoke.js"
+  },
+  "peerDependencies": {
+    "@turf/helpers": ">=7",
+    "leaflet": ">=1.9",
+    "ol": ">=9",
+    "maplibre-gl": ">=4",
+    "mapbox-gl": ">=3.5",
+    "@deck.gl/layers": ">=9",
+    "@types/google.maps": ">=3",
+    "@types/geojson": ">=7946"
+  },
+  "peerDependenciesMeta": {
+    "@turf/helpers": {
+      "optional": true
+    },
+    "leaflet": {
+      "optional": true
+    },
+    "ol": {
+      "optional": true
+    },
+    "maplibre-gl": {
+      "optional": true
+    },
+    "mapbox-gl": {
+      "optional": true
+    },
+    "@deck.gl/layers": {
+      "optional": true
+    },
+    "@types/google.maps": {
+      "optional": true
+    },
+    "@types/geojson": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@deck.gl/core": "^9.4.2",
+    "@deck.gl/geo-layers": "^9.4.2",
+    "@deck.gl/layers": "^9.4.2",
+    "@here/flexpolyline": "^0.1.0",
+    "@maplibre/maplibre-gl-style-spec": "^26.11.0",
+    "@turf/helpers": "^7.4.0",
+    "@turf/turf": "^7.4.0",
+    "@types/geojson": "^7946.0.16",
+    "@types/google.maps": "^3.67.0",
+    "@types/leaflet": "^1.9.23",
+    "c8": "^12.0.0",
+    "esbuild": "^0.28.2",
+    "fast-check": "^4.11.0",
+    "jsdom": "^29.1.1",
+    "leaflet": "^1.9.4",
+    "leaflet-2": "npm:leaflet@^2.0.0-beta.5",
+    "mapbox-gl": "^3.36.0",
+    "maplibre-gl": "^6.19.0",
+    "ol": "^10.11.0",
+    "playwright-core": "^1.65.1",
+    "typescript": "^7.0.2",
+    "wabt": "^1.0.39"
+  }
+}

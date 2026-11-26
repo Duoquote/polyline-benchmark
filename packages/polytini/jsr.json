@@ -1,0 +1,32 @@
+{
+  "name": "@duoquote/polytini",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/deno.js",
+    "./web": "./src/web.js",
+    "./browser": "./src/browser.js",
+    "./node": "./src/node.js",
+    "./wasm": "./src/wasm.js",
+    "./presets": "./src/presets.js",
+    "./turf": "./src/turf.js",
+    "./leaflet": "./src/leaflet.js",
+    "./leaflet/auto": "./src/leaflet-auto.js",
+    "./google": "./src/google.js",
+    "./openlayers": "./src/openlayers.js",
+    "./maplibre": "./src/maplibre.js",
+    "./mapbox": "./src/mapbox.js",
+    "./deckgl": "./src/deckgl.js",
+    "./flexible": "./src/flexible.js",
+    "./cli": "./src/cli.js"
+  },
+  "publish": {
+    "include": [
+      "src/**/*.js",
+      "types/**/*.d.ts",
+      "README.md",
+      "LICENSE",
+      "jsr.json"
+    ]
+  }
+}
