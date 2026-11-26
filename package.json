@@ -11,6 +11,7 @@
     "test": "node test/correctness.js",
     "test:bun": "bun test/correctness.js",
     "test:deno": "deno run --allow-read test/correctness.js",
+    "behavior": "node test/behavior.js",
     "bench": "node --expose-gc bench/run.js",
     "bench:bun": "bun bench/run.js",
     "bench:deno": "deno run --allow-read --allow-write --allow-sys --allow-env --allow-run --v8-flags=--expose-gc bench/run.js",
