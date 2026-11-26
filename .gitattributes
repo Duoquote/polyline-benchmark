@@ -1,0 +1,2 @@
+* text=auto eol=lf
+fixtures/example.csv -text
