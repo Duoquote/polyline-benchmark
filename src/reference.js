@@ -6,9 +6,12 @@
 // the benchmark. Plain Number arithmetic stays exact up to 2^53, so it does
 // not overflow the way 32-bit bitwise code can at high precisions.
 
-// Round half away from zero, the way the original Google implementation does.
+// Round half away from zero, the way Google's algorithm description and
+// C's round() do. Math.round on the magnitude is exact; the common
+// Math.floor(Math.abs(value) + 0.5) is not, because the addition itself
+// rounds 0.49999999999999994 + 0.5 up to 1.
 function round(value) {
-  return Math.sign(value) * Math.floor(Math.abs(value) + 0.5);
+  return Math.sign(value) * Math.round(Math.abs(value));
 }
 
 function encodeValue(delta) {
