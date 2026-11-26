@@ -20,7 +20,8 @@ export function environment() {
     runtimeVersion,
     runtimeLabel: `${runtime[0].toUpperCase()}${runtime.slice(1)} ${runtimeVersion}`,
     engine,
-    cpu: cpus[0]?.model?.trim() ?? 'unknown',
+    // Deno pads the model name with NUL characters.
+    cpu: cpus[0]?.model?.replace(/[\s\u0000]+/g, ' ').trim() || 'unknown',
     threads: cpus.length,
     memoryGiB: Math.round(os.totalmem() / 2 ** 30),
     os: `${os.type()} ${os.release()} ${os.arch()}`,

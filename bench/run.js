@@ -1,6 +1,6 @@
 // Benchmark every implementation on every fixture, for decode and encode.
 //
-//   node --expose-gc bench/run.js [--precision 5|6] [--time 1000] [--only mapbox] [--no-write]
+//   node --expose-gc bench/run.js [--precision 5|6] [--time 1000] [--rounds 3] [--only mapbox] [--no-write]
 //
 // Each implementation runs in its own child process, so the JIT and GC state
 // one library leaves behind can't change the numbers of the next one.
@@ -23,6 +23,7 @@ const precision = Number(opt('precision', 5));
 const time = Number(opt('time', 1000));
 const only = opt('only', '');
 const write = !args.includes('--no-write');
+const rounds = Number(opt('rounds', 3));
 const worker = opt('worker', null); // internal: benchmark one implementation and print JSON
 
 // Each timed call processes at least this many points, so short lines are not
@@ -100,20 +101,37 @@ function selfCommand() {
 async function main() {
   const impls = implementations.filter((i) => i.precisions.includes(precision) && i.name.includes(only));
   const [cmd, baseArgs] = selfCommand();
-  const results = [];
-  for (const impl of impls) {
-    process.stderr.write(`${impl.name} ... `);
-    const child = spawnSync(cmd, [...baseArgs, '--worker', impl.name, '--precision', String(precision), '--time', String(time)], {
-      encoding: 'utf8',
-      maxBuffer: 64 * 1024 * 1024,
-    });
-    const line = child.stdout?.split('\n').find((l) => l.startsWith('RESULTS '));
-    if (child.status !== 0 || !line) {
-      throw new Error(`worker for ${impl.name} failed (status ${child.status}):\n${child.stderr}`);
+  const runs = []; // one array of worker results per (round, implementation)
+  // Rounds are interleaved, so a slow minute on the machine hits every
+  // library a little instead of one library a lot.
+  for (let round = 1; round <= rounds; round++) {
+    for (const impl of impls) {
+      process.stderr.write(`round ${round}/${rounds} ${impl.name} ... `);
+      const child = spawnSync(cmd, [...baseArgs, '--worker', impl.name, '--precision', String(precision), '--time', String(time)], {
+        encoding: 'utf8',
+        maxBuffer: 64 * 1024 * 1024,
+      });
+      const line = child.stdout?.split('\n').find((l) => l.startsWith('RESULTS '));
+      if (child.status !== 0 || !line) {
+        throw new Error(`worker for ${impl.name} failed (status ${child.status}):\n${child.stderr}`);
+      }
+      runs.push(...JSON.parse(line.slice('RESULTS '.length)).map((r) => ({ ...r, round })));
+      process.stderr.write('done\n');
     }
-    results.push(...JSON.parse(line.slice('RESULTS '.length)));
-    process.stderr.write('done\n');
   }
+
+  // Median across rounds per cell, plus how far apart the rounds were.
+  const median = (xs) => {
+    const s = [...xs].sort((a, b) => a - b);
+    return s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2;
+  };
+  const results = [];
+  for (const r of runs.filter((x) => x.round === 1)) {
+    const all = runs.filter((x) => x.op === r.op && x.fixture === r.fixture && x.impl === r.impl).map((x) => x.mptsPerSec);
+    const m = median(all);
+    results.push({ op: r.op, fixture: r.fixture, impl: r.impl, mptsPerSec: m, rounds: all, spread: (Math.max(...all) - Math.min(...all)) / m });
+  }
+  const spreads = results.map((r) => r.spread);
 
   const fixtures = benchFixtures(precision).map((f) => f.name);
   const md = [
@@ -121,7 +139,9 @@ async function main() {
     '',
     environmentMarkdown(env),
     '',
-    'Million points per second, from the median sample. Higher is better. Rows are sorted by the 10,000 point column.',
+    `Million points per second. Each cell is the median of ${rounds} rounds, and each round is the median sample of a ${time} ms tinybench run in a fresh process. Higher is better. Rows are sorted by the 10,000 point column.`,
+    '',
+    `Spread between the fastest and slowest round of a cell: median ${(median(spreads) * 100).toFixed(0)}%, worst ${(Math.max(...spreads) * 100).toFixed(0)}%.`,
     '',
     table(results, fixtures, 'decode'),
     '',
@@ -136,7 +156,7 @@ async function main() {
     mkdirSync(dir, { recursive: true });
     const base = `${dir}${env.runtime}${precision === 5 ? '' : `-p${precision}`}`;
     writeFileSync(`${base}.md`, md);
-    writeFileSync(`${base}.json`, JSON.stringify({ env, precision, time, results }, null, 2) + '\n');
+    writeFileSync(`${base}.json`, JSON.stringify({ env, precision, time, rounds, results, runs }, null, 2) + '\n');
     console.error(`wrote ${base}.md and .json`);
   }
 }
