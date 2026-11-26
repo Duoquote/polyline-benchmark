@@ -121,7 +121,7 @@ async function main() {
     '',
     environmentMarkdown(env),
     '',
-    'Million points per second (median sample). Higher is better, and the fastest in each column is in bold.',
+    'Million points per second, from the median sample. Higher is better. Rows are sorted by the 10,000 point column.',
     '',
     table(results, fixtures, 'decode'),
     '',
@@ -149,14 +149,10 @@ function table(results, cols, op) {
   // Sort by the 10,000 point column.
   const key = cols.find((c) => c.startsWith('10,000')) ?? cols[0];
   names.sort((a, b) => get(b, key).mptsPerSec - get(a, key).mptsPerSec);
-  const best = Object.fromEntries(cols.map((c) => [c, Math.max(...names.map((n) => get(n, c).mptsPerSec))]));
 
   const lines = [`| ${op} | ${cols.join(' | ')} |`, `|---|${cols.map(() => '--:').join('|')}|`];
   for (const name of names) {
-    const cells = cols.map((c) => {
-      const v = get(name, c).mptsPerSec;
-      return v === best[c] ? `**${fmt(v)}**` : fmt(v);
-    });
+    const cells = cols.map((c) => fmt(get(name, c).mptsPerSec));
     lines.push(`| ${name} | ${cells.join(' | ')} |`);
   }
   return lines.join('\n');
