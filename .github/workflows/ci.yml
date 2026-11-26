@@ -114,5 +114,6 @@ jobs:
         with:
           deno-version: v2.x
       - run: npm ci --ignore-scripts
+        working-directory: packages/polytini
       - run: node test/smoke.js
         working-directory: packages/polytini
