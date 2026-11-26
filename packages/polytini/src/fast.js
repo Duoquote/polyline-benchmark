@@ -24,7 +24,9 @@ import { opts, st, LIMIT, slowDecode, slowEncode, decodeLoop, flip } from './cor
 // a temporary buffer, so one huge line doesn't pin megabytes for good.
 const KEEP = 1 << 20;
 
-export function fast(Buffer) {
+// `grow`: above this many points, build the result by appending instead of
+// allocating it at its final size. See node.js for why.
+export function fast(Buffer, grow = Infinity) {
   const ucs2Write = Buffer.prototype.ucs2Write, latin1Slice = Buffer.prototype.latin1Slice;
   // The kept scratch buffer and its views. allocUnsafeSlow gives each buffer
   // its own ArrayBuffer at offset 0, so the wider views are aligned.
@@ -59,7 +61,7 @@ export function fast(Buffer) {
   // shared loop with a per-point branch measured about 20% slower on
   // JavaScriptCore at 10,000 points.
   function big(str, f) {
-    const len = str.length, want = load(str, len) >> 1, b = u16, out = Array(want);
+    const len = str.length, want = load(str, len) >> 1, b = u16, out = want > grow ? [] : Array(want);
     let i = 0, n = 0, lat = 0, lng = 0, bad = 0, c, v, s;
     while (i < len) {
       c = b[i++] - 63;

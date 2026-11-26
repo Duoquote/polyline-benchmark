@@ -159,6 +159,14 @@ for (const { name, api } of all) {
     throws(() => api.encodeFlat([1, 2, 3]), 'input');
     throws(() => api.encodeFlat([1, NaN]), 'coordinate');
     throws(() => api.encode([[1e300, 0]]), 'overflow');
+    // Long lines take the byte-buffer paths, which have their own bailouts.
+    const long = Array.from({ length: 1000 }, (_, i) => [i / 1e3, -i / 1e3]);
+    for (const bad of [null, [NaN, 1], ['1', 2]]) {
+      const pts = long.slice();
+      pts[700] = bad;
+      if (typeof bad?.[0] == 'string') eq(api.encode(pts), ref.encode(pts.map((p) => p.map(Number)), 5));
+      else eq(throws(() => api.encode(pts), 'coordinate').index, 700);
+    }
     // Numeric strings are numbers, like in every other library.
     eq(api.encode([['38.5', '-120.2']]), ref.encode([[38.5, -120.2]], 5));
   });

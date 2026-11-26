@@ -67,6 +67,10 @@ export async function entries() {
   if (cached) return cached;
   const list = [];
   for (const name of ['web', 'browser', 'node', 'bun', 'deno']) list.push({ name, api: await import(here(`../src/${name}.js`)) });
+  // The node entry's appending decode, which only V8 12 uses on its own.
+  const { Buffer } = await import('node:buffer');
+  const { fast } = await import(here('../src/fast.js'));
+  list.push({ name: 'node (appending)', api: { ...list.find((e) => e.name == 'node').api, ...fast(Buffer, 0) } });
   const wasm = await import(here('../src/wasm.js'));
   await wasm.init();
   list.push({ name: 'wasm', api: wasm });
