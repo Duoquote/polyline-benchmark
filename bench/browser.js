@@ -105,7 +105,8 @@ const bundle = await build({
 const js = bundle.outputFiles[0].contents;
 // Which polytini file the browser build picked.
 const polytiniFiles = Object.keys(bundle.metafile.inputs).filter((f) => f.includes('polytini/src/')).map((f) => f.slice(f.indexOf('src/')));
-const polytiniEntry = ['src/web.js', 'src/node.js', 'src/bun.js', 'src/deno.js'].find((f) => polytiniFiles.includes(f));
+// The web entry row pulls in src/web.js too, so the runtime entries go first.
+const polytiniEntry = ['src/browser.js', 'src/node.js', 'src/bun.js', 'src/deno.js', 'src/web.js'].find((f) => polytiniFiles.includes(f));
 
 const html = (impl) =>
   `<!doctype html><meta charset="utf-8"><title>bench</title>` +
