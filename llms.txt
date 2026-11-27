@@ -1,0 +1,28 @@
+# polyline-benchmark
+
+> Correctness checks and benchmarks for every JavaScript library that encodes and decodes Google encoded polylines, on Bun, Node 22 to 26, Deno and Chrome. It's a repository to run, not a package to install. It includes polytini (`@duoquote/polytini`), which the same author wrote, so read its rows knowing that.
+
+What it measures: calls per second for `encode()` and `decode()` on lines of 10 to 100,000 points and on 1000 real-world lines (median 82 points), plus typed arrays, batch calls, memory per call and gzipped bundle size. Every library has to pass the same correctness test before it's timed.
+
+How to read the numbers: a cell moves about 30% between rounds, so a gap under about 30% between the top libraries isn't a reliable ranking. The "best at what" table marks those. Libraries are only compared within one runtime. CI runs the correctness tests only, never the benchmark.
+
+Run it:
+
+```sh
+npm ci
+npm test              # correctness, every library
+npm run bench:quick   # about a minute, writes nothing
+npm run bench:all     # everything, about 10 minutes, writes results/
+```
+
+## Docs
+
+- [README](https://raw.githubusercontent.com/Duoquote/polyline-benchmark/main/README.md): the best-at-what table and the Bun and Node 24 results
+- [Results](https://raw.githubusercontent.com/Duoquote/polyline-benchmark/main/docs/results.md): every runtime, relative speed, typed arrays, batch calls, memory and sizes
+- [Methodology](https://raw.githubusercontent.com/Duoquote/polyline-benchmark/main/docs/methodology.md): the library list, the correctness cases, how timing and memory are measured, and the run options
+- [AGENTS.md](https://raw.githubusercontent.com/Duoquote/polyline-benchmark/main/AGENTS.md): how to work in the repo and add a library
+
+## Optional
+
+- [Charts](https://raw.githubusercontent.com/Duoquote/polyline-benchmark/main/docs/charts.md): every chart, generated from results/
+- [polytini](https://github.com/Duoquote/polytini): the codec this benchmark led to, with its own llms.txt
