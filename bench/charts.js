@@ -17,7 +17,8 @@
 //   Bars start at the 1.0x line, because a bar from the bottom of a log
 //   axis has a length that depends on where the axis happens to start.
 // - memory-decode, memory-encode: the same shape for memory per call.
-// - size: gzipped bundle size.
+// - size: gzipped bundle size, a panel per import (decode only, encode
+//   only, both, the whole entry), every library smallest first.
 // - ops-<runtime>-<op>: absolute calls per second by line length.
 // - speed-<runtime>-<op>: the real-world column only. Nothing here links it
 //   any more, but polytini 0.1.4's README on npm and JSR does, so it stays.
@@ -551,14 +552,57 @@ for (const op of ['decode', 'encode']) {
   }));
 }
 
-// Bundle size, gzipped, smallest first.
+// Bundle size per import: a panel per import (decode only, encode only,
+// both, the whole entry), each with every library smallest first, polytini
+// in its color and the rest gray. One shared axis, so panels compare.
+const IMPORT_TITLES = { decode: 'import { decode }', encode: 'import { encode }', both: 'import { decode, encode }', whole: 'import * as m (the whole entry)' };
+const sizeFmt = (v) => `${v.toLocaleString('en-US')} B`;
+function sizePanels(t, { title, subtitle, panels, notes: footer }) {
+  const sub = Array.isArray(subtitle) ? subtitle : [subtitle];
+  const cols = 2, gx = 24, rowH = 21, padT = 24, valueW = 52;
+  const labelW = Math.max(...panels.flatMap((p) => p.rows.map((r) => textW(r.label, 11.5)))) + 14;
+  const pw = Math.round(labelW + 200 + valueW), W = 16 + cols * pw + (cols - 1) * gx + 16;
+  const maxRows = Math.max(...panels.map((p) => p.rows.length)), ph = padT + maxRows * rowH + 10;
+  const top = 43 + sub.length * 16 + 12;
+  footer = footer.flatMap((s) => wrap(s, W - 32));
+  const rowsN = Math.ceil(panels.length / cols), H = top + rowsN * (ph + 12) + footer.length * 15 + 12;
+  const max = Math.max(...panels.flatMap((p) => p.rows.map((r) => r.value))) * 1.02;
+  let body = header(t, title, sub);
+  panels.forEach((p, i) => {
+    const ox = 16 + (i % cols) * (pw + gx), oy = top + Math.floor(i / cols) * (ph + 12);
+    const x0 = ox + labelW, plotW = pw - labelW - valueW, x = (v) => x0 + (v / max) * plotW;
+    body += `<text x="${ox}" y="${oy + 13}" font-size="12.5" font-weight="600" fill="${t.text}">${esc(p.label)}</text>\n`;
+    p.rows.forEach((r, k) => {
+      const y = oy + padT + k * rowH, ours = isOurs(r.name);
+      body += `<text x="${x0 - 8}" y="${y + 13}" font-size="11.5" text-anchor="end" fill="${t.text}"${ours ? ' font-weight="600"' : ''}>${esc(r.label)}</text>`;
+      body += bar(x0, y + 3, Math.max(1, x(r.value) - x0), 13, ours ? t.ours : t.bar, `${p.label}, ${r.label}: ${sizeFmt(r.value)} gzipped`);
+      body += `<text x="${(x(r.value) + 5).toFixed(1)}" y="${y + 13}" font-size="11.5" fill="${t.text}"${ours ? ' font-weight="600"' : ''}>${esc(sizeFmt(r.value))}</text>\n`;
+    });
+  });
+  body += notes(t, footer, top + rowsN * (ph + 12) + 4);
+  const desc = `${sub.join(' ')} ${panels.map((p) => `${p.label}: ${p.rows.map((r) => `${r.label} ${sizeFmt(r.value)}`).join(', ')}`).join('. ')}.`;
+  return svg(t, W, H, title, desc, body);
+}
+
+// Bundle size, gzipped, per import, smallest first in each panel. The
+// first row per package in results/size.json is its default import; the
+// other rows (polytini's other entries, ol's whole format class, HERE's
+// format) are in the tables only.
 if (existsSync(results + 'size.json')) {
   const size = JSON.parse(readFileSync(results + 'size.json', 'utf8'));
-  const rows = size.map((r) => ({ name: r.name, label: short(r.name), value: r.gzip })).sort((a, b) => a.value - b.value);
-  write('size', (t) => barChart(t, {
-    title: 'Bundle size, gzipped',
-    subtitle: 'What the import pulls into a browser bundle: esbuild, minified, gzip level 9. Smaller is better.',
-    rows, fmt: bytes,
+  const seen = new Set(), main = size.rows.filter((r) => !/flexpolyline/.test(r.pkg) && !seen.has(r.pkg) && seen.add(r.pkg));
+  const label = (r) => (r.pkg === '@duoquote/polytini' ? `polytini ${r.version}` : r.note ? `${r.pkg} (${r.note.split(' ')[0]})` : r.pkg);
+  const panels = Object.keys(IMPORT_TITLES).map((k) => ({
+    label: IMPORT_TITLES[k],
+    rows: main.filter((r) => r.imports[k]).map((r) => ({ name: `${r.pkg}@${r.version}`, label: label(r), value: r.imports[k].esbuild.gzip })).sort((a, b) => a.value - b.value),
+  }));
+  write('size', (t) => sizePanels(t, {
+    title: 'Bundle size per import, gzipped',
+    subtitle: `What a browser bundle gets for each import: esbuild ${size.bundlers.esbuild}, minified, gzip level 9, ${size.date}. Smaller is better.`,
+    panels,
+    notes: [
+      "@mapbox/polyline, polyline-encoded and decode-google-map-polyline are CommonJS and google-polyline exports one object, so esbuild keeps the whole library for any import of them. decode-google-map-polyline only decodes. ol is ol/format/Polyline's decodeDeltas and encodeDeltas. The whole entry also keeps the namespace object, so it's a bit more than both functions. Rollup and webpack numbers are in docs/results.md.",
+    ],
   }));
 }
 

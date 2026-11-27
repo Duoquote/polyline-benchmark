@@ -62,14 +62,13 @@ export function bestAt() {
   }
   const size = read('size');
   if (size) {
-    const best = {};
-    for (const r of size) {
-      const name = r.name.replace(/@\d[^ ]*/, '').replace(/ \(.*\)$/, '');
-      if (/flexpolyline|flexible|ol\/format|deltas/i.test(r.name)) continue;
-      if (!(best[name] <= r.gzip)) best[name] = r.gzip;
+    // Each package's default import (its first row), esbuild, gzipped. ol is
+    // left out: decodeDeltas isn't a polyline API with options.
+    const seen = new Set(), main = size.rows.filter((r) => !/flexpolyline|^ol$/.test(r.pkg) && !seen.has(r.pkg) && seen.add(r.pkg));
+    for (const [k, what] of [['decode', 'decode only'], ['both', 'decode and encode']]) {
+      const [a, b] = main.filter((r) => r.imports[k]).map((r) => [r.pkg, r.imports[k].esbuild.gzip]).sort((x, y) => x[1] - y[1]);
+      rows.push({ situation: `Smallest bundle, ${what} (gzipped)`, winner: `${a[0]} (${bytes(a[1])})`, runnerUp: `${b[0]} (${bytes(b[1])})`, margin: `${b[1] - a[1]} B smaller` });
     }
-    const [a, b] = Object.entries(best).sort((x, y) => x[1] - y[1]);
-    rows.push({ situation: 'Smallest bundle (gzipped)', winner: `${a[0]} (${bytes(a[1])})`, runnerUp: `${b[0]} (${bytes(b[1])})`, margin: `${b[1] - a[1]} B smaller` });
   }
   // Strict validation: the libraries that throw on a truncated string (see
   // npm run behavior), ranked by decode speed.

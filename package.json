@@ -25,7 +25,7 @@
     "memory": "node --expose-gc --max-semi-space-size=128 bench/memory.js"
   },
   "dependencies": {
-    "@duoquote/polytini": "0.1.4",
+    "@duoquote/polytini": "0.1.6",
     "@googlemaps/polyline-codec": "1.0.28",
     "@here/flexpolyline": "0.1.0",
     "@lp-labs/polyline-codec": "0.1.0",
@@ -38,8 +38,13 @@
     "polyline-encoded": "0.0.9"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "29.0.3",
+    "@rollup/plugin-node-resolve": "16.0.3",
+    "@rollup/plugin-terser": "1.0.2",
     "esbuild": "0.28.2",
     "playwright-core": "1.65.1",
-    "tinybench": "6.2.5"
+    "rollup": "4.68.8",
+    "tinybench": "6.2.5",
+    "webpack": "5.113.0"
   }
 }

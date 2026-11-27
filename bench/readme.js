@@ -54,7 +54,7 @@ blocks['charts:top'] = '\n' + TOP.filter(([n]) => chartExists(n)).map(([n, alt])
 const MORE = [
   ['memory-decode', 'Memory allocated per decode call relative to @mapbox/polyline at 100, 10,000 and 100,000 points, on Node 24 and Deno'],
   ['memory-encode', 'Memory allocated per encode call relative to @mapbox/polyline at 100, 10,000 and 100,000 points, on Node 24 and Deno'],
-  ['size', 'Gzipped bundle size of every library, smallest first'],
+  ['size', 'Gzipped bundle size of every library for decode only, encode only, both and the whole entry, smallest first'],
 ];
 blocks['charts:more'] = '\n' + MORE.filter(([n]) => chartExists(n)).map(([n, alt]) => picture(n, alt, 'docs/charts/')).join('\n') + '\n';
 fill(`${root}README.md`, blocks);
@@ -100,7 +100,7 @@ if (chartExists('memory-decode')) {
   charts.push('## Memory', '', "Allocated per call on Node 24 and Deno, relative to `@mapbox/polyline`. How it's measured: [methodology](methodology.md#memory).", '');
   for (const op of ['decode', 'encode']) if (chartExists(`memory-${op}`)) charts.push(picture(`memory-${op}`, `Memory allocated per ${op} call relative to @mapbox/polyline at 100, 10,000 and 100,000 points, a panel per runtime`, 'charts/'), '');
 }
-if (chartExists('size')) charts.push('## Bundle size', '', picture('size', 'Gzipped bundle size of every library', 'charts/'), '');
+if (chartExists('size')) charts.push('## Bundle size', '', picture('size', 'Gzipped bundle size of every library for decode only, encode only, both and the whole entry', 'charts/'), '');
 charts.push('## Calls per second, per runtime', '', 'Absolute speed by line length for polytini and the two fastest other libraries on that runtime, then every library on the real-world lines.', '');
 for (const [f, name] of RUNTIMES) {
   charts.push(`### ${name}`, '');
