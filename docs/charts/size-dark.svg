@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="834" height="490" viewBox="0 0 834 490" role="img" aria-labelledby="t d" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
 <title id="t">Bundle size, gzipped</title>
-<desc id="d">What the import pulls into a browser bundle: esbuild, minified, gzip level 9. Smaller is better.. google-polyline 551 B, @googlemaps/polyline-codec 568 B, @placemarkio/polyline 580 B, @pirxpilot/google-polyline 595 B, decode-google-map-polyline 738 B, @mapbox/polyline 948 B, polyline-encoded 1.2 KB, @lp-labs/polyline-codec 1.2 KB, @here/flexpolyline (HERE Flexible Polyline) 1.4 KB, ol (encodeDeltas/decodeDeltas) 1.5 KB, @duoquote/polytini (encode and decode only) 2.0 KB, @duoquote/polytini (web entry, every export) 2.0 KB, @duoquote/polytini (flexible) 2.1 KB, @duoquote/polytini (browser entry, every export) 2.3 KB, @duoquote/polytini (node entry) 2.6 KB, @duoquote/polytini (wasm, JS glue plus inlined .wasm) 4.3 KB, ol (ol/format/Polyline) 9.5 KB.</desc>
+<desc id="d">What the import pulls into a browser bundle: esbuild, minified, gzip level 9. Smaller is better.. google-polyline 551 B, @googlemaps/polyline-codec 568 B, @placemarkio/polyline 580 B, @pirxpilot/google-polyline 595 B, decode-google-map-polyline 738 B, @mapbox/polyline 948 B, polyline-encoded 1.2 KB, @lp-labs/polyline-codec 1.2 KB, @here/flexpolyline (HERE Flexible Polyline) 1.4 KB, ol (encodeDeltas/decodeDeltas) 1.5 KB, @duoquote/polytini (encode and decode only) 2.0 KB, @duoquote/polytini (web entry, every export) 2.0 KB, @duoquote/polytini (flexible) 2.1 KB, @duoquote/polytini (browser entry, every export) 2.3 KB, @duoquote/polytini (node entry) 2.6 KB, @duoquote/polytini (wasm, JS glue plus inlined .wasm) 4.5 KB, ol (ol/format/Polyline) 9.5 KB.</desc>
 <rect width="834" height="490" rx="6" fill="#191919"/>
 <text x="16" y="24" font-size="15" font-weight="600" fill="#efefef">Bundle size, gzipped</text>
 <text x="16" y="43" font-size="12" fill="#9c9c9c">What the import pulls into a browser bundle: esbuild, minified, gzip level 9. Smaller is better.</text>
@@ -35,23 +35,23 @@
 <path d="M380.16,278h50.44074850167783a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-50.44074850167783z" fill="#5c5c5c"><title>ol (encodeDeltas/decodeDeltas): 1.5 KB</title></path>
 <text x="440.60074850167786" y="289" font-size="12" fill="#efefef">1.5 KB</text>
 <text x="370.16" y="313" font-size="12" text-anchor="end" fill="#efefef" font-weight="600">@duoquote/polytini (encode and decode only)</text>
-<path d="M380.16,302h67.14575853933735a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-67.14575853933735z" fill="#338ced"><title>@duoquote/polytini (encode and decode only): 2.0 KB</title></path>
-<text x="457.3057585393374" y="313" font-size="12" fill="#efefef">2.0 KB</text>
+<path d="M380.16,302h67.77879049865919a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-67.77879049865919z" fill="#338ced"><title>@duoquote/polytini (encode and decode only): 2.0 KB</title></path>
+<text x="457.9387904986592" y="313" font-size="12" fill="#efefef">2.0 KB</text>
 <text x="370.16" y="337" font-size="12" text-anchor="end" fill="#efefef" font-weight="600">@duoquote/polytini (web entry, every export)</text>
-<path d="M380.16,326h67.63811672992102a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-67.63811672992102z" fill="#338ced"><title>@duoquote/polytini (web entry, every export): 2.0 KB</title></path>
-<text x="457.79811672992105" y="337" font-size="12" fill="#efefef">2.0 KB</text>
+<path d="M380.16,326h68.1656433626892a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-68.1656433626892z" fill="#338ced"><title>@duoquote/polytini (web entry, every export): 2.0 KB</title></path>
+<text x="458.3256433626892" y="337" font-size="12" fill="#efefef">2.0 KB</text>
 <text x="370.16" y="361" font-size="12" text-anchor="end" fill="#efefef" font-weight="600">@duoquote/polytini (flexible)</text>
 <path d="M380.16,350h70.09990768283927a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-70.09990768283927z" fill="#338ced"><title>@duoquote/polytini (flexible): 2.1 KB</title></path>
 <text x="460.2599076828393" y="361" font-size="12" fill="#efefef">2.1 KB</text>
 <text x="370.16" y="385" font-size="12" text-anchor="end" fill="#efefef" font-weight="600">@duoquote/polytini (browser entry, every export)</text>
-<path d="M380.16,374h77.3446067728558a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-77.3446067728558z" fill="#338ced"><title>@duoquote/polytini (browser entry, every export): 2.3 KB</title></path>
-<text x="467.5046067728558" y="385" font-size="12" fill="#efefef">2.3 KB</text>
+<path d="M380.16,374h78.04797561654675a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-78.04797561654675z" fill="#338ced"><title>@duoquote/polytini (browser entry, every export): 2.3 KB</title></path>
+<text x="468.2079756165468" y="385" font-size="12" fill="#efefef">2.3 KB</text>
 <text x="370.16" y="409" font-size="12" text-anchor="end" fill="#efefef" font-weight="600">@duoquote/polytini (node entry)</text>
-<path d="M380.16,398h89.93490907492344a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-89.93490907492344z" fill="#338ced"><title>@duoquote/polytini (node entry): 2.6 KB</title></path>
-<text x="480.09490907492346" y="409" font-size="12" fill="#efefef">2.6 KB</text>
+<path d="M380.16,398h90.77895168735256a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-90.77895168735256z" fill="#338ced"><title>@duoquote/polytini (node entry): 2.6 KB</title></path>
+<text x="480.9389516873526" y="409" font-size="12" fill="#efefef">2.6 KB</text>
 <text x="370.16" y="433" font-size="12" text-anchor="end" fill="#efefef" font-weight="600">@duoquote/polytini (wasm, JS glue plus inlined .wasm)</text>
-<path d="M380.16,422h152.39406239467786a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-152.39406239467786z" fill="#338ced"><title>@duoquote/polytini (wasm, JS glue plus inlined .wasm): 4.3 KB</title></path>
-<text x="542.5540623946779" y="433" font-size="12" fill="#efefef">4.3 KB</text>
+<path d="M380.16,422h159.1112348519262a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-159.1112348519262z" fill="#338ced"><title>@duoquote/polytini (wasm, JS glue plus inlined .wasm): 4.5 KB</title></path>
+<text x="549.2712348519262" y="433" font-size="12" fill="#efefef">4.5 KB</text>
 <text x="370.16" y="457" font-size="12" text-anchor="end" fill="#efefef">ol (ol/format/Polyline)</text>
 <path d="M380.16,446h338.85714285714283a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-338.85714285714283z" fill="#5c5c5c"><title>ol (ol/format/Polyline): 9.5 KB</title></path>
 <text x="729.0171428571429" y="457" font-size="12" fill="#efefef">9.5 KB</text>

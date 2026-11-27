@@ -14,6 +14,7 @@ npm run test:deno
 npm run behavior         # where libraries legitimately disagree; prints, never fails
 npm run bench:quick      # about a minute, one round, writes nothing
 npm run bench:all        # every runtime, about 10 minutes, writes results/
+npm run bench:clean      # the same, one step at a time, pinned (Windows); what the published results use
 npm run size             # gzipped bundle size per library
 npm run charts           # docs/charts and docs/badges from results/*.json
 node bench/readme.js     # the tables in README.md and docs/

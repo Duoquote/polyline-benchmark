@@ -40,29 +40,29 @@
     "gzip": 1223
   },
   {
-    "name": "@duoquote/polytini@0.1.0 (browser entry, every export)",
-    "min": 4977,
-    "gzip": 2313
+    "name": "@duoquote/polytini@0.1.4 (browser entry, every export)",
+    "min": 5028,
+    "gzip": 2333
   },
   {
-    "name": "@duoquote/polytini@0.1.0 (web entry, every export)",
-    "min": 4093,
-    "gzip": 2037
+    "name": "@duoquote/polytini@0.1.4 (web entry, every export)",
+    "min": 4133,
+    "gzip": 2052
   },
   {
-    "name": "@duoquote/polytini@0.1.0 (encode and decode only)",
-    "min": 4353,
-    "gzip": 2023
+    "name": "@duoquote/polytini@0.1.4 (encode and decode only)",
+    "min": 4382,
+    "gzip": 2041
   },
   {
-    "name": "@duoquote/polytini@0.1.0 (node entry)",
-    "min": 5451,
-    "gzip": 2671
+    "name": "@duoquote/polytini@0.1.4 (node entry)",
+    "min": 5505,
+    "gzip": 2695
   },
   {
-    "name": "@duoquote/polytini@0.1.0 (wasm, JS glue plus inlined .wasm)",
-    "min": 9138,
-    "gzip": 4447
+    "name": "@duoquote/polytini@0.1.4 (wasm, JS glue plus inlined .wasm)",
+    "min": 9568,
+    "gzip": 4638
   },
   {
     "name": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
@@ -80,7 +80,7 @@
     "gzip": 1433
   },
   {
-    "name": "@duoquote/polytini@0.1.0 (flexible)",
+    "name": "@duoquote/polytini@0.1.4 (flexible)",
     "min": 4300,
     "gzip": 2107
   }

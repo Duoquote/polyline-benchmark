@@ -1,43 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="346" viewBox="0 0 680 346" role="img" aria-labelledby="t d" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="322" viewBox="0 0 680 322" role="img" aria-labelledby="t d" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
 <title id="t">Chrome: encode speed relative to @mapbox/polyline</title>
-<desc id="d">Calls per second on the real-world lines (median 82 points), @mapbox/polyline = 1.0x. Higher is faster. 2026-11-26.. @duoquote/polytini (web entry) 2.82x, @duoquote/polytini 2.60x, @duoquote/polytini (wasm) 2.01x, @pirxpilot/google-polyline 1.40x, google-polyline 1.37x, @placemarkio/polyline 1.01x, @mapbox/polyline (baseline) 1.00x, @googlemaps/polyline-codec 0.80x, google.maps.geometry.encoding 0.57x, @lp-labs/polyline-codec 0.26x, polyline-encoded 0.12x.</desc>
-<rect width="680" height="346" rx="6" fill="#191919"/>
+<desc id="d">Calls per second on the real-world lines (median 82 points), @mapbox/polyline = 1.0x. Higher is faster. 2026-11-27.. @duoquote/polytini (web entry) 2.93x, @duoquote/polytini 2.79x, @duoquote/polytini (wasm) 2.00x, @pirxpilot/google-polyline 1.36x, google-polyline 1.34x, @placemarkio/polyline 1.14x, @mapbox/polyline (baseline) 1.00x, @googlemaps/polyline-codec 0.79x, @lp-labs/polyline-codec 0.28x, polyline-encoded 0.13x.</desc>
+<rect width="680" height="322" rx="6" fill="#191919"/>
 <text x="16" y="24" font-size="15" font-weight="600" fill="#efefef">Chrome: encode speed relative to @mapbox/polyline</text>
-<text x="16" y="43" font-size="12" fill="#9c9c9c">Calls per second on the real-world lines (median 82 points), @mapbox/polyline = 1.0x. Higher is faster. 2026-11-26.</text>
+<text x="16" y="43" font-size="12" fill="#9c9c9c">Calls per second on the real-world lines (median 82 points), @mapbox/polyline = 1.0x. Higher is faster. 2026-11-27.</text>
 <text x="215.60000000000002" y="73" font-size="12" text-anchor="end" fill="#efefef" font-weight="600">@duoquote/polytini (web entry)</text>
-<path d="M225.60000000000002,62h338.8571428571428a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-338.8571428571428z" fill="#338ced"><title>@duoquote/polytini (web entry): 2.82x</title></path>
-<text x="574.4571428571428" y="73" font-size="12" fill="#efefef">2.82x</text>
+<path d="M225.60000000000002,62h338.8571428571428a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-338.8571428571428z" fill="#338ced"><title>@duoquote/polytini (web entry): 2.93x</title></path>
+<text x="574.4571428571428" y="73" font-size="12" fill="#efefef">2.93x</text>
 <text x="215.60000000000002" y="97" font-size="12" text-anchor="end" fill="#efefef" font-weight="600">@duoquote/polytini</text>
-<path d="M225.60000000000002,86h312.32236663614435a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-312.32236663614435z" fill="#338ced"><title>@duoquote/polytini: 2.60x</title></path>
-<text x="547.9223666361444" y="97" font-size="12" fill="#efefef">2.60x</text>
+<path d="M225.60000000000002,86h322.5306172546125a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-322.5306172546125z" fill="#338ced"><title>@duoquote/polytini: 2.79x</title></path>
+<text x="558.1306172546125" y="97" font-size="12" fill="#efefef">2.79x</text>
 <text x="215.60000000000002" y="121" font-size="12" text-anchor="end" fill="#efefef" font-weight="600">@duoquote/polytini (wasm)</text>
-<path d="M225.60000000000002,110h240.58942385860934a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-240.58942385860934z" fill="#338ced"><title>@duoquote/polytini (wasm): 2.01x</title></path>
-<text x="476.18942385860936" y="121" font-size="12" fill="#efefef">2.01x</text>
+<path d="M225.60000000000002,110h229.83805128013455a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-229.83805128013455z" fill="#338ced"><title>@duoquote/polytini (wasm): 2.00x</title></path>
+<text x="465.4380512801346" y="121" font-size="12" fill="#efefef">2.00x</text>
 <text x="215.60000000000002" y="145" font-size="12" text-anchor="end" fill="#efefef">@pirxpilot/google-polyline</text>
-<path d="M225.60000000000002,134h166.11422214072326a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-166.11422214072326z" fill="#5c5c5c"><title>@pirxpilot/google-polyline: 1.40x</title></path>
-<text x="401.7142221407233" y="145" font-size="12" fill="#efefef">1.40x</text>
+<path d="M225.60000000000002,134h155.06851926365414a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-155.06851926365414z" fill="#5c5c5c"><title>@pirxpilot/google-polyline: 1.36x</title></path>
+<text x="390.66851926365416" y="145" font-size="12" fill="#efefef">1.36x</text>
 <text x="215.60000000000002" y="169" font-size="12" text-anchor="end" fill="#efefef">google-polyline</text>
-<path d="M225.60000000000002,158h163.2744041945815a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-163.2744041945815z" fill="#5c5c5c"><title>google-polyline: 1.37x</title></path>
-<text x="398.87440419458153" y="169" font-size="12" fill="#efefef">1.37x</text>
+<path d="M225.60000000000002,158h152.80734961421672a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-152.80734961421672z" fill="#5c5c5c"><title>google-polyline: 1.34x</title></path>
+<text x="388.40734961421674" y="169" font-size="12" fill="#efefef">1.34x</text>
 <text x="215.60000000000002" y="193" font-size="12" text-anchor="end" fill="#efefef">@placemarkio/polyline</text>
-<path d="M225.60000000000002,182h119.5103657102182a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-119.5103657102182z" fill="#5c5c5c"><title>@placemarkio/polyline: 1.01x</title></path>
-<text x="355.1103657102182" y="193" font-size="12" fill="#efefef">1.01x</text>
+<path d="M225.60000000000002,182h129.11347835556535a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-129.11347835556535z" fill="#5c5c5c"><title>@placemarkio/polyline: 1.14x</title></path>
+<text x="364.71347835556537" y="193" font-size="12" fill="#efefef">1.14x</text>
 <text x="215.60000000000002" y="217" font-size="12" text-anchor="end" fill="#efefef">@mapbox/polyline (baseline)</text>
-<path d="M225.60000000000002,206h117.71965897291886a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-117.71965897291886z" fill="#5c5c5c"><title>@mapbox/polyline (baseline): 1.00x</title></path>
-<text x="353.3196589729189" y="217" font-size="12" fill="#efefef">1.00x</text>
+<path d="M225.60000000000002,206h113.13494237577754a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-113.13494237577754z" fill="#5c5c5c"><title>@mapbox/polyline (baseline): 1.00x</title></path>
+<text x="348.73494237577756" y="217" font-size="12" fill="#efefef">1.00x</text>
 <text x="215.60000000000002" y="241" font-size="12" text-anchor="end" fill="#efefef">@googlemaps/polyline-codec</text>
-<path d="M225.60000000000002,230h93.92830050017403a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-93.92830050017403z" fill="#5c5c5c"><title>@googlemaps/polyline-codec: 0.80x</title></path>
-<text x="329.52830050017405" y="241" font-size="12" fill="#efefef">0.80x</text>
-<text x="215.60000000000002" y="265" font-size="12" text-anchor="end" fill="#efefef">google.maps.geometry.encoding</text>
-<path d="M225.60000000000002,254h65.46077130321964a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-65.46077130321964z" fill="#5c5c5c"><title>google.maps.geometry.encoding: 0.57x</title></path>
-<text x="301.06077130321967" y="265" font-size="12" fill="#efefef">0.57x</text>
-<text x="215.60000000000002" y="289" font-size="12" text-anchor="end" fill="#efefef">@lp-labs/polyline-codec</text>
-<path d="M225.60000000000002,278h27.60327292575886a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-27.60327292575886z" fill="#5c5c5c"><title>@lp-labs/polyline-codec: 0.26x</title></path>
-<text x="263.2032729257589" y="289" font-size="12" fill="#efefef">0.26x</text>
-<text x="215.60000000000002" y="313" font-size="12" text-anchor="end" fill="#efefef">polyline-encoded</text>
-<path d="M225.60000000000002,302h10.533690619578977a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-10.533690619578977z" fill="#5c5c5c"><title>polyline-encoded: 0.12x</title></path>
-<text x="246.133690619579" y="313" font-size="12" fill="#efefef">0.12x</text>
-<line x1="347.3" y1="54" x2="347.3" y2="322" stroke="#9c9c9c" stroke-width="1"/>
-<text x="347.3" y="336" font-size="11" text-anchor="middle" fill="#9c9c9c">1.0x</text>
+<path d="M225.60000000000002,230h88.05888588925666a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-88.05888588925666z" fill="#5c5c5c"><title>@googlemaps/polyline-codec: 0.79x</title></path>
+<text x="323.6588858892567" y="241" font-size="12" fill="#efefef">0.79x</text>
+<text x="215.60000000000002" y="265" font-size="12" text-anchor="end" fill="#efefef">@lp-labs/polyline-codec</text>
+<path d="M225.60000000000002,254h28.72043965809189a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-28.72043965809189z" fill="#5c5c5c"><title>@lp-labs/polyline-codec: 0.28x</title></path>
+<text x="264.3204396580919" y="265" font-size="12" fill="#efefef">0.28x</text>
+<text x="215.60000000000002" y="289" font-size="12" text-anchor="end" fill="#efefef">polyline-encoded</text>
+<path d="M225.60000000000002,278h10.653707336854723a4,4 0 0 1 4,4v6a4,4 0 0 1 -4,4h-10.653707336854723z" fill="#5c5c5c"><title>polyline-encoded: 0.13x</title></path>
+<text x="246.25370733685475" y="289" font-size="12" fill="#efefef">0.13x</text>
+<line x1="342.7" y1="54" x2="342.7" y2="298" stroke="#9c9c9c" stroke-width="1"/>
+<text x="342.7" y="312" font-size="11" text-anchor="middle" fill="#9c9c9c">1.0x</text>
 
 </svg>

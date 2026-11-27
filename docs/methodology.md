@@ -62,7 +62,8 @@ Exact rounding ties are left out on purpose, because the libraries disagree ther
 - The real-world set is the CSV from 2021: 1000 lines from PostGIS `ST_AsEncodedPolyline`, 146,330 points in total, median 82 points per line.
 - Each library runs in its own child process with `tinybench`, 120 ms per cell after a 60 ms warmup, and at least 8 samples. I added the separate processes after `@mapbox/polyline` decoded 10 points about 25% faster when it ran alone than after the other libraries.
 - The 5 rounds are interleaved: every library runs once, then every library again, in a different shuffled order each round. A slow minute on the machine hits every library a little instead of one library a lot. I added the shuffle after a fixed order showed a 20 to 35% drop in the last two rounds for whichever libraries ran last.
-- `npm run bench:all` runs 3 runtimes at a time, each a single-threaded process on its own core, so the whole thing fits in about 10 minutes. Libraries are only compared within one runtime, where they share the same conditions, so this adds noise but no bias. The spread line in each `results/*.md` says how much.
+- The published numbers come from `npm run bench:clean`: one runtime at a time, at high priority, pinned to logical CPUs 12 to 15 (`--jobs 1 --prio high --affinity 0xF000`), the same setup polytini's `bench/ab.js` uses. It takes about 30 minutes. `npm run bench:all` runs 3 runtimes at a time in about 10 minutes; libraries are only compared within one runtime, where they share the same conditions, so that adds noise but no bias. The spread line in each `results/*.md` says how much.
+- The 27 November 2026 run used `bench:all` on a desktop with other programs busy, and a cell moved by a median of 29 to 35% between rounds. The run after it, later the same day, used `bench:clean` with my other CPU-heavy jobs paused. The machine still had its usual background, about 40% total CPU from a remote desktop session and system services, on other cores. The median spread was 5 to 7% per runtime. Three steps (Chrome, Bun and Node 22) overlapped another benchmark at first, so I ran them again once it had stopped; the committed results are from the second try.
 - Short lines are repeated inside one timed call until it covers 20,000 points, so timer overhead doesn't swamp a 10 point decode.
 - Inputs are built in each library's own point shape ahead of time, so flipping to `[lng, lat]` or building objects isn't part of the timing. Decode returns whatever the library returns.
 - The browser runs use the same `measure()` code as the server runtimes, bundled into the page. Chrome starts once, and every library gets a fresh browser context.
@@ -96,6 +97,7 @@ npm ci
 npm test
 npm run bench:quick   # about a minute, writes nothing
 npm run bench:all     # everything, about 10 minutes, writes results/
+npm run bench:clean   # the same one step at a time, pinned, about 30 minutes (Windows)
 npm run charts        # docs/charts and docs/badges from results/
 node bench/readme.js  # the tables in README.md and docs/results.md
 ```

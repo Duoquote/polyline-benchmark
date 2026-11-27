@@ -32,55 +32,67 @@ Across all 8 runtimes (geometric mean over runtimes and sizes):
 <!-- best -->
 | Situation | Best | Runner-up | Margin |
 |---|---|---|--:|
-| Decode short lines (10 and 100 points) | @googlemaps/polyline-codec | @mapbox/polyline | 1.05x faster, within the noise |
-| Decode long lines (10,000 and 100,000 points) | **@duoquote/polytini** | @googlemaps/polyline-codec | 1.14x faster, within the noise |
-| Decode real-world lines (median 82 points) | **@duoquote/polytini** | @googlemaps/polyline-codec | 1.22x faster, within the noise |
-| Encode, any length | **@duoquote/polytini** | google-polyline | 2.05x faster |
-| Decode to typed arrays | **@duoquote/polytini (wasm, Float64Array)** | @duoquote/polytini (Float64Array) | 1.08x faster, within the noise |
-| Encode from typed arrays | **@duoquote/polytini (wasm, Float64Array)** | @duoquote/polytini (Float64Array) | 1.05x faster, within the noise |
-| Decode 1000 lines in one call | **@duoquote/polytini (wasm decodeMany/encodeMany)** | @duoquote/polytini (wasm, Float64Array) | 1.61x faster |
-| Least memory per decode (10,000 points, [lat, lng] arrays) | **@duoquote/polytini (765.4 KB)** | @googlemaps/polyline-codec (766.2 KB) | 0.1% less |
+| Decode short lines (10 and 100 points) | **@duoquote/polytini** | @placemarkio/polyline | 1.01x faster, within the noise |
+| Decode long lines (10,000 and 100,000 points) | **@duoquote/polytini** | @googlemaps/polyline-codec | 1.20x faster |
+| Decode real-world lines (median 82 points) | **@duoquote/polytini** | @googlemaps/polyline-codec | 1.27x faster |
+| Encode, any length | **@duoquote/polytini** | google-polyline | 2.01x faster |
+| Decode to typed arrays | **@duoquote/polytini (Float64Array)** | @duoquote/polytini (wasm, Float64Array) | 1.00x faster, within the noise |
+| Encode from typed arrays | **@duoquote/polytini (wasm, Float64Array)** | @duoquote/polytini (Float64Array) | 1.03x faster, within the noise |
+| Decode 1000 lines in one call | **@duoquote/polytini (wasm decodeMany/encodeMany)** | @duoquote/polytini (wasm, Float64Array) | 1.57x faster |
+| Least memory per decode (10,000 points, [lat, lng] arrays) | **@duoquote/polytini (764.8 KB)** | @googlemaps/polyline-codec (766.2 KB) | 0.2% less |
 | Smallest bundle (gzipped) | google-polyline (551 B) | @googlemaps/polyline-codec (568 B) | 17 B smaller |
-| Strict validation (throws on bad input) | **@duoquote/polytini** | @lp-labs/polyline-codec | 15x faster |
-| HERE Flexible Polyline (encode and decode) | **@duoquote/polytini (flexible)** | @here/flexpolyline | 24x faster |
+| Strict validation (throws on bad input) | **@duoquote/polytini** | @lp-labs/polyline-codec | 17x faster |
+| HERE Flexible Polyline (encode and decode) | **@duoquote/polytini (flexible)** | @here/flexpolyline | 25x faster |
 <!-- /best -->
+
+## Since the 27 November run
+
+That run had polytini 0.1.0 from GitHub and a busy machine, so a cell moved by about 30% between rounds and most decode cells were ties. This one has polytini 0.1.4 from npm, one runtime at a time on pinned cores, and cells moved by 5 to 7% ([methodology](docs/methodology.md#how-its-measured)). What changed:
+
+- Decode, short lines: `@googlemaps/polyline-codec` led before, by 1.05x. polytini leads now, by 1.01x over `@placemarkio/polyline`, which is still a tie. Cell by cell, polytini is behind at 10 points on every runtime except Bun, by 11 to 21%. At 100 points it's ahead on Bun, Node 22 and 24, even on Node 23 and 26, and 6 to 12% behind on Node 25, Deno and Chrome.
+- Decode, long and real-world lines: 1.14x and 1.22x before, both inside the noise. 1.20x and 1.27x now, outside it.
+- Encode: 2.05x before, 2.01x now, ahead of `google-polyline` both times.
+- Decode to typed arrays: polytini's WASM build led by 1.08x before. Its JS and WASM builds are even now.
+- The heatmap: 49 cells faster, 3 slower and 44 inside the noise before. 70 faster, 13 slower and 13 inside the noise now. Most of that is the quieter machine turning ties into results, in both directions. The 13 slower cells are all decode, mostly at 10 points and in Chrome.
+
+polytini 0.1.4 made short lines faster when a precision is passed, which the benchmark does for every library, and changed how its Node, Bun and Deno builds copy and make strings ([changelog](https://github.com/Duoquote/polytini/blob/main/CHANGELOG.md#014)). Its own paired runs measured 8 to 33% on 10-point lines. Two runs this far apart in noise can't confirm numbers that small cell by cell, but the biggest moves line up with it: against `@mapbox/polyline`, 10-point decode on Node 22 went from 0.64x to 0.89x, 10-point encode on Node 22 and 23 from 1.63x and 1.47x to 2.29x and 2.39x, and encode at 100 points on Deno from 1.23x to 2.09x.
 
 ## Results
 
-Calls per second, higher is better, fastest first, the fastest in each column in bold. A call is one `encode()` or `decode()` of one line. Between rounds a cell moved by a median of <!-- spread -->29% to 35%<!-- /spread --> depending on the runtime, so a gap smaller than that between the top libraries isn't a reliable ranking; the heatmap hatches those cells and the best-at-what table marks them. Relative numbers (`@mapbox/polyline` = 1.0x), typed arrays, batch calls, memory and sizes are in [docs/results.md](docs/results.md), and every chart is in [docs/charts.md](docs/charts.md).
+Calls per second, higher is better, fastest first, the fastest in each column in bold. A call is one `encode()` or `decode()` of one line. Between rounds a cell moved by a median of <!-- spread -->5% to 7%<!-- /spread --> depending on the runtime, so a gap smaller than that between the top libraries isn't a reliable ranking; the heatmap hatches those cells and the best-at-what table marks them. Relative numbers (`@mapbox/polyline` = 1.0x), typed arrays, batch calls, memory and sizes are in [docs/results.md](docs/results.md), and every chart is in [docs/charts.md](docs/charts.md).
 
 <details>
 <summary>Bun</summary>
 
 <!-- results:bun -->
-Bun v1.4.3, 2026-11-26. `@duoquote/polytini` resolved to `src/bun.js`. Between rounds a cell moved by a median of 33%, 224% at worst.
+Bun v1.4.3, 2026-11-27. `@duoquote/polytini` resolved to `src/bun.js`. Between rounds a cell moved by a median of 7%, 220% at worst.
 
 | decode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0 (web entry)** | 8.10M | **949k** | **99.9k** | 9.47k | 815 | 425k |
-| **@duoquote/polytini@0.1.0** | 6.60M | 716k | 84.3k | **10.9k** | **937** | **459k** |
-| @googlemaps/polyline-codec@1.0.28 | **9.55M** | 919k | 93.0k | 9.24k | 640 | 286k |
-| **@duoquote/polytini@0.1.0 (wasm)** | 7.39M | 766k | 75.4k | 7.54k | 713 | 348k |
-| google-polyline@2.0.0 | 8.25M | 825k | 72.6k | 7.77k | 540 | 271k |
-| @placemarkio/polyline@2.0.3 | 7.38M | 610k | 61.9k | 7.52k | 646 | 267k |
-| @mapbox/polyline@1.2.1 | 7.40M | 757k | 66.1k | 6.07k | 628 | 256k |
-| @pirxpilot/google-polyline@4.0.1 | 2.36M | 382k | 36.0k | 2.97k | 233 | 124k |
-| polyline-encoded@0.0.9 | 1.06M | 107k | 11.7k | 988 | 92.6 | 64.7k |
-| @lp-labs/polyline-codec@0.1.0 | 436k | 41.5k | 4.17k | 387 | 22.7 | 21.1k |
-| decode-google-map-polyline@1.0.1 | 293k | 31.3k | 3.43k | 374 | 30.5 | 22.8k |
+| **@duoquote/polytini@0.1.4** | 11.0M | 1.38M | 138k | **13.6k** | **1.31k** | **589k** |
+| **@duoquote/polytini@0.1.4 (wasm)** | 11.3M | 1.43M | **139k** | 12.9k | 1.20k | 527k |
+| **@duoquote/polytini@0.1.4 (web entry)** | **11.4M** | **1.44M** | 134k | 12.9k | 1.17k | 549k |
+| @googlemaps/polyline-codec@1.0.28 | 11.0M | 1.21M | 120k | 11.3k | 1.04k | 407k |
+| @placemarkio/polyline@2.0.3 | 11.1M | 1.05M | 103k | 10.6k | 965 | 401k |
+| google-polyline@2.0.0 | 10.3M | 969k | 92.7k | 9.57k | 899 | 387k |
+| @mapbox/polyline@1.2.1 | 9.42M | 941k | 90.4k | 8.93k | 775 | 367k |
+| @pirxpilot/google-polyline@4.0.1 | 3.83M | 440k | 42.5k | 4.12k | 374 | 192k |
+| polyline-encoded@0.0.9 | 1.14M | 121k | 12.3k | 1.26k | 121 | 72.0k |
+| decode-google-map-polyline@1.0.1 | 407k | 44.0k | 4.60k | 453 | 38.1 | 27.9k |
+| @lp-labs/polyline-codec@0.1.0 | 505k | 48.6k | 4.87k | 441 | 28.4 | 24.8k |
 
 | encode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0** | **8.47M** | **1.75M** | **173k** | **14.8k** | **1.34k** | **470k** |
-| **@duoquote/polytini@0.1.0 (wasm)** | 4.25M | 1.46M | 152k | 10.6k | 995 | 283k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 4.61M | 697k | 71.8k | 6.16k | 479 | 266k |
-| google-polyline@2.0.0 | 5.30M | 720k | 64.2k | 4.75k | 356 | 211k |
-| @pirxpilot/google-polyline@4.0.1 | 4.20M | 628k | 65.7k | 3.74k | 372 | 195k |
-| @placemarkio/polyline@2.0.3 | 2.83M | 309k | 28.3k | 2.79k | 216 | 139k |
-| @mapbox/polyline@1.2.1 | 2.68M | 236k | 26.0k | 2.40k | 180 | 129k |
-| @googlemaps/polyline-codec@1.0.28 | 1.35M | 171k | 16.0k | 1.55k | 137 | 75.2k |
-| @lp-labs/polyline-codec@0.1.0 | 402k | 31.3k | 3.62k | 316 | 27.2 | 18.0k |
-| polyline-encoded@0.0.9 | 270k | 29.8k | 3.07k | 257 | 24.0 | 18.5k |
+| **@duoquote/polytini@0.1.4** | **9.82M** | **1.82M** | **192k** | **16.4k** | **1.60k** | **578k** |
+| **@duoquote/polytini@0.1.4 (wasm)** | 5.95M | 1.57M | 162k | 11.5k | 1.10k | 374k |
+| **@duoquote/polytini@0.1.4 (web entry)** | 6.06M | 906k | 93.2k | 9.04k | 850 | 391k |
+| google-polyline@2.0.0 | 6.44M | 912k | 79.3k | 6.10k | 592 | 260k |
+| @pirxpilot/google-polyline@4.0.1 | 6.80M | 786k | 83.0k | 5.59k | 563 | 252k |
+| @placemarkio/polyline@2.0.3 | 3.98M | 494k | 46.8k | 3.87k | 361 | 188k |
+| @mapbox/polyline@1.2.1 | 3.55M | 405k | 39.8k | 3.65k | 291 | 154k |
+| @googlemaps/polyline-codec@1.0.28 | 1.55M | 202k | 18.8k | 1.76k | 160 | 84.4k |
+| @lp-labs/polyline-codec@0.1.0 | 501k | 51.1k | 4.99k | 451 | 34.4 | 24.4k |
+| polyline-encoded@0.0.9 | 359k | 35.9k | 3.64k | 337 | 30.5 | 22.5k |
 <!-- /results:bun -->
 
 </details>
@@ -89,34 +101,34 @@ Bun v1.4.3, 2026-11-26. `@duoquote/polytini` resolved to `src/bun.js`. Between r
 <summary>Node 22</summary>
 
 <!-- results:node-22 -->
-Node v22.23.5, 2026-11-26. `@duoquote/polytini` resolved to `src/node.js`. Between rounds a cell moved by a median of 35%, 89% at worst.
+Node v22.23.5, 2026-11-27. `@duoquote/polytini` resolved to `src/node.js`. Between rounds a cell moved by a median of 7%, 83% at worst.
 
 | decode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0** | 4.91M | **822k** | **82.1k** | **8.22k** | **235** | **328k** |
-| **@duoquote/polytini@0.1.0 (wasm)** | 6.32M | 767k | 81.0k | 7.88k | 154 | 282k |
-| @mapbox/polyline@1.2.1 | **7.68M** | 742k | 59.1k | 6.10k | 234 | 241k |
-| @placemarkio/polyline@2.0.3 | 6.75M | 681k | 66.1k | 6.20k | 232 | 256k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 5.78M | 776k | 71.9k | 7.31k | 151 | 255k |
-| @googlemaps/polyline-codec@1.0.28 | 5.20M | 702k | 66.8k | 6.93k | 133 | 277k |
-| google-polyline@2.0.0 | 6.11M | 482k | 47.1k | 5.77k | 186 | 249k |
-| @pirxpilot/google-polyline@4.0.1 | 5.68M | 389k | 47.5k | 3.94k | 186 | 227k |
-| polyline-encoded@0.0.9 | 1.49M | 145k | 13.0k | 1.20k | 42.9 | 77.5k |
-| @lp-labs/polyline-codec@0.1.0 | 429k | 55.5k | 5.14k | 401 | 26.1 | 24.9k |
-| decode-google-map-polyline@1.0.1 | 82.2k | 16.2k | 1.74k | 168 | 10.1 | 9.96k |
+| **@duoquote/polytini@0.1.4** | 7.56M | **1.19M** | **125k** | **12.0k** | 288 | **457k** |
+| @mapbox/polyline@1.2.1 | **8.52M** | 933k | 82.1k | 8.33k | **291** | 356k |
+| @placemarkio/polyline@2.0.3 | 8.30M | 934k | 82.6k | 8.13k | 235 | 349k |
+| **@duoquote/polytini@0.1.4 (web entry)** | 7.53M | 1.03M | 99.4k | 9.12k | 165 | 369k |
+| @googlemaps/polyline-codec@1.0.28 | 6.57M | 1.06M | 106k | 9.53k | 162 | 373k |
+| **@duoquote/polytini@0.1.4 (wasm)** | 7.56M | 1.02M | 95.9k | 8.86k | 162 | 381k |
+| google-polyline@2.0.0 | 7.38M | 840k | 71.6k | 7.13k | 217 | 324k |
+| @pirxpilot/google-polyline@4.0.1 | 6.67M | 725k | 65.8k | 6.67k | 238 | 298k |
+| polyline-encoded@0.0.9 | 1.89M | 227k | 20.4k | 1.99k | 54.0 | 117k |
+| @lp-labs/polyline-codec@0.1.0 | 525k | 68.2k | 6.03k | 491 | 32.3 | 30.7k |
+| decode-google-map-polyline@1.0.1 | 126k | 19.9k | 2.12k | 196 | 12.8 | 13.6k |
 
 | encode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0** | **4.59M** | **972k** | 85.2k | **11.2k** | **857** | **423k** |
-| **@duoquote/polytini@0.1.0 (wasm)** | 3.30M | 785k | **87.5k** | 6.99k | 623 | 284k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 2.92M | 513k | 57.1k | 5.95k | 328 | 297k |
-| google-polyline@2.0.0 | 4.42M | 445k | 43.4k | 4.07k | 116 | 174k |
-| @pirxpilot/google-polyline@4.0.1 | 3.83M | 495k | 45.0k | 3.35k | 102 | 166k |
-| @placemarkio/polyline@2.0.3 | 2.80M | 446k | 43.1k | 3.31k | 106 | 134k |
-| @mapbox/polyline@1.2.1 | 2.82M | 419k | 38.2k | 3.20k | 105 | 134k |
-| @googlemaps/polyline-codec@1.0.28 | 1.12M | 190k | 13.9k | 961 | 75.9 | 69.7k |
-| @lp-labs/polyline-codec@0.1.0 | 511k | 68.7k | 5.70k | 468 | 34.4 | 30.2k |
-| polyline-encoded@0.0.9 | 124k | 14.9k | 1.29k | 120 | 12.5 | 8.69k |
+| **@duoquote/polytini@0.1.4** | **7.09M** | **1.18M** | **128k** | **11.7k** | **1.10k** | **499k** |
+| **@duoquote/polytini@0.1.4 (wasm)** | 4.97M | 1.00M | 104k | 7.66k | 781 | 357k |
+| **@duoquote/polytini@0.1.4 (web entry)** | 5.01M | 681k | 74.4k | 7.52k | 387 | 429k |
+| google-polyline@2.0.0 | 5.08M | 668k | 63.4k | 4.97k | 154 | 231k |
+| @pirxpilot/google-polyline@4.0.1 | 4.16M | 579k | 66.6k | 5.14k | 155 | 229k |
+| @placemarkio/polyline@2.0.3 | 3.36M | 552k | 51.5k | 4.35k | 133 | 187k |
+| @mapbox/polyline@1.2.1 | 3.10M | 490k | 45.5k | 3.94k | 128 | 175k |
+| @googlemaps/polyline-codec@1.0.28 | 1.55M | 216k | 18.9k | 1.22k | 103 | 87.7k |
+| @lp-labs/polyline-codec@0.1.0 | 703k | 92.6k | 8.10k | 679 | 45.0 | 36.0k |
+| polyline-encoded@0.0.9 | 166k | 17.2k | 1.66k | 165 | 15.9 | 10.5k |
 <!-- /results:node-22 -->
 
 </details>
@@ -125,34 +137,34 @@ Node v22.23.5, 2026-11-26. `@duoquote/polytini` resolved to `src/node.js`. Betwe
 <summary>Node 23</summary>
 
 <!-- results:node-23 -->
-Node v23.11.1, 2026-11-26. `@duoquote/polytini` resolved to `src/node.js`. Between rounds a cell moved by a median of 29%, 67% at worst.
+Node v23.11.1, 2026-11-27. `@duoquote/polytini` resolved to `src/node.js`. Between rounds a cell moved by a median of 6%, 116% at worst.
 
 | decode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| @placemarkio/polyline@2.0.3 | **7.89M** | 683k | 67.2k | 7.06k | **263** | 286k |
-| @mapbox/polyline@1.2.1 | 6.71M | 791k | 71.7k | 7.47k | 210 | 294k |
-| **@duoquote/polytini@0.1.0** | 7.00M | 678k | 67.0k | **7.60k** | 194 | **329k** |
-| **@duoquote/polytini@0.1.0 (web entry)** | 7.00M | **824k** | **73.9k** | 7.47k | 153 | 245k |
-| @googlemaps/polyline-codec@1.0.28 | 6.18M | 820k | 65.3k | 7.08k | 160 | 307k |
-| google-polyline@2.0.0 | 6.48M | 701k | 51.3k | 6.29k | 243 | 286k |
-| **@duoquote/polytini@0.1.0 (wasm)** | 6.40M | 794k | 63.4k | 6.07k | 160 | 295k |
-| @pirxpilot/google-polyline@4.0.1 | 5.47M | 520k | 47.7k | 5.63k | 195 | 212k |
-| polyline-encoded@0.0.9 | 1.69M | 188k | 15.3k | 1.47k | 48.2 | 81.9k |
-| @lp-labs/polyline-codec@0.1.0 | 443k | 59.1k | 5.58k | 451 | 27.2 | 28.0k |
-| decode-google-map-polyline@1.0.1 | 106k | 19.5k | 2.05k | 178 | 12.6 | 12.2k |
+| **@duoquote/polytini@0.1.4** | 8.11M | **1.20M** | **130k** | **12.7k** | **400** | **481k** |
+| @placemarkio/polyline@2.0.3 | 9.28M | 990k | 88.5k | 8.65k | 334 | 355k |
+| @googlemaps/polyline-codec@1.0.28 | 7.45M | 1.15M | 115k | 10.5k | 179 | 371k |
+| @mapbox/polyline@1.2.1 | **9.91M** | 967k | 85.2k | 8.85k | 239 | 359k |
+| **@duoquote/polytini@0.1.4 (wasm)** | 8.18M | 1.06M | 99.1k | 9.12k | 173 | 388k |
+| **@duoquote/polytini@0.1.4 (web entry)** | 8.12M | 1.05M | 100k | 9.35k | 171 | 382k |
+| google-polyline@2.0.0 | 8.25M | 920k | 79.2k | 7.73k | 230 | 320k |
+| @pirxpilot/google-polyline@4.0.1 | 7.32M | 762k | 69.7k | 6.97k | 286 | 302k |
+| polyline-encoded@0.0.9 | 1.85M | 223k | 20.5k | 2.07k | 63.1 | 118k |
+| @lp-labs/polyline-codec@0.1.0 | 561k | 70.5k | 6.45k | 532 | 32.1 | 33.2k |
+| decode-google-map-polyline@1.0.1 | 135k | 22.9k | 2.36k | 216 | 14.0 | 15.1k |
 
 | encode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0** | **4.15M** | 1.07M | 117k | **11.1k** | **964** | **418k** |
-| **@duoquote/polytini@0.1.0 (wasm)** | 3.34M | **1.23M** | **138k** | 9.63k | 856 | 316k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 3.40M | 537k | 63.7k | 6.02k | 272 | 295k |
-| google-polyline@2.0.0 | 4.11M | 563k | 52.5k | 4.39k | 125 | 186k |
-| @pirxpilot/google-polyline@4.0.1 | 3.74M | 535k | 55.0k | 3.36k | 120 | 177k |
-| @placemarkio/polyline@2.0.3 | 3.03M | 483k | 46.7k | 4.09k | 112 | 160k |
-| @mapbox/polyline@1.2.1 | 2.82M | 467k | 42.4k | 3.47k | 91.9 | 145k |
-| @googlemaps/polyline-codec@1.0.28 | 1.21M | 162k | 15.5k | 1.02k | 78.9 | 64.5k |
-| @lp-labs/polyline-codec@0.1.0 | 605k | 82.2k | 6.61k | 539 | 31.6 | 32.4k |
-| polyline-encoded@0.0.9 | 168k | 16.4k | 1.66k | 133 | 14.7 | 9.59k |
+| **@duoquote/polytini@0.1.4** | **7.01M** | 1.19M | 126k | **11.7k** | **1.08k** | **488k** |
+| **@duoquote/polytini@0.1.4 (wasm)** | 4.84M | **1.36M** | **143k** | 10.1k | 964 | 385k |
+| **@duoquote/polytini@0.1.4 (web entry)** | 4.91M | 656k | 73.8k | 7.38k | 328 | 438k |
+| google-polyline@2.0.0 | 4.94M | 649k | 64.2k | 5.01k | 153 | 225k |
+| @pirxpilot/google-polyline@4.0.1 | 4.10M | 575k | 64.1k | 5.17k | 151 | 231k |
+| @placemarkio/polyline@2.0.3 | 3.34M | 570k | 53.6k | 4.54k | 130 | 190k |
+| @mapbox/polyline@1.2.1 | 2.93M | 492k | 45.4k | 3.97k | 126 | 173k |
+| @googlemaps/polyline-codec@1.0.28 | 1.55M | 219k | 19.2k | 1.27k | 105 | 87.8k |
+| @lp-labs/polyline-codec@0.1.0 | 732k | 94.3k | 7.90k | 717 | 45.6 | 39.8k |
+| polyline-encoded@0.0.9 | 188k | 19.2k | 1.94k | 187 | 17.3 | 12.6k |
 <!-- /results:node-23 -->
 
 </details>
@@ -161,34 +173,34 @@ Node v23.11.1, 2026-11-26. `@duoquote/polytini` resolved to `src/node.js`. Betwe
 <summary>Node 24</summary>
 
 <!-- results:node-24 -->
-Node v24.22.3, 2026-11-26. `@duoquote/polytini` resolved to `src/node.js`. Between rounds a cell moved by a median of 32%, 70% at worst.
+Node v24.22.3, 2026-11-27. `@duoquote/polytini` resolved to `src/node.js`. Between rounds a cell moved by a median of 6%, 58% at worst.
 
 | decode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0** | 6.50M | 760k | 74.4k | 7.21k | **581** | **410k** |
-| @googlemaps/polyline-codec@1.0.28 | 6.66M | **872k** | 71.8k | 6.72k | 460 | 326k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 5.44M | 865k | **74.6k** | **7.62k** | 496 | 302k |
-| **@duoquote/polytini@0.1.0 (wasm)** | 5.28M | 694k | 70.3k | 6.65k | 519 | 340k |
-| @placemarkio/polyline@2.0.3 | **7.50M** | 681k | 64.8k | 7.03k | 403 | 306k |
-| @mapbox/polyline@1.2.1 | 7.00M | 608k | 60.3k | 6.67k | 368 | 254k |
-| google-polyline@2.0.0 | 5.09M | 595k | 56.7k | 5.84k | 332 | 254k |
-| @pirxpilot/google-polyline@4.0.1 | 5.78M | 627k | 56.5k | 5.13k | 312 | 254k |
-| polyline-encoded@0.0.9 | 1.72M | 161k | 14.5k | 1.36k | 99.8 | 81.5k |
-| @lp-labs/polyline-codec@0.1.0 | 531k | 66.5k | 5.68k | 489 | 37.5 | 27.1k |
-| decode-google-map-polyline@1.0.1 | 131k | 25.1k | 2.36k | 260 | 17.5 | 15.7k |
+| **@duoquote/polytini@0.1.4** | 8.16M | **1.25M** | **131k** | **12.4k** | **995** | **527k** |
+| @googlemaps/polyline-codec@1.0.28 | 7.69M | 1.17M | 114k | 10.3k | 804 | 383k |
+| **@duoquote/polytini@0.1.4 (wasm)** | 8.08M | 1.09M | 104k | 9.56k | 790 | 403k |
+| **@duoquote/polytini@0.1.4 (web entry)** | 8.28M | 1.09M | 104k | 9.51k | 790 | 396k |
+| @placemarkio/polyline@2.0.3 | **9.59M** | 1.02M | 87.0k | 8.69k | 618 | 359k |
+| @mapbox/polyline@1.2.1 | 9.45M | 932k | 84.0k | 8.28k | 615 | 353k |
+| google-polyline@2.0.0 | 8.19M | 907k | 74.2k | 7.54k | 577 | 327k |
+| @pirxpilot/google-polyline@4.0.1 | 7.13M | 790k | 67.3k | 6.73k | 545 | 309k |
+| polyline-encoded@0.0.9 | 2.19M | 243k | 23.1k | 1.97k | 154 | 113k |
+| @lp-labs/polyline-codec@0.1.0 | 648k | 73.2k | 6.88k | 629 | 45.0 | 35.9k |
+| decode-google-map-polyline@1.0.1 | 189k | 29.5k | 3.17k | 307 | 20.4 | 19.3k |
 
 | encode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0** | **5.74M** | 898k | 117k | **10.8k** | **918** | **346k** |
-| **@duoquote/polytini@0.1.0 (wasm)** | 4.08M | **1.35M** | **144k** | 7.96k | 706 | 264k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 3.89M | 579k | 63.2k | 6.43k | 448 | 301k |
-| @pirxpilot/google-polyline@4.0.1 | 4.44M | 483k | 55.8k | 4.42k | 438 | 182k |
-| google-polyline@2.0.0 | 4.41M | 522k | 54.1k | 4.12k | 368 | 172k |
-| @placemarkio/polyline@2.0.3 | 3.45M | 477k | 49.7k | 4.14k | 329 | 172k |
-| @mapbox/polyline@1.2.1 | 2.90M | 470k | 41.0k | 3.39k | 295 | 152k |
-| @googlemaps/polyline-codec@1.0.28 | 1.67M | 210k | 17.8k | 1.02k | 82.7 | 73.5k |
-| @lp-labs/polyline-codec@0.1.0 | 673k | 83.3k | 7.05k | 605 | 41.7 | 35.3k |
-| polyline-encoded@0.0.9 | 230k | 22.9k | 2.32k | 218 | 19.9 | 13.1k |
+| **@duoquote/polytini@0.1.4** | **6.73M** | 1.13M | 123k | **11.4k** | **1.07k** | **473k** |
+| **@duoquote/polytini@0.1.4 (wasm)** | 4.82M | **1.41M** | **152k** | 10.8k | 1.06k | 421k |
+| **@duoquote/polytini@0.1.4 (web entry)** | 4.92M | 668k | 72.8k | 7.20k | 730 | 416k |
+| @pirxpilot/google-polyline@4.0.1 | 4.97M | 589k | 65.2k | 5.11k | 516 | 236k |
+| google-polyline@2.0.0 | 5.02M | 661k | 63.6k | 4.88k | 494 | 232k |
+| @placemarkio/polyline@2.0.3 | 3.86M | 585k | 53.9k | 4.64k | 405 | 203k |
+| @mapbox/polyline@1.2.1 | 3.37M | 486k | 46.7k | 3.99k | 359 | 175k |
+| @googlemaps/polyline-codec@1.0.28 | 1.78M | 231k | 20.5k | 1.38k | 118 | 92.0k |
+| @lp-labs/polyline-codec@0.1.0 | 768k | 89.8k | 8.08k | 706 | 53.7 | 41.8k |
+| polyline-encoded@0.0.9 | 239k | 24.8k | 2.38k | 231 | 22.4 | 15.6k |
 <!-- /results:node-24 -->
 
 </details>
@@ -197,34 +209,34 @@ Node v24.22.3, 2026-11-26. `@duoquote/polytini` resolved to `src/node.js`. Betwe
 <summary>Node 25</summary>
 
 <!-- results:node-25 -->
-Node v25.2.1, 2026-11-26. `@duoquote/polytini` resolved to `src/node.js`. Between rounds a cell moved by a median of 29%, 69% at worst.
+Node v25.2.1, 2026-11-27. `@duoquote/polytini` resolved to `src/node.js`. Between rounds a cell moved by a median of 5%, 54% at worst.
 
 | decode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0** | 6.76M | 852k | **86.9k** | 8.35k | **542** | **399k** |
-| @googlemaps/polyline-codec@1.0.28 | 7.25M | **964k** | 83.0k | **8.49k** | 482 | 300k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 7.05M | 889k | 86.6k | 7.82k | 450 | 307k |
-| **@duoquote/polytini@0.1.0 (wasm)** | 7.04M | 838k | 74.1k | 7.25k | 431 | 321k |
-| @mapbox/polyline@1.2.1 | **7.58M** | 782k | 64.6k | 5.82k | 354 | 280k |
-| google-polyline@2.0.0 | 6.76M | 676k | 55.6k | 5.06k | 428 | 292k |
-| @placemarkio/polyline@2.0.3 | 7.34M | 597k | 55.6k | 5.30k | 351 | 277k |
-| @pirxpilot/google-polyline@4.0.1 | 4.55M | 517k | 46.7k | 5.42k | 321 | 243k |
-| polyline-encoded@0.0.9 | 1.45M | 160k | 15.5k | 1.37k | 101 | 84.9k |
-| @lp-labs/polyline-codec@0.1.0 | 540k | 62.1k | 5.66k | 536 | 32.7 | 28.5k |
-| decode-google-map-polyline@1.0.1 | 133k | 22.8k | 2.46k | 238 | 17.4 | 16.8k |
+| @googlemaps/polyline-codec@1.0.28 | 7.99M | **1.21M** | **115k** | **10.4k** | 809 | 374k |
+| **@duoquote/polytini@0.1.4** | 7.93M | 1.06M | 105k | 9.75k | **849** | **460k** |
+| **@duoquote/polytini@0.1.4 (web entry)** | 8.14M | 1.04M | 97.4k | 9.12k | 755 | 380k |
+| **@duoquote/polytini@0.1.4 (wasm)** | 8.13M | 1.04M | 99.9k | 9.06k | 710 | 386k |
+| @placemarkio/polyline@2.0.3 | **9.85M** | 943k | 81.8k | 8.45k | 597 | 354k |
+| @mapbox/polyline@1.2.1 | 9.67M | 930k | 84.0k | 8.31k | 595 | 360k |
+| google-polyline@2.0.0 | 8.31M | 902k | 76.5k | 7.77k | 599 | 331k |
+| @pirxpilot/google-polyline@4.0.1 | 6.29M | 680k | 61.2k | 6.20k | 496 | 278k |
+| polyline-encoded@0.0.9 | 2.16M | 230k | 22.7k | 2.12k | 170 | 120k |
+| @lp-labs/polyline-codec@0.1.0 | 653k | 72.8k | 6.92k | 587 | 46.6 | 35.7k |
+| decode-google-map-polyline@1.0.1 | 167k | 29.6k | 3.27k | 318 | 20.9 | 19.6k |
 
 | encode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0** | **5.87M** | 1.13M | 118k | **11.0k** | **906** | **419k** |
-| **@duoquote/polytini@0.1.0 (wasm)** | 3.98M | **1.33M** | **141k** | 8.58k | 847 | 298k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 4.17M | 581k | 68.2k | 6.52k | 559 | 353k |
-| @pirxpilot/google-polyline@4.0.1 | 4.73M | 565k | 50.7k | 4.82k | 429 | 202k |
-| google-polyline@2.0.0 | 4.61M | 611k | 58.2k | 4.56k | 312 | 188k |
-| @placemarkio/polyline@2.0.3 | 3.58M | 517k | 49.5k | 3.98k | 325 | 174k |
-| @mapbox/polyline@1.2.1 | 3.13M | 463k | 42.9k | 3.67k | 320 | 152k |
-| @googlemaps/polyline-codec@1.0.28 | 1.55M | 137k | 16.5k | 1.24k | 111 | 71.1k |
-| @lp-labs/polyline-codec@0.1.0 | 665k | 76.6k | 6.62k | 559 | 37.3 | 34.0k |
-| polyline-encoded@0.0.9 | 218k | 22.6k | 2.14k | 203 | 18.4 | 13.9k |
+| **@duoquote/polytini@0.1.4** | **7.14M** | 1.19M | 127k | **11.7k** | **1.09k** | **484k** |
+| **@duoquote/polytini@0.1.4 (wasm)** | 5.06M | **1.45M** | **152k** | 10.4k | 1.03k | 421k |
+| **@duoquote/polytini@0.1.4 (web entry)** | 5.11M | 679k | 73.4k | 7.27k | 760 | 468k |
+| @pirxpilot/google-polyline@4.0.1 | 5.17M | 638k | 67.8k | 5.45k | 542 | 246k |
+| google-polyline@2.0.0 | 5.04M | 675k | 63.9k | 5.08k | 500 | 239k |
+| @placemarkio/polyline@2.0.3 | 3.98M | 561k | 53.1k | 4.62k | 419 | 202k |
+| @mapbox/polyline@1.2.1 | 3.52M | 508k | 45.2k | 3.95k | 354 | 178k |
+| @googlemaps/polyline-codec@1.0.28 | 1.67M | 225k | 19.6k | 1.57k | 141 | 89.9k |
+| @lp-labs/polyline-codec@0.1.0 | 742k | 85.7k | 8.12k | 744 | 54.1 | 41.7k |
+| polyline-encoded@0.0.9 | 245k | 25.5k | 2.48k | 247 | 24.0 | 16.1k |
 <!-- /results:node-25 -->
 
 </details>
@@ -233,34 +245,34 @@ Node v25.2.1, 2026-11-26. `@duoquote/polytini` resolved to `src/node.js`. Betwee
 <summary>Node 26</summary>
 
 <!-- results:node-26 -->
-Node v26.13.1, 2026-11-26. `@duoquote/polytini` resolved to `src/node.js`. Between rounds a cell moved by a median of 34%, 87% at worst.
+Node v26.13.1, 2026-11-27. `@duoquote/polytini` resolved to `src/node.js`. Between rounds a cell moved by a median of 7%, 56% at worst.
 
 | decode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0** | 6.99M | **887k** | 80.5k | **8.33k** | **561** | **413k** |
-| @googlemaps/polyline-codec@1.0.28 | **7.39M** | 851k | **89.6k** | 8.31k | 506 | 307k |
-| **@duoquote/polytini@0.1.0 (wasm)** | 6.27M | 859k | 88.7k | 5.95k | 474 | 339k |
-| @mapbox/polyline@1.2.1 | 7.06M | 615k | 64.3k | 6.82k | 478 | 308k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 7.00M | 791k | 66.5k | 5.87k | 414 | 295k |
-| @placemarkio/polyline@2.0.3 | 7.22M | 719k | 60.6k | 6.33k | 446 | 284k |
-| google-polyline@2.0.0 | 6.93M | 626k | 49.3k | 6.30k | 426 | 265k |
-| @pirxpilot/google-polyline@4.0.1 | 5.41M | 520k | 43.3k | 5.18k | 410 | 242k |
-| polyline-encoded@0.0.9 | 1.74M | 144k | 15.5k | 1.86k | 83.0 | 94.4k |
-| @lp-labs/polyline-codec@0.1.0 | 541k | 49.4k | 4.23k | 491 | 28.6 | 26.3k |
-| decode-google-map-polyline@1.0.1 | 162k | 29.0k | 3.23k | 313 | 15.5 | 17.0k |
+| **@duoquote/polytini@0.1.4** | 8.15M | **1.27M** | **127k** | **11.5k** | **981** | **521k** |
+| @googlemaps/polyline-codec@1.0.28 | 8.71M | 1.18M | 115k | 10.6k | 810 | 382k |
+| **@duoquote/polytini@0.1.4 (web entry)** | 8.25M | 1.06M | 99.5k | 9.18k | 764 | 377k |
+| **@duoquote/polytini@0.1.4 (wasm)** | 8.10M | 1.06M | 98.4k | 9.16k | 761 | 384k |
+| @placemarkio/polyline@2.0.3 | **9.95M** | 968k | 85.9k | 8.78k | 724 | 362k |
+| @mapbox/polyline@1.2.1 | 9.79M | 943k | 84.8k | 8.51k | 685 | 353k |
+| google-polyline@2.0.0 | 8.12M | 892k | 78.5k | 7.79k | 632 | 324k |
+| @pirxpilot/google-polyline@4.0.1 | 6.23M | 688k | 61.3k | 6.28k | 527 | 273k |
+| polyline-encoded@0.0.9 | 2.21M | 244k | 22.5k | 2.37k | 108 | 121k |
+| @lp-labs/polyline-codec@0.1.0 | 642k | 72.7k | 6.87k | 614 | 39.3 | 34.5k |
+| decode-google-map-polyline@1.0.1 | 232k | 36.6k | 3.88k | 382 | 21.7 | 23.2k |
 
 | encode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0** | **6.24M** | 1.18M | 122k | **10.8k** | 597 | **373k** |
-| **@duoquote/polytini@0.1.0 (wasm)** | 4.05M | **1.36M** | **145k** | 9.49k | **817** | 299k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 3.72M | 550k | 66.1k | 6.80k | 601 | 317k |
-| google-polyline@2.0.0 | 4.25M | 600k | 55.2k | 4.10k | 326 | 169k |
-| @pirxpilot/google-polyline@4.0.1 | 4.58M | 435k | 44.4k | 4.50k | 377 | 180k |
-| @placemarkio/polyline@2.0.3 | 3.76M | 406k | 48.0k | 3.89k | 274 | 161k |
-| @mapbox/polyline@1.2.1 | 3.30M | 458k | 40.5k | 3.82k | 298 | 152k |
-| @googlemaps/polyline-codec@1.0.28 | 1.73M | 225k | 16.8k | 1.46k | 118 | 69.1k |
-| @lp-labs/polyline-codec@0.1.0 | 688k | 76.3k | 6.45k | 435 | 43.9 | 33.5k |
-| polyline-encoded@0.0.9 | 241k | 25.7k | 2.66k | 239 | 22.8 | 16.2k |
+| **@duoquote/polytini@0.1.4** | **7.42M** | 1.23M | 127k | **11.6k** | **1.12k** | **492k** |
+| **@duoquote/polytini@0.1.4 (wasm)** | 5.14M | **1.49M** | **152k** | 10.6k | 1.06k | 374k |
+| **@duoquote/polytini@0.1.4 (web entry)** | 5.12M | 682k | 75.8k | 7.55k | 753 | 439k |
+| @pirxpilot/google-polyline@4.0.1 | 5.05M | 640k | 70.0k | 5.26k | 548 | 233k |
+| google-polyline@2.0.0 | 5.04M | 671k | 64.0k | 5.13k | 486 | 224k |
+| @placemarkio/polyline@2.0.3 | 4.10M | 573k | 54.4k | 4.65k | 424 | 205k |
+| @mapbox/polyline@1.2.1 | 3.68M | 532k | 47.8k | 4.04k | 359 | 168k |
+| @googlemaps/polyline-codec@1.0.28 | 1.93M | 249k | 21.7k | 1.86k | 167 | 96.5k |
+| @lp-labs/polyline-codec@0.1.0 | 791k | 91.3k | 8.26k | 733 | 59.2 | 42.2k |
+| polyline-encoded@0.0.9 | 297k | 30.9k | 3.06k | 299 | 28.0 | 19.2k |
 <!-- /results:node-26 -->
 
 </details>
@@ -269,34 +281,34 @@ Node v26.13.1, 2026-11-26. `@duoquote/polytini` resolved to `src/node.js`. Betwe
 <summary>Deno</summary>
 
 <!-- results:deno -->
-Deno v2.5.4, 2026-11-26. `@duoquote/polytini` resolved to `src/deno.js`. Between rounds a cell moved by a median of 35%, 66% at worst.
+Deno v2.5.4, 2026-11-27. `@duoquote/polytini` resolved to `src/deno.js`. Between rounds a cell moved by a median of 5%, 56% at worst.
 
 | decode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0** | 7.74M | 789k | **94.1k** | **9.35k** | **684** | **395k** |
-| **@duoquote/polytini@0.1.0 (wasm)** | 7.53M | **890k** | 84.7k | 7.48k | 379 | 311k |
-| @googlemaps/polyline-codec@1.0.28 | 6.36M | 871k | 81.1k | 6.99k | 475 | 322k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 7.05M | 804k | 75.6k | 6.90k | 378 | 317k |
-| @mapbox/polyline@1.2.1 | **8.36M** | 707k | 67.1k | 5.30k | 487 | 294k |
-| @placemarkio/polyline@2.0.3 | 7.18M | 594k | 60.4k | 5.88k | 365 | 291k |
-| google-polyline@2.0.0 | 5.50M | 597k | 49.7k | 5.77k | 354 | 245k |
-| @pirxpilot/google-polyline@4.0.1 | 4.86M | 381k | 44.5k | 5.12k | 350 | 226k |
-| polyline-encoded@0.0.9 | 1.90M | 188k | 17.6k | 1.79k | 134 | 89.6k |
-| @lp-labs/polyline-codec@0.1.0 | 504k | 63.7k | 4.88k | 444 | 32.4 | 26.6k |
-| decode-google-map-polyline@1.0.1 | 128k | 23.4k | 2.16k | 215 | 15.6 | 15.3k |
+| **@duoquote/polytini@0.1.4** | 8.17M | 1.09M | **120k** | **11.6k** | **883** | **484k** |
+| @googlemaps/polyline-codec@1.0.28 | 8.22M | **1.16M** | 114k | 10.1k | 791 | 384k |
+| **@duoquote/polytini@0.1.4 (wasm)** | 8.30M | 1.05M | 101k | 9.12k | 681 | 387k |
+| **@duoquote/polytini@0.1.4 (web entry)** | 8.33M | 1.05M | 99.1k | 8.93k | 682 | 397k |
+| @placemarkio/polyline@2.0.3 | **9.98M** | 990k | 83.0k | 8.43k | 626 | 357k |
+| @mapbox/polyline@1.2.1 | 9.74M | 984k | 84.8k | 8.55k | 614 | 340k |
+| google-polyline@2.0.0 | 8.50M | 911k | 76.3k | 7.66k | 598 | 328k |
+| @pirxpilot/google-polyline@4.0.1 | 6.24M | 694k | 61.1k | 6.11k | 493 | 278k |
+| polyline-encoded@0.0.9 | 2.23M | 236k | 22.0k | 2.07k | 173 | 121k |
+| @lp-labs/polyline-codec@0.1.0 | 602k | 73.1k | 6.73k | 609 | 42.5 | 35.2k |
+| decode-google-map-polyline@1.0.1 | 164k | 26.3k | 3.05k | 309 | 20.1 | 19.1k |
 
 | encode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0** | 4.19M | 542k | 107k | **9.60k** | **715** | 283k |
-| **@duoquote/polytini@0.1.0 (wasm)** | 4.14M | **650k** | **107k** | 6.73k | 670 | 244k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 4.19M | 597k | 62.3k | 6.33k | 561 | **374k** |
-| google-polyline@2.0.0 | **4.47M** | 523k | 58.1k | 3.95k | 416 | 184k |
-| @pirxpilot/google-polyline@4.0.1 | 3.58M | 504k | 47.5k | 4.14k | 382 | 199k |
-| @placemarkio/polyline@2.0.3 | 3.53M | 515k | 44.6k | 3.63k | 294 | 148k |
-| @mapbox/polyline@1.2.1 | 3.27M | 442k | 40.4k | 3.36k | 268 | 155k |
-| @googlemaps/polyline-codec@1.0.28 | 1.56M | 152k | 15.6k | 977 | 66.8 | 73.4k |
-| @lp-labs/polyline-codec@0.1.0 | 641k | 70.9k | 5.07k | 436 | 34.5 | 35.5k |
-| polyline-encoded@0.0.9 | 189k | 22.9k | 2.22k | 197 | 18.0 | 12.6k |
+| **@duoquote/polytini@0.1.4** | 5.01M | 1.04M | 129k | **12.1k** | **1.07k** | 448k |
+| **@duoquote/polytini@0.1.4 (wasm)** | 5.02M | **1.17M** | **138k** | 9.91k | 982 | 352k |
+| **@duoquote/polytini@0.1.4 (web entry)** | 4.95M | 663k | 73.1k | 7.17k | 735 | **461k** |
+| @pirxpilot/google-polyline@4.0.1 | 5.07M | 592k | 62.0k | 5.30k | 547 | 246k |
+| google-polyline@2.0.0 | **5.10M** | 668k | 63.4k | 4.94k | 490 | 230k |
+| @placemarkio/polyline@2.0.3 | 4.08M | 579k | 53.6k | 4.61k | 414 | 203k |
+| @mapbox/polyline@1.2.1 | 3.52M | 500k | 46.1k | 3.96k | 357 | 171k |
+| @googlemaps/polyline-codec@1.0.28 | 1.73M | 229k | 19.9k | 1.33k | 122 | 90.6k |
+| @lp-labs/polyline-codec@0.1.0 | 737k | 86.4k | 7.93k | 696 | 53.3 | 41.4k |
+| polyline-encoded@0.0.9 | 247k | 25.0k | 2.42k | 242 | 22.6 | 15.6k |
 <!-- /results:deno -->
 
 </details>
@@ -305,36 +317,34 @@ Deno v2.5.4, 2026-11-26. `@duoquote/polytini` resolved to `src/deno.js`. Between
 <summary>Chrome</summary>
 
 <!-- results:browser -->
-Chrome 157.0.8103.80 (headless), 2026-11-26. `@duoquote/polytini` resolved to `src/browser.js`. Between rounds a cell moved by a median of 33%, 72% at worst.
+Chrome 157.0.8103.80 (headless), 2026-11-27. `@duoquote/polytini` resolved to `src/browser.js`. Between rounds a cell moved by a median of 6%, 57% at worst.
 
 | decode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| @googlemaps/polyline-codec@1.0.28 | 8.33M | 1.05M | **111k** | 9.52k | **847** | **463k** |
-| @placemarkio/polyline@2.0.3 | **10.3M** | 1.08M | 93.0k | 8.70k | 644 | 402k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 7.69M | **1.11M** | **111k** | **9.52k** | 630 | 406k |
-| google-polyline@2.0.0 | 8.70M | 1.03M | 81.6k | 7.55k | 714 | 437k |
-| @mapbox/polyline@1.2.1 | 9.09M | 952k | 87.0k | 7.27k | 637 | 421k |
-| **@duoquote/polytini@0.1.0** | 8.89M | 1.03M | 85.1k | 7.27k | 608 | 419k |
-| **@duoquote/polytini@0.1.0 (wasm)** | 8.51M | 808k | 78.4k | 6.78k | 743 | 458k |
-| @pirxpilot/google-polyline@4.0.1 | 6.15M | 667k | 47.6k | 6.15k | 434 | 324k |
-| google.maps.geometry.encoding | 3.45M | 455k | 48.8k | 4.12k | 152 | 270k |
-| polyline-encoded@0.0.9 | 1.87M | 209k | 18.8k | 1.66k | 90.4 | 104k |
-| @lp-labs/polyline-codec@0.1.0 | 766k | 80.3k | 6.35k | 544 | 48.8 | 38.8k |
-| decode-google-map-polyline@1.0.1 | 222k | 36.9k | 3.30k | 353 | 25.4 | 23.2k |
+| @googlemaps/polyline-codec@1.0.28 | 9.76M | **1.38M** | **133k** | **11.8k** | **1.09k** | 535k |
+| @placemarkio/polyline@2.0.3 | **11.8M** | 1.33M | 111k | 11.1k | 1.02k | 528k |
+| @mapbox/polyline@1.2.1 | **11.8M** | 1.25M | 108k | 10.8k | 990 | 517k |
+| **@duoquote/polytini@0.1.4** | 9.30M | 1.29M | 125k | 11.1k | 881 | **541k** |
+| **@duoquote/polytini@0.1.4 (web entry)** | 9.30M | 1.29M | 125k | 11.1k | 879 | 533k |
+| **@duoquote/polytini@0.1.4 (wasm)** | 9.52M | 1.29M | 121k | 11.1k | 862 | 526k |
+| google-polyline@2.0.0 | 9.30M | 1.18M | 97.6k | 9.76k | 905 | 478k |
+| @pirxpilot/google-polyline@4.0.1 | 7.14M | 833k | 74.1k | 7.27k | 707 | 386k |
+| polyline-encoded@0.0.9 | 2.45M | 274k | 24.6k | 2.61k | 103 | 142k |
+| @lp-labs/polyline-codec@0.1.0 | 766k | 89.0k | 8.40k | 756 | 58.4 | 45.5k |
+| decode-google-map-polyline@1.0.1 | 262k | 44.8k | 4.76k | 472 | 29.3 | 28.5k |
 
 | encode, calls/s | 10 pts | 100 pts | 1,000 pts | 10,000 pts | 100,000 pts | real-world line |
 |---|--:|--:|--:|--:|--:|--:|
-| **@duoquote/polytini@0.1.0** | 4.47M | **678k** | **133k** | **11.8k** | **930** | 407k |
-| **@duoquote/polytini@0.1.0 (wasm)** | 4.35M | 656k | 127k | 9.30k | 826 | 315k |
-| **@duoquote/polytini@0.1.0 (web entry)** | 3.88M | 661k | 76.9k | 7.55k | 778 | **442k** |
-| google-polyline@2.0.0 | **5.06M** | 537k | 58.8k | 4.88k | 472 | 215k |
-| @pirxpilot/google-polyline@4.0.1 | 4.88M | 563k | 62.5k | 4.76k | 391 | 219k |
-| @placemarkio/polyline@2.0.3 | 3.39M | 548k | 47.3k | 4.12k | 380 | 159k |
-| @mapbox/polyline@1.2.1 | 3.43M | 447k | 44.0k | 3.15k | 295 | 157k |
-| @googlemaps/polyline-codec@1.0.28 | 2.55M | 336k | 28.0k | 2.55k | 217 | 126k |
-| google.maps.geometry.encoding | 2.33M | 323k | 25.8k | 2.13k | 142 | 89.4k |
-| @lp-labs/polyline-codec@0.1.0 | 843k | 101k | 8.89k | 727 | 55.9 | 40.7k |
-| polyline-encoded@0.0.9 | 343k | 31.2k | 3.34k | 304 | 29.4 | 18.7k |
+| **@duoquote/polytini@0.1.4** | **5.56M** | 755k | **138k** | **12.5k** | **1.03k** | 515k |
+| **@duoquote/polytini@0.1.4 (wasm)** | 5.48M | **1.08M** | **138k** | 10.3k | 971 | 369k |
+| **@duoquote/polytini@0.1.4 (web entry)** | 5.48M | 741k | 81.6k | 8.33k | 837 | **541k** |
+| @pirxpilot/google-polyline@4.0.1 | 5.26M | 645k | 71.4k | 5.88k | 583 | 251k |
+| google-polyline@2.0.0 | 5.26M | 702k | 70.2k | 5.48k | 539 | 247k |
+| @placemarkio/polyline@2.0.3 | 4.26M | 625k | 55.6k | 4.76k | 452 | 210k |
+| @mapbox/polyline@1.2.1 | 3.67M | 541k | 48.2k | 4.04k | 373 | 185k |
+| @googlemaps/polyline-codec@1.0.28 | 2.76M | 370k | 32.8k | 3.01k | 282 | 145k |
+| @lp-labs/polyline-codec@0.1.0 | 964k | 111k | 10.3k | 942 | 78.3 | 51.6k |
+| polyline-encoded@0.0.9 | 370k | 37.0k | 3.73k | 356 | 35.1 | 23.1k |
 <!-- /results:browser -->
 
 </details>
@@ -362,6 +372,7 @@ Chrome 157.0.8103.80 (headless), 2026-11-26. `@duoquote/polytini` resolved to `s
 npm ci
 npm test              # correctness, every library
 npm run bench:all     # everything, about 10 minutes
+npm run bench:clean   # one step at a time, pinned, about 30 minutes: the published numbers
 npm run bench:quick   # about a minute, for checking changes
 ```
 
