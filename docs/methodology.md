@@ -16,9 +16,9 @@ The README has the results. This page has the details behind them.
 | `decode-google-map-polyline` | 1.0.1 | 2017-01 | 2,949 | `{lat, lng}` | 5 only, decode only |
 | `@pirxpilot/google-polyline` | 4.0.1 | 2026-02 | 50 | `[lng, lat]` | 5, 6 |
 | `@lp-labs/polyline-codec` | 0.1.0 | 2026-11 | 28 | `{latitude, longitude}` | 5, 6 |
-| `@duoquote/polytini` | 0.1.0 | not published yet | | `[lat, lng]` or `[lng, lat]` | 0 to 15 |
+| `@duoquote/polytini` | 0.1.4 | 2026-11 | new | `[lat, lng]` or `[lng, lat]` | 0 to 15 |
 
-Downloads are from npm for 19 to 25 November 2026. Most of `ol`'s downloads are for the map library as a whole, not its polyline format, so the relative tables and charts use `@mapbox/polyline` as the 1.0x baseline: it's the most downloaded polyline library, and the one people most likely have installed.
+Downloads are from npm for 19 to 25 November 2026; polytini was first published on 27 November, after that week. Most of `ol`'s downloads are for the map library as a whole, not its polyline format, so the relative tables and charts use `@mapbox/polyline` as the 1.0x baseline: it's the most downloaded polyline library, and the one people most likely have installed.
 
 Since 2021, `@googlemaps/polyline-codec` went from 1.0.2 to 1.0.28 and `@mapbox/polyline` from 1.1.1 to 1.2.1. `google-polyline` went from 1.0.3 to 2.0.0, which is ESM and lives on Codeberg now. `polyline-encoded` and `decode-google-map-polyline` haven't had a release since 2020 and 2017. I kept both because people still download them every week.
 
@@ -112,12 +112,12 @@ For the `google.maps.geometry.encoding` row, set `GOOGLE_MAPS_API_KEY` to a Maps
 
 I've only run the benchmark on Windows. CI runs the correctness tests on Ubuntu with Node 22, 24 and 26, Bun and Deno.
 
-## polytini from GitHub
+## Updating polytini
 
-polytini isn't on npm yet, so `package.json` takes it from its GitHub repository at a fixed commit. Update it with `npm install github:Duoquote/polytini#<commit>`:
+polytini comes from npm at an exact version, like every other library. Before 0.1.4 it came from its GitHub repository at a fixed commit, because it wasn't published yet; the 27 November run used 0.1.0 that way. To move to a new release:
 
-```json
-"@duoquote/polytini": "github:Duoquote/polytini#<commit>"
+```sh
+npm install --save-exact @duoquote/polytini@<version>
 ```
 
-Once it's published, switch to the npm package with `npm install @duoquote/polytini@<version>`, which replaces that line with a normal version range. Nothing else changes: the adapters import `@duoquote/polytini` and its subpaths either way.
+The adapters import `@duoquote/polytini` and its subpaths, and the version in each row's name comes from the installed package.json, so nothing else changes. Then update the version in the library table above.

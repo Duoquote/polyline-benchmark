@@ -2,7 +2,7 @@
 
 Notes for AI coding agents working in this repository.
 
-This repo compares the JavaScript libraries for Google's encoded polyline format: correctness first, then speed, memory and size, on Bun, Node 22 to 26, Deno and Chrome. It isn't published anywhere (`"private": true`). polytini comes from its GitHub repo at a fixed commit (see docs/methodology.md).
+This repo compares the JavaScript libraries for Google's encoded polyline format: correctness first, then speed, memory and size, on Bun, Node 22 to 26, Deno and Chrome. It isn't published anywhere (`"private": true`). polytini comes from npm at an exact version, like the other libraries (see docs/methodology.md#updating-polytini).
 
 ## Commands
 

@@ -24,7 +24,7 @@
     "memory": "node --expose-gc --max-semi-space-size=128 bench/memory.js"
   },
   "dependencies": {
-    "@duoquote/polytini": "github:Duoquote/polytini#9b760a323c3902e57d4009cfc2be5b6850516ee4",
+    "@duoquote/polytini": "0.1.4",
     "@googlemaps/polyline-codec": "1.0.28",
     "@here/flexpolyline": "0.1.0",
     "@lp-labs/polyline-codec": "0.1.0",
