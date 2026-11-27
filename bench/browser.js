@@ -28,6 +28,9 @@ import { defs } from '../src/adapters.js';
 import { version } from '../src/implementations.js';
 import { summarize, roundOrder } from './measure.js';
 import { speedTables } from './report.js';
+import { applyPriority } from './priority.js';
+
+applyPriority();
 
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright-core');

@@ -17,6 +17,9 @@ import { encodeFlexible } from '../src/adapters.js';
 import { environment, environmentMarkdown } from '../src/environment.js';
 import { measure, summarize, roundOrder } from './measure.js';
 import { speedTables } from './report.js';
+import { applyPriority } from './priority.js';
+
+applyPriority();
 
 const args = process.argv.slice(2);
 const opt = (name, fallback) => {

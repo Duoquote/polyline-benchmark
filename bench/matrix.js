@@ -19,6 +19,17 @@
 // same conditions, so parallel steps add noise but no bias. Use --jobs 1 for
 // the quietest numbers. Each step's output goes to results/logs/<step>.log.
 //
+//   node bench/matrix.js --jobs 1 --prio high --affinity 0xF000
+//
+// is what the published runs use on Windows, the same as polytini's
+// bench/ab.js: one step at a time, high priority, pinned to logical CPUs
+// 12 to 15. `--affinity` pins this process, and Windows passes the mask on
+// to every child, Chrome included. `--prio high` sets BENCH_PRIORITY=high,
+// and run.js, memory.js and browser.js raise their own priority from it,
+// because a child doesn't inherit a high priority class. Both are Windows
+// only; elsewhere they're ignored. With --jobs 1 the run takes longer than
+// 15 minutes; results/logs/matrix.log has the time of every step.
+//
 // Node versions other than the one running this script come from
 // `npx -p node@<major>`, so the global Node install is never changed. Set
 // BUN or DENO to pick a binary: a machine can have more than one Bun on
@@ -41,6 +52,11 @@ const skip = new Set(opt('skip', '').split(',').filter(Boolean));
 const root = fileURLToPath(new URL('..', import.meta.url));
 const logs = `${root}results/logs/`;
 mkdirSync(logs, { recursive: true });
+const prio = opt('prio', 'normal'), affinity = opt('affinity', null);
+if (affinity && process.platform === 'win32') {
+  spawnSync('powershell', ['-NoProfile', '-Command', `(Get-Process -Id ${process.pid}).ProcessorAffinity = ${Number(affinity)}`], { stdio: 'inherit' });
+}
+if (prio === 'high') process.env.BENCH_PRIORITY = 'high';
 const common = ['--time', time, '--rounds', rounds, ...(quick ? ['--no-write'] : [])];
 if (quick) delete process.env.GOOGLE_MAPS_API_KEY;
 const mine = process.versions.node.split('.')[0];
@@ -68,11 +84,18 @@ const steps = [
 const shell = (cmd) => process.platform === 'win32' && cmd === 'npx';
 const started = Date.now();
 const mins = (t) => ((Date.now() - t) / 60000).toFixed(1);
+const matrixLog = createWriteStream(`${logs}matrix.log`);
+const say = (line) => {
+  console.error(line);
+  matrixLog.write(`${new Date().toISOString()} ${line}
+`);
+};
+say(`jobs ${jobs}, time ${time} ms, rounds ${rounds}, priority ${prio}${affinity ? `, affinity ${affinity}` : ''}`);
 
 function runStep([name, [cmd, ...pre], rest]) {
   // --version doesn't need the deno subcommand flags.
   const version = spawnSync(cmd, [...pre, '--version'], { encoding: 'utf8', shell: shell(cmd) }).stdout?.split('\n')[0].trim();
-  console.error(`start ${name} (${version})`);
+  say(`start ${name} (${version})`);
   const log = createWriteStream(`${logs}${name}.log`);
   log.write(`${[cmd, ...pre, ...rest].join(' ')}\n${version}\n`);
   const t = Date.now();
@@ -82,7 +105,7 @@ function runStep([name, [cmd, ...pre], rest]) {
     child.stderr.pipe(log, { end: false });
     child.on('close', (code) => {
       log.end();
-      console.error(`${code === 0 ? 'done ' : 'FAIL '} ${name}: exit ${code}, ${mins(t)} min${code === 0 ? '' : `, see results/logs/${name}.log`}`);
+      say(`${code === 0 ? 'done ' : 'FAIL '} ${name}: exit ${code}, ${mins(t)} min${code === 0 ? '' : `, see results/logs/${name}.log`}`);
       if (code !== 0) process.exitCode = 1;
       done();
     });
@@ -93,4 +116,5 @@ const queue = [...steps];
 await Promise.all(Array.from({ length: Math.min(jobs, queue.length) }, async () => {
   while (queue.length) await runStep(queue.shift());
 }));
-console.error(`all steps finished in ${mins(started)} min`);
+say(`all steps finished in ${mins(started)} min`);
+matrixLog.end();

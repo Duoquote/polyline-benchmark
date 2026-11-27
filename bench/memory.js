@@ -25,6 +25,9 @@ import { implementations, polytiniEntry } from '../src/implementations.js';
 import { benchFixtures } from '../src/fixtures.js';
 import { environment } from '../src/environment.js';
 import { roundOrder } from './measure.js';
+import { applyPriority } from './priority.js';
+
+applyPriority();
 
 const args = process.argv.slice(2);
 const opt = (name, fallback) => {
