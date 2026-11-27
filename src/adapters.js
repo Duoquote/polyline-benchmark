@@ -21,6 +21,7 @@ import { encodeDeltas, decodeDeltas } from 'ol/format/Polyline.js';
 import * as polytini from '@duoquote/polytini';
 import * as polytiniWeb from '@duoquote/polytini/web';
 import * as polytiniWasm from '@duoquote/polytini/wasm';
+import * as polytiniLite from '@duoquote/polytini/lite';
 import hereFlex from '@here/flexpolyline';
 import * as polytiniFlex from '@duoquote/polytini/flexible';
 import { binaryPaths } from '@duoquote/polytini/deckgl';
@@ -129,6 +130,16 @@ export const defs = [
     precisions: [5, 6],
     encode: (points, p) => polytiniWeb.encode(points, p),
     decode: (str, p) => polytiniWeb.decode(str, p),
+  },
+  {
+    pkg: '@duoquote/polytini',
+    variant: 'lite',
+    // /lite: the fast loops alone, a precision number and plain errors, for
+    // the smallest bundle. Same output as the main entry.
+    shape: 'latlng',
+    precisions: [5, 6],
+    encode: (points, p) => polytiniLite.encode(points, p),
+    decode: (str, p) => polytiniLite.decode(str, p),
   },
   {
     pkg: '@duoquote/polytini',

@@ -54,7 +54,7 @@ const THEMES = {
 };
 const FONT = "font-family=\"-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif\"";
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-const isOurs = (n) => n.startsWith('@duoquote/polytini@');
+const isOurs = (n) => n.startsWith('@duoquote/polytini@') || n.startsWith('@duoquote/polytini/lite@');
 // Short names: drop the version, keep polytini's variant.
 const short = (n) => n.replace(/@\d[^ ]*/, '');
 // Shorter still, for the heatmap cells: the scope, or the bare package name.
@@ -587,11 +587,12 @@ function sizePanels(t, { title, subtitle, panels, notes: footer }) {
 // Bundle size, gzipped, per import, smallest first in each panel. The
 // first row per package in results/size.json is its default import; the
 // other rows (polytini's other entries, ol's whole format class, HERE's
-// format) are in the tables only.
+// format) are in the tables only. /lite has a package name of its own
+// there, so it gets a bar.
 if (existsSync(results + 'size.json')) {
   const size = JSON.parse(readFileSync(results + 'size.json', 'utf8'));
   const seen = new Set(), main = size.rows.filter((r) => !/flexpolyline/.test(r.pkg) && !seen.has(r.pkg) && seen.add(r.pkg));
-  const label = (r) => (r.pkg === '@duoquote/polytini' ? `polytini ${r.version}` : r.note ? `${r.pkg} (${r.note.split(' ')[0]})` : r.pkg);
+  const label = (r) => (r.pkg === '@duoquote/polytini' ? `polytini ${r.version}` : r.pkg === '@duoquote/polytini/lite' ? `polytini ${r.version} /lite` : r.note ? `${r.pkg} (${r.note.split(' ')[0]})` : r.pkg);
   const panels = Object.keys(IMPORT_TITLES).map((k) => ({
     label: IMPORT_TITLES[k],
     rows: main.filter((r) => r.imports[k]).map((r) => ({ name: `${r.pkg}@${r.version}`, label: label(r), value: r.imports[k].esbuild.gzip })).sort((a, b) => a.value - b.value),

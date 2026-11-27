@@ -62,6 +62,7 @@ const rows = [
   ['decode-google-map-polyline', 'decodes only', { decode: `import d from 'decode-google-map-polyline'; ${keep(['d'])}`, whole: whole('decode-google-map-polyline') }],
   ['@lp-labs/polyline-codec', '', named('@lp-labs/polyline-codec', 'decodePolyline', 'encodePolyline')],
   ['ol', 'encodeDeltas/decodeDeltas', { ...named('ol/format/Polyline.js', 'decodeDeltas', 'encodeDeltas'), whole: undefined }],
+  ['@duoquote/polytini/lite', '', named('@duoquote/polytini/lite')],
   ['@duoquote/polytini', '/web entry', named('@duoquote/polytini/web')],
   ['@duoquote/polytini', 'node entry', named('@duoquote/polytini/node'), 'node'],
   ['@duoquote/polytini', '/wasm, JS glue plus inlined .wasm', { decode: `import { init, decode } from '@duoquote/polytini/wasm'; ${keep(['init', 'decode'])}`, encode: `import { init, encode } from '@duoquote/polytini/wasm'; ${keep(['init', 'encode'])}`, both: `import { init, decode, encode } from '@duoquote/polytini/wasm'; ${keep(['init', 'decode', 'encode'])}`, whole: whole('@duoquote/polytini/wasm') }],
@@ -113,7 +114,7 @@ const out = [];
 let n = 0;
 try {
   for (const [pkg, note, imports, platform = 'browser'] of rows) {
-    const row = { pkg, version: version(pkg.replace(/\/format\/.*$/, '')), note, platform, imports: {} };
+    const row = { pkg, version: version(pkg.replace(/\/format\/.*$|\/lite$/, '')), note, platform, imports: {} };
     for (const k of IMPORTS) {
       if (!imports[k]) continue;
       // Entries in the repo, so packages resolve from its node_modules.
