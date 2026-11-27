@@ -39,7 +39,7 @@ Allocated per call on Node 24 and Deno, relative to `@mapbox/polyline`. How it's
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="charts/size-dark.svg">
-  <img alt="Gzipped bundle size of every library" src="charts/size-light.svg">
+  <img alt="Gzipped bundle size of every library for decode only, encode only, both and the whole entry" src="charts/size-light.svg">
 </picture>
 
 ## Calls per second, per runtime

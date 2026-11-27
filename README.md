@@ -40,7 +40,8 @@ Across all 8 runtimes (geometric mean over runtimes and sizes):
 | Encode from typed arrays | **@duoquote/polytini (wasm, Float64Array)** | @duoquote/polytini (Float64Array) | 1.03x faster, within the noise |
 | Decode 1000 lines in one call | **@duoquote/polytini (wasm decodeMany/encodeMany)** | @duoquote/polytini (wasm, Float64Array) | 1.57x faster |
 | Least memory per decode (10,000 points, [lat, lng] arrays) | **@duoquote/polytini (764.8 KB)** | @googlemaps/polyline-codec (766.2 KB) | 0.2% less |
-| Smallest bundle (gzipped) | google-polyline (551 B) | @googlemaps/polyline-codec (568 B) | 17 B smaller |
+| Smallest bundle, decode only (gzipped) | @placemarkio/polyline (230 B) | @googlemaps/polyline-codec (252 B) | 22 B smaller |
+| Smallest bundle, decode and encode (gzipped) | @placemarkio/polyline (424 B) | google-polyline (464 B) | 40 B smaller |
 | Strict validation (throws on bad input) | **@duoquote/polytini** | @lp-labs/polyline-codec | 17x faster |
 | HERE Flexible Polyline (encode and decode) | **@duoquote/polytini (flexible)** | @here/flexpolyline | 25x faster |
 <!-- /best -->
@@ -362,7 +363,7 @@ Chrome 157.0.8103.80 (headless), 2026-11-27. `@duoquote/polytini` resolved to `s
 </picture>
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/charts/size-dark.svg">
-  <img alt="Gzipped bundle size of every library, smallest first" src="docs/charts/size-light.svg">
+  <img alt="Gzipped bundle size of every library for decode only, encode only, both and the whole entry, smallest first" src="docs/charts/size-light.svg">
 </picture>
 <!-- /charts:more -->
 

@@ -1,87 +1,950 @@
-[
-  {
-    "name": "@mapbox/polyline@1.2.1",
-    "min": 1810,
-    "gzip": 948
+{
+  "date": "2026-11-27",
+  "bundlers": {
+    "esbuild": "0.28.2",
+    "rollup": "4.68.8",
+    "webpack": "5.113.0"
   },
-  {
-    "name": "@googlemaps/polyline-codec@1.0.28",
-    "min": 1035,
-    "gzip": 568
-  },
-  {
-    "name": "google-polyline@2.0.0",
-    "min": 873,
-    "gzip": 551
-  },
-  {
-    "name": "@pirxpilot/google-polyline@4.0.1",
-    "min": 973,
-    "gzip": 595
-  },
-  {
-    "name": "@placemarkio/polyline@2.0.3",
-    "min": 1016,
-    "gzip": 580
-  },
-  {
-    "name": "polyline-encoded@0.0.9",
-    "min": 3106,
-    "gzip": 1205
-  },
-  {
-    "name": "decode-google-map-polyline@1.0.1",
-    "min": 1367,
-    "gzip": 738
-  },
-  {
-    "name": "@lp-labs/polyline-codec@0.1.0",
-    "min": 2639,
-    "gzip": 1223
-  },
-  {
-    "name": "@duoquote/polytini@0.1.4 (browser entry, every export)",
-    "min": 5028,
-    "gzip": 2333
-  },
-  {
-    "name": "@duoquote/polytini@0.1.4 (web entry, every export)",
-    "min": 4133,
-    "gzip": 2052
-  },
-  {
-    "name": "@duoquote/polytini@0.1.4 (encode and decode only)",
-    "min": 4382,
-    "gzip": 2041
-  },
-  {
-    "name": "@duoquote/polytini@0.1.4 (node entry)",
-    "min": 5505,
-    "gzip": 2695
-  },
-  {
-    "name": "@duoquote/polytini@0.1.4 (wasm, JS glue plus inlined .wasm)",
-    "min": 9568,
-    "gzip": 4638
-  },
-  {
-    "name": "ol@10.11.0 (encodeDeltas/decodeDeltas)",
-    "min": 3977,
-    "gzip": 1548
-  },
-  {
-    "name": "ol@10.11.0 (ol/format/Polyline)",
-    "min": 27937,
-    "gzip": 9749
-  },
-  {
-    "name": "@here/flexpolyline@0.1.0 (HERE Flexible Polyline)",
-    "min": 2666,
-    "gzip": 1433
-  },
-  {
-    "name": "@duoquote/polytini@0.1.4 (flexible)",
-    "min": 4300,
-    "gzip": 2107
-  }
-]
+  "rows": [
+    {
+      "pkg": "@duoquote/polytini",
+      "version": "0.1.6",
+      "note": "",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 1904,
+            "gzip": 1063
+          },
+          "rollup": {
+            "min": 1864,
+            "gzip": 1021
+          },
+          "webpack": {
+            "min": 1888,
+            "gzip": 1035
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 3050,
+            "gzip": 1432
+          },
+          "rollup": {
+            "min": 2926,
+            "gzip": 1433
+          },
+          "webpack": {
+            "min": 3047,
+            "gzip": 1476
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 4209,
+            "gzip": 1895
+          },
+          "rollup": {
+            "min": 4045,
+            "gzip": 1907
+          },
+          "webpack": {
+            "min": 4194,
+            "gzip": 1939
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 5368,
+            "gzip": 2278
+          },
+          "rollup": {
+            "min": 5265,
+            "gzip": 2287
+          },
+          "webpack": {
+            "min": 5538,
+            "gzip": 2397
+          }
+        }
+      }
+    },
+    {
+      "pkg": "@mapbox/polyline",
+      "version": "1.2.1",
+      "note": "",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 1829,
+            "gzip": 956
+          },
+          "rollup": {
+            "min": 1356,
+            "gzip": 720
+          },
+          "webpack": {
+            "min": 1306,
+            "gzip": 681
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 1829,
+            "gzip": 956
+          },
+          "rollup": {
+            "min": 1356,
+            "gzip": 720
+          },
+          "webpack": {
+            "min": 1306,
+            "gzip": 680
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 1846,
+            "gzip": 960
+          },
+          "rollup": {
+            "min": 1365,
+            "gzip": 723
+          },
+          "webpack": {
+            "min": 1317,
+            "gzip": 685
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 1812,
+            "gzip": 949
+          },
+          "rollup": {
+            "min": 1674,
+            "gzip": 873
+          },
+          "webpack": {
+            "min": 2202,
+            "gzip": 1087
+          }
+        }
+      }
+    },
+    {
+      "pkg": "@googlemaps/polyline-codec",
+      "version": "1.0.28",
+      "note": "",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 366,
+            "gzip": 252
+          },
+          "rollup": {
+            "min": 358,
+            "gzip": 247
+          },
+          "webpack": {
+            "min": 357,
+            "gzip": 245
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 536,
+            "gzip": 340
+          },
+          "rollup": {
+            "min": 528,
+            "gzip": 340
+          },
+          "webpack": {
+            "min": 523,
+            "gzip": 335
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 882,
+            "gzip": 472
+          },
+          "rollup": {
+            "min": 870,
+            "gzip": 481
+          },
+          "webpack": {
+            "min": 865,
+            "gzip": 476
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 1035,
+            "gzip": 568
+          },
+          "rollup": {
+            "min": 939,
+            "gzip": 531
+          },
+          "webpack": {
+            "min": 1205,
+            "gzip": 653
+          }
+        }
+      }
+    },
+    {
+      "pkg": "google-polyline",
+      "version": "2.0.0",
+      "note": "",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 739,
+            "gzip": 459
+          },
+          "rollup": {
+            "min": 281,
+            "gzip": 229
+          },
+          "webpack": {
+            "min": 706,
+            "gzip": 433
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 739,
+            "gzip": 460
+          },
+          "rollup": {
+            "min": 469,
+            "gzip": 319
+          },
+          "webpack": {
+            "min": 706,
+            "gzip": 433
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 748,
+            "gzip": 464
+          },
+          "rollup": {
+            "min": 718,
+            "gzip": 441
+          },
+          "webpack": {
+            "min": 715,
+            "gzip": 438
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 873,
+            "gzip": 551
+          },
+          "rollup": {
+            "min": 767,
+            "gzip": 481
+          },
+          "webpack": {
+            "min": 1019,
+            "gzip": 612
+          }
+        }
+      }
+    },
+    {
+      "pkg": "@pirxpilot/google-polyline",
+      "version": "4.0.1",
+      "note": "",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 405,
+            "gzip": 305
+          },
+          "rollup": {
+            "min": 393,
+            "gzip": 302
+          },
+          "webpack": {
+            "min": 392,
+            "gzip": 300
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 416,
+            "gzip": 295
+          },
+          "rollup": {
+            "min": 414,
+            "gzip": 298
+          },
+          "webpack": {
+            "min": 413,
+            "gzip": 296
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 805,
+            "gzip": 491
+          },
+          "rollup": {
+            "min": 791,
+            "gzip": 494
+          },
+          "webpack": {
+            "min": 790,
+            "gzip": 491
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 973,
+            "gzip": 595
+          },
+          "rollup": {
+            "min": 881,
+            "gzip": 549
+          },
+          "webpack": {
+            "min": 1141,
+            "gzip": 679
+          }
+        }
+      }
+    },
+    {
+      "pkg": "@placemarkio/polyline",
+      "version": "2.0.3",
+      "note": "",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 326,
+            "gzip": 230
+          },
+          "rollup": {
+            "min": 339,
+            "gzip": 236
+          },
+          "webpack": {
+            "min": 338,
+            "gzip": 233
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 423,
+            "gzip": 293
+          },
+          "rollup": {
+            "min": 428,
+            "gzip": 297
+          },
+          "webpack": {
+            "min": 427,
+            "gzip": 295
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 733,
+            "gzip": 424
+          },
+          "rollup": {
+            "min": 751,
+            "gzip": 432
+          },
+          "webpack": {
+            "min": 750,
+            "gzip": 430
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 1016,
+            "gzip": 580
+          },
+          "rollup": {
+            "min": 950,
+            "gzip": 539
+          },
+          "webpack": {
+            "min": 1214,
+            "gzip": 675
+          }
+        }
+      }
+    },
+    {
+      "pkg": "polyline-encoded",
+      "version": "0.0.9",
+      "note": "",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 3125,
+            "gzip": 1215
+          },
+          "rollup": {
+            "min": 2617,
+            "gzip": 988
+          },
+          "webpack": {
+            "min": 2649,
+            "gzip": 975
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 3125,
+            "gzip": 1215
+          },
+          "rollup": {
+            "min": 2617,
+            "gzip": 988
+          },
+          "webpack": {
+            "min": 2649,
+            "gzip": 975
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 3142,
+            "gzip": 1218
+          },
+          "rollup": {
+            "min": 2626,
+            "gzip": 991
+          },
+          "webpack": {
+            "min": 2658,
+            "gzip": 978
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 3108,
+            "gzip": 1207
+          },
+          "rollup": {
+            "min": 2939,
+            "gzip": 1140
+          },
+          "webpack": {
+            "min": 3376,
+            "gzip": 1307
+          }
+        }
+      }
+    },
+    {
+      "pkg": "decode-google-map-polyline",
+      "version": "1.0.1",
+      "note": "decodes only",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 1379,
+            "gzip": 744
+          },
+          "rollup": {
+            "min": 890,
+            "gzip": 496
+          },
+          "webpack": {
+            "min": 920,
+            "gzip": 493
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 1369,
+            "gzip": 739
+          },
+          "rollup": {
+            "min": 1208,
+            "gzip": 648
+          },
+          "webpack": {
+            "min": 1653,
+            "gzip": 848
+          }
+        }
+      }
+    },
+    {
+      "pkg": "@lp-labs/polyline-codec",
+      "version": "0.1.0",
+      "note": "",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 1514,
+            "gzip": 803
+          },
+          "rollup": {
+            "min": 1519,
+            "gzip": 801
+          },
+          "webpack": {
+            "min": 1518,
+            "gzip": 798
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 1315,
+            "gzip": 702
+          },
+          "rollup": {
+            "min": 1318,
+            "gzip": 700
+          },
+          "webpack": {
+            "min": 1317,
+            "gzip": 697
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 2099,
+            "gzip": 996
+          },
+          "rollup": {
+            "min": 2116,
+            "gzip": 1017
+          },
+          "webpack": {
+            "min": 2115,
+            "gzip": 1014
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 2639,
+            "gzip": 1223
+          },
+          "rollup": {
+            "min": 2568,
+            "gzip": 1197
+          },
+          "webpack": {
+            "min": 2835,
+            "gzip": 1315
+          }
+        }
+      }
+    },
+    {
+      "pkg": "ol",
+      "version": "10.11.0",
+      "note": "encodeDeltas/decodeDeltas",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 3493,
+            "gzip": 1371
+          },
+          "rollup": {
+            "min": 3434,
+            "gzip": 1332
+          },
+          "webpack": {
+            "min": 6342,
+            "gzip": 2317
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 3591,
+            "gzip": 1408
+          },
+          "rollup": {
+            "min": 3524,
+            "gzip": 1372
+          },
+          "webpack": {
+            "min": 6432,
+            "gzip": 2354
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 3977,
+            "gzip": 1548
+          },
+          "rollup": {
+            "min": 3915,
+            "gzip": 1495
+          },
+          "webpack": {
+            "min": 6823,
+            "gzip": 2475
+          }
+        }
+      }
+    },
+    {
+      "pkg": "@duoquote/polytini",
+      "version": "0.1.6",
+      "note": "/web entry",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 1904,
+            "gzip": 1063
+          },
+          "rollup": {
+            "min": 1864,
+            "gzip": 1021
+          },
+          "webpack": {
+            "min": 1888,
+            "gzip": 1035
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 2202,
+            "gzip": 1222
+          },
+          "rollup": {
+            "min": 2138,
+            "gzip": 1163
+          },
+          "webpack": {
+            "min": 2199,
+            "gzip": 1204
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 3361,
+            "gzip": 1686
+          },
+          "rollup": {
+            "min": 3257,
+            "gzip": 1604
+          },
+          "webpack": {
+            "min": 3347,
+            "gzip": 1650
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 4490,
+            "gzip": 2061
+          },
+          "rollup": {
+            "min": 4401,
+            "gzip": 2006
+          },
+          "webpack": {
+            "min": 4677,
+            "gzip": 2124
+          }
+        }
+      }
+    },
+    {
+      "pkg": "@duoquote/polytini",
+      "version": "0.1.6",
+      "note": "node entry",
+      "platform": "node",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 5557,
+            "gzip": 2561
+          },
+          "rollup": {
+            "min": 5194,
+            "gzip": 2376
+          },
+          "webpack": {
+            "min": 5235,
+            "gzip": 2384
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 5557,
+            "gzip": 2562
+          },
+          "rollup": {
+            "min": 5194,
+            "gzip": 2379
+          },
+          "webpack": {
+            "min": 5235,
+            "gzip": 2384
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 5559,
+            "gzip": 2563
+          },
+          "rollup": {
+            "min": 5205,
+            "gzip": 2381
+          },
+          "webpack": {
+            "min": 5237,
+            "gzip": 2386
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 5805,
+            "gzip": 2682
+          },
+          "rollup": {
+            "min": 5700,
+            "gzip": 2595
+          },
+          "webpack": {
+            "min": 5980,
+            "gzip": 2730
+          }
+        }
+      }
+    },
+    {
+      "pkg": "@duoquote/polytini",
+      "version": "0.1.6",
+      "note": "/wasm, JS glue plus inlined .wasm",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 6789,
+            "gzip": 2925
+          },
+          "rollup": {
+            "min": 6631,
+            "gzip": 2794
+          },
+          "webpack": {
+            "min": 6684,
+            "gzip": 2832
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 8069,
+            "gzip": 3413
+          },
+          "rollup": {
+            "min": 7977,
+            "gzip": 3390
+          },
+          "webpack": {
+            "min": 8011,
+            "gzip": 3413
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 9260,
+            "gzip": 3880
+          },
+          "rollup": {
+            "min": 9110,
+            "gzip": 3875
+          },
+          "webpack": {
+            "min": 9180,
+            "gzip": 3884
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 14370,
+            "gzip": 5671
+          },
+          "rollup": {
+            "min": 14236,
+            "gzip": 5458
+          },
+          "webpack": {
+            "min": 14607,
+            "gzip": 5580
+          }
+        }
+      }
+    },
+    {
+      "pkg": "ol",
+      "version": "10.11.0",
+      "note": "ol/format/Polyline",
+      "platform": "browser",
+      "imports": {
+        "whole": {
+          "esbuild": {
+            "min": 27937,
+            "gzip": 9749
+          },
+          "rollup": {
+            "min": 26973,
+            "gzip": 9039
+          },
+          "webpack": {
+            "min": 27029,
+            "gzip": 8971
+          }
+        }
+      }
+    },
+    {
+      "pkg": "@here/flexpolyline",
+      "version": "0.1.0",
+      "note": "HERE Flexible Polyline",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 2685,
+            "gzip": 1444
+          },
+          "rollup": {
+            "min": 2233,
+            "gzip": 1177
+          },
+          "webpack": {
+            "min": 1297,
+            "gzip": 730
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 2685,
+            "gzip": 1443
+          },
+          "rollup": {
+            "min": 2233,
+            "gzip": 1177
+          },
+          "webpack": {
+            "min": 1128,
+            "gzip": 647
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 2702,
+            "gzip": 1449
+          },
+          "rollup": {
+            "min": 2242,
+            "gzip": 1181
+          },
+          "webpack": {
+            "min": 2188,
+            "gzip": 1120
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 2668,
+            "gzip": 1435
+          },
+          "rollup": {
+            "min": 2555,
+            "gzip": 1328
+          },
+          "webpack": {
+            "min": 2961,
+            "gzip": 1501
+          }
+        }
+      }
+    },
+    {
+      "pkg": "@duoquote/polytini",
+      "version": "0.1.6",
+      "note": "/flexible",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 2241,
+            "gzip": 1121
+          },
+          "rollup": {
+            "min": 2145,
+            "gzip": 1054
+          },
+          "webpack": {
+            "min": 2216,
+            "gzip": 1085
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 2109,
+            "gzip": 1250
+          },
+          "rollup": {
+            "min": 2121,
+            "gzip": 1234
+          },
+          "webpack": {
+            "min": 2114,
+            "gzip": 1231
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 3899,
+            "gzip": 1900
+          },
+          "rollup": {
+            "min": 3906,
+            "gzip": 1893
+          },
+          "webpack": {
+            "min": 3905,
+            "gzip": 1890
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 4300,
+            "gzip": 2107
+          },
+          "rollup": {
+            "min": 4161,
+            "gzip": 2028
+          },
+          "webpack": {
+            "min": 4492,
+            "gzip": 2190
+          }
+        }
+      }
+    }
+  ]
+}
