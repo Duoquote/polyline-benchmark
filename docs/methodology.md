@@ -16,7 +16,7 @@ The README has the results. This page has the details behind them.
 | `decode-google-map-polyline` | 1.0.1 | 2017-01 | 2,949 | `{lat, lng}` | 5 only, decode only |
 | `@pirxpilot/google-polyline` | 4.0.1 | 2026-02 | 50 | `[lng, lat]` | 5, 6 |
 | `@lp-labs/polyline-codec` | 0.1.0 | 2026-11 | 28 | `{latitude, longitude}` | 5, 6 |
-| `@duoquote/polytini` | 0.1.6 | 2026-11 | new | `[lat, lng]` or `[lng, lat]` | 0 to 15 |
+| `@duoquote/polytini` | 0.1.8 | 2026-11 | new | `[lat, lng]` or `[lng, lat]` | 0 to 15 |
 
 Downloads are from npm for 19 to 25 November 2026; polytini was first published on 27 November, after that week. Most of `ol`'s downloads are for the map library as a whole, not its polyline format, so the relative tables and charts use `@mapbox/polyline` as the 1.0x baseline: it's the most downloaded polyline library, and the one people most likely have installed.
 
@@ -86,7 +86,7 @@ One thing it shows: a library that builds its string with `+=` returns a rope, a
 
 Until 27 November the chart showed only the whole entry, which compared polytini's every export with other libraries' whole files. What a bundle gets depends on what it imports: tree shaking drops the rest for ES modules, and does nothing for CommonJS packages or a package that exports one object. The chart now has a panel per import, with esbuild's numbers; the tables in docs/results.md have Rollup and webpack too.
 
-The size results use polytini 0.1.6, which made its per-import bundles smaller at the same speed (its changelog has the paired runs). The speed and memory results are still from the 27 November run with 0.1.4, and their rows say so.
+The size results use polytini 0.1.8. Its `/lite` entry (decode and encode only, precision 0 to 6) has a row and a bar of its own, under `@duoquote/polytini/lite`; it's a polytini variant in the speed tables too, from the next full run. 0.1.6 made the other per-import bundles smaller at the same speed (its changelog has the paired runs). The speed and memory results are still from the 27 November run with 0.1.4, and their rows say so.
 
 ## Chrome and the Maps JavaScript API
 

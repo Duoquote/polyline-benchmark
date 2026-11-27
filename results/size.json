@@ -8,7 +8,7 @@
   "rows": [
     {
       "pkg": "@duoquote/polytini",
-      "version": "0.1.6",
+      "version": "0.1.8",
       "note": "",
       "platform": "browser",
       "imports": {
@@ -605,8 +605,72 @@
       }
     },
     {
+      "pkg": "@duoquote/polytini/lite",
+      "version": "0.1.8",
+      "note": "",
+      "platform": "browser",
+      "imports": {
+        "decode": {
+          "esbuild": {
+            "min": 475,
+            "gzip": 295
+          },
+          "rollup": {
+            "min": 479,
+            "gzip": 298
+          },
+          "webpack": {
+            "min": 478,
+            "gzip": 296
+          }
+        },
+        "encode": {
+          "esbuild": {
+            "min": 502,
+            "gzip": 349
+          },
+          "rollup": {
+            "min": 502,
+            "gzip": 352
+          },
+          "webpack": {
+            "min": 501,
+            "gzip": 349
+          }
+        },
+        "both": {
+          "esbuild": {
+            "min": 924,
+            "gzip": 503
+          },
+          "rollup": {
+            "min": 930,
+            "gzip": 512
+          },
+          "webpack": {
+            "min": 929,
+            "gzip": 509
+          }
+        },
+        "whole": {
+          "esbuild": {
+            "min": 1052,
+            "gzip": 583
+          },
+          "rollup": {
+            "min": 982,
+            "gzip": 551
+          },
+          "webpack": {
+            "min": 1240,
+            "gzip": 682
+          }
+        }
+      }
+    },
+    {
       "pkg": "@duoquote/polytini",
-      "version": "0.1.6",
+      "version": "0.1.8",
       "note": "/web entry",
       "platform": "browser",
       "imports": {
@@ -670,7 +734,7 @@
     },
     {
       "pkg": "@duoquote/polytini",
-      "version": "0.1.6",
+      "version": "0.1.8",
       "note": "node entry",
       "platform": "node",
       "imports": {
@@ -734,7 +798,7 @@
     },
     {
       "pkg": "@duoquote/polytini",
-      "version": "0.1.6",
+      "version": "0.1.8",
       "note": "/wasm, JS glue plus inlined .wasm",
       "platform": "browser",
       "imports": {
@@ -884,7 +948,7 @@
     },
     {
       "pkg": "@duoquote/polytini",
-      "version": "0.1.6",
+      "version": "0.1.8",
       "note": "/flexible",
       "platform": "browser",
       "imports": {
