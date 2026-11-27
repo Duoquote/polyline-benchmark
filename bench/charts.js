@@ -128,8 +128,7 @@ function svg(t, w, h, title, desc, body, defs = '') {
 <desc id="d">${esc(desc)}</desc>
 ${defs}<rect width="${w}" height="${h}" rx="6" fill="${t.surface}"/>
 ${body}
-</svg>
-`;
+</svg>\n`;
 }
 
 function header(t, title, subtitle) {
@@ -230,57 +229,72 @@ function lineChart(t, { title, subtitle, series, sizes }) {
  * with its value printed, and an optional second line of small text.
  * Cells marked `noise` are gray and hatched instead of colored.
  */
-function heatmap(t, { title, subtitle, colGroups, rows, notes: footer }) {
+function heatmap(t, { title, subtitle, colGroups, rows, notes: footer, stacked = false }) {
   const cw = 78, ch = 42, gap = 2, groupGap = 16, labelW = 104, L = 16 + labelW;
-  const sub = Array.isArray(subtitle) ? subtitle : [subtitle];
-  const legendY = 43 + sub.length * 16 + 10, T = legendY + 86;
-  const colX = [];
-  let x = L;
-  for (const g of colGroups) {
-    g.x0 = x;
-    for (let i = 0; i < g.cols.length; i++) colX.push(x), (x += cw + gap);
-    g.x1 = x - gap;
-    x += groupGap - gap;
-  }
-  const W = Math.max(colX.at(-1) + cw + 16, 760), bottom = T + rows.length * (ch + gap);
+  // Side by side, or (stacked) one block per group, for narrow pages.
+  const blocks = stacked ? colGroups.map((g) => [g]) : [colGroups];
+  let offset = 0;
+  for (const g of colGroups) (g.offset = offset), (offset += g.cols.length);
+  const blockW = (gs) => gs.reduce((a, g) => a + g.cols.length * (cw + gap) - gap, 0) + (gs.length - 1) * groupGap;
+  const W = Math.max(...blocks.map((gs) => L + blockW(gs) + 16), stacked ? 0 : 760);
+  const titleLines = wrap(title, W - 32, 15 * 1.08);
+  const sub = (Array.isArray(subtitle) ? subtitle : [subtitle]).flatMap((s) => wrap(s, W - 32, 12));
+  const narrow = W < 760;
+  const top = 24 + (titleLines.length - 1) * 19;
+  const legendY = top + 19 + sub.length * 16 + 10;
+  const blockH = 64 + rows.length * (ch + gap);
+  const T0 = legendY + (narrow ? 112 : 86);
   footer = footer.flatMap((s) => wrap(s, W - 32));
+  const bottom = T0 + blocks.length * blockH - 64 + (blocks.length - 1) * 8;
   const H = bottom + 14 + footer.length * 15 + 6;
   const defs = `<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="${t.mid}"/><line x1="0" y1="0" x2="0" y2="6" stroke="${t.hatch}" stroke-width="1.6" stroke-opacity="0.45"/></pattern></defs>\n`;
-  let body = header(t, title, sub);
+  let body = titleLines.map((s, i) => `<text x="16" y="${24 + i * 19}" font-size="15" font-weight="600" fill="${t.text}">${esc(s)}</text>\n`).join('');
+  body += sub.map((s, i) => `<text x="16" y="${top + 19 + i * 16}" font-size="12" fill="${t.muted}">${esc(s)}</text>\n`).join('');
   // Legend: the diverging scale as small steps, then the hatch swatch.
   const lx = 16, lw = 320, steps = 64, ly = legendY + 12;
   body += `<text x="${lx}" y="${legendY + 4}" font-size="11" fill="${t.text}">polytini slower</text><text x="${lx + lw}" y="${legendY + 4}" font-size="11" text-anchor="end" fill="${t.text}">polytini faster</text>\n`;
   for (let i = 0; i < steps; i++) {
-    const r = DIVERGE_MAX ** ((i + 0.5) / steps * 2 - 1);
+    const r = DIVERGE_MAX ** (((i + 0.5) / steps) * 2 - 1);
     body += `<rect x="${(lx + (i * lw) / steps).toFixed(1)}" y="${ly}" width="${(lw / steps + 0.4).toFixed(1)}" height="10" fill="${divergeColor(t, r)}"/>`;
   }
   for (const r of [0.25, 0.5, 1, 2, 4]) {
     const tx = lx + ((Math.log(r) / Math.log(DIVERGE_MAX) + 1) / 2) * lw;
     body += `<line x1="${tx.toFixed(1)}" y1="${ly + 10}" x2="${tx.toFixed(1)}" y2="${ly + 14}" stroke="${t.muted}" stroke-width="1"/><text x="${tx.toFixed(1)}" y="${ly + 25}" font-size="10.5" text-anchor="${r === 4 ? 'end' : r === 0.25 ? 'start' : 'middle'}" fill="${t.muted}">${r === 4 ? '4x or more' : r === 0.25 ? '0.25x or less' : `${r}x`}</text>`;
   }
-  const hx = lx + lw + 48;
-  body += `\n<rect x="${hx}" y="${ly - 6}" width="28" height="20" rx="3" fill="url(#hatch)"/><text x="${hx + 36}" y="${ly + 3}" font-size="11" fill="${t.text}">Within the noise: polytini was ahead in some rounds</text><text x="${hx + 36}" y="${ly + 17}" font-size="11" fill="${t.text}">and behind in others, so call it even</text>\n`;
-  // Column headers.
-  for (const g of colGroups) {
-    body += `<text x="${(g.x0 + g.x1) / 2}" y="${T - 30}" font-size="12" font-weight="600" text-anchor="middle" fill="${t.text}">${esc(g.label)}</text>`;
-    body += `<line x1="${g.x0}" y1="${T - 24}" x2="${g.x1}" y2="${T - 24}" stroke="${t.axis}" stroke-width="1"/>\n`;
-  }
-  colGroups.flatMap((g) => g.cols).forEach((c, i) => (body += `<text x="${colX[i] + cw / 2}" y="${T - 8}" font-size="11" text-anchor="middle" fill="${t.muted}">${esc(c)}</text>`));
-  body += '\n';
-  rows.forEach((row, ri) => {
-    const y = T + ri * (ch + gap);
-    body += `<text x="${L - 10}" y="${y + ch / 2 + 4}" font-size="12" text-anchor="end" fill="${t.text}">${esc(row.label)}</text>\n`;
-    row.cells.forEach((c, ci) => {
-      if (!c) return;
-      const fill = c.noise ? t.mid : divergeColor(t, c.value), ink = c.noise ? t.text : inkOn(fill);
-      body += `<rect x="${colX[ci]}" y="${y}" width="${cw}" height="${ch}" rx="3" fill="${c.noise ? 'url(#hatch)' : fill}"><title>${esc(c.tip)}</title></rect>`;
-      body += `<text x="${colX[ci] + cw / 2}" y="${y + 19}" font-size="13" font-weight="600" text-anchor="middle" fill="${ink}" pointer-events="none">${esc(times(c.value))}</text>`;
-      if (c.sub) body += `<text x="${colX[ci] + cw / 2}" y="${y + 33}" font-size="9.5" text-anchor="middle" fill="${ink}" pointer-events="none">${esc(c.sub)}</text>`;
+  const [hx, hy] = narrow ? [lx, ly + 40] : [lx + lw + 48, ly];
+  const hatchText = narrow ? ['Within the noise: polytini was ahead in some rounds and', 'behind in others, so call it even'] : ['Within the noise: polytini was ahead in some rounds', 'and behind in others, so call it even'];
+  body += `
+<rect x="${hx}" y="${hy - 6}" width="28" height="20" rx="3" fill="url(#hatch)"/><text x="${hx + 36}" y="${hy + 3}" font-size="11" fill="${t.text}">${esc(hatchText[0])}</text><text x="${hx + 36}" y="${hy + 17}" font-size="11" fill="${t.text}">${esc(hatchText[1])}</text>\n`;
+  blocks.forEach((gs, bi) => {
+    const T = T0 + bi * (blockH + 8);
+    let x = L;
+    const colX = {};
+    for (const g of gs) {
+      g.x0 = x;
+      g.cols.forEach((c, i) => (colX[g.offset + i] = x + i * (cw + gap)));
+      g.x1 = x + g.cols.length * (cw + gap) - gap;
+      x = g.x1 + groupGap;
+      body += `<text x="${(g.x0 + g.x1) / 2}" y="${T - 30}" font-size="12" font-weight="600" text-anchor="middle" fill="${t.text}">${esc(g.label)}</text>`;
+      body += `<line x1="${g.x0}" y1="${T - 24}" x2="${g.x1}" y2="${T - 24}" stroke="${t.axis}" stroke-width="1"/>\n`;
+      g.cols.forEach((c, i) => (body += `<text x="${colX[g.offset + i] + cw / 2}" y="${T - 8}" font-size="11" text-anchor="middle" fill="${t.muted}">${esc(c)}</text>`));
       body += '\n';
+    }
+    rows.forEach((row, ri) => {
+      const y = T + ri * (ch + gap);
+      body += `<text x="${L - 10}" y="${y + ch / 2 + 4}" font-size="12" text-anchor="end" fill="${t.text}">${esc(row.label)}</text>\n`;
+      row.cells.forEach((c, ci) => {
+        if (!c || !(ci in colX)) return;
+        const fill = c.noise ? t.mid : divergeColor(t, c.value), ink = c.noise ? t.text : inkOn(fill);
+        body += `<rect x="${colX[ci]}" y="${y}" width="${cw}" height="${ch}" rx="3" fill="${c.noise ? 'url(#hatch)' : fill}"><title>${esc(c.tip)}</title></rect>`;
+        body += `<text x="${colX[ci] + cw / 2}" y="${y + 19}" font-size="13" font-weight="600" text-anchor="middle" fill="${ink}" pointer-events="none">${esc(times(c.value))}</text>`;
+        if (c.sub) body += `<text x="${colX[ci] + cw / 2}" y="${y + 33}" font-size="9.5" text-anchor="middle" fill="${ink}" pointer-events="none">${esc(c.sub)}</text>`;
+        body += '\n';
+      });
     });
   });
   body += notes(t, footer, bottom + 14);
-  const desc = `${sub.join(' ')} ${rows.map((r) => `${r.label}: ${r.cells.map((c, i) => c && `${colGroups.flatMap((g) => g.cols.map((col) => `${g.label} ${col}`))[i]} ${times(c.value)}${c.noise ? ' (within the noise)' : ''}`).filter(Boolean).join(', ')}`).join('. ')}.`;
+  const names = colGroups.flatMap((g) => g.cols.map((col) => `${g.label} ${col}`));
+  const desc = `${sub.join(' ')} ${rows.map((r) => `${r.label}: ${r.cells.map((c, i) => c && `${names[i]} ${times(c.value)}${c.noise ? ' (within the noise)' : ''}`).filter(Boolean).join(', ')}`).join('. ')}.`;
   return svg(t, W, H, title, desc, body, defs);
 }
 
@@ -402,7 +416,7 @@ if (runtimes.length) {
   });
   const others = new Set(Object.values(data).flatMap((d) => groups(d).main.map((r) => r.impl).filter((n) => !isOurs(n)).map(short)));
   const wins = cells.filter((c) => !c.noise && c.v > 1).length, losses = cells.filter((c) => !c.noise && c.v < 1).length, even = cells.filter((c) => c.noise).length;
-  write('overview', (t) => heatmap(t, {
+  const overview = {
     title: `polytini ${version} against the fastest other library, every runtime and line length`,
     subtitle: [
       `Each cell: polytini's calls per second divided by the fastest of the ${others.size} other libraries in that cell (named under the value). 1.0x is even, above is faster.`,
@@ -414,7 +428,10 @@ if (runtimes.length) {
       `"real" is the 1000 real-world lines, median 82 points. Each cell is the median of ${first.rounds} interleaved rounds; between rounds a cell moved by a median of ${spreadRange}, depending on the runtime.`,
       'googlemaps is @googlemaps/polyline-codec, mapbox is @mapbox/polyline, placemarkio is @placemarkio/polyline, pirxpilot is @pirxpilot/google-polyline. Every number is in docs/results.md.',
     ],
-  }));
+  };
+  write('overview', (t) => heatmap(t, overview));
+  // The same with decode above encode, about 620 pixels wide, for blog posts and phones.
+  write('overview-narrow', (t) => heatmap(t, { ...overview, stacked: true }));
 }
 
 // The grouped bar charts: speed relative to the baseline, a panel per runtime.
