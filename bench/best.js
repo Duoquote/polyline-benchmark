@@ -27,12 +27,19 @@ function speed(pick, op, cols) {
   return Object.entries(scores).filter(([, xs]) => xs.length === n).map(([name, xs]) => ({ name, score: geo(xs) })).sort((a, b) => b.score - a.score);
 }
 const plain = (g) => g.main.filter((r) => !/\(.*\)$/.test(r.impl));
+// The noise: how far a cell moved between rounds, the median over every
+// cell of a runtime, then the median over runtimes. A lead smaller than
+// that isn't a ranking. It was about 30% on a busy desktop.
+const median = (xs) => [...xs].sort((a, b) => a - b)[(xs.length - 1) >> 1];
+export function noise() {
+  const per = RUNTIMES.map(read).filter(Boolean).map((d) => median(d.results.map((r) => r.spread)));
+  return per.length ? median(per) : 0.3;
+}
 const row = (situation, list, better = 'faster') => {
   const [a, b] = list;
   if (!a || !b) return null;
   const m = better === 'faster' ? a.score / b.score : b.score / a.score;
-  // Cells moved about 30% between rounds, so a smaller lead isn't a ranking.
-  return { situation, winner: a.name, runnerUp: b.name, margin: `${m.toFixed(m >= 10 ? 0 : 2)}x ${better}${m < 1.3 ? ', within the noise' : ''}` };
+  return { situation, winner: a.name, runnerUp: b.name, margin: `${m.toFixed(m >= 10 ? 0 : 2)}x ${better}${m < 1 + noise() ? ', within the noise' : ''}` };
 };
 
 export function bestAt() {
