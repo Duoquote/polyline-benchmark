@@ -20,6 +20,7 @@
     "bench:all": "node bench/matrix.js",
     "size": "node bench/size.js",
     "bench:quick": "node bench/matrix.js --quick",
+    "bench:clean": "node bench/matrix.js --jobs 1 --prio high --affinity 0xF000",
     "charts": "node bench/charts.js",
     "memory": "node --expose-gc --max-semi-space-size=128 bench/memory.js"
   },

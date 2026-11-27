@@ -31,9 +31,11 @@ const plain = (g) => g.main.filter((r) => !/\(.*\)$/.test(r.impl));
 // cell of a runtime, then the median over runtimes. A lead smaller than
 // that isn't a ranking. It was about 30% on a busy desktop.
 const median = (xs) => [...xs].sort((a, b) => a - b)[(xs.length - 1) >> 1];
+let noiseCache;
 export function noise() {
+  if (noiseCache !== undefined) return noiseCache;
   const per = RUNTIMES.map(read).filter(Boolean).map((d) => median(d.results.map((r) => r.spread)));
-  return per.length ? median(per) : 0.3;
+  return (noiseCache = per.length ? median(per) : 0.3);
 }
 const row = (situation, list, better = 'faster') => {
   const [a, b] = list;

@@ -1,4 +1,5 @@
-// Runs the whole benchmark matrix in under 15 minutes:
+// Runs the whole benchmark matrix: about 10 minutes with the default 3
+// jobs, about 30 with --jobs 1.
 //
 //   node bench/matrix.js [--time 120] [--rounds 5] [--jobs 3] [--skip node22,browser]
 //   node bench/matrix.js --quick     about 2 minutes, for development
@@ -24,11 +25,12 @@
 // is what the published runs use on Windows, the same as polytini's
 // bench/ab.js: one step at a time, high priority, pinned to logical CPUs
 // 12 to 15. `--affinity` pins this process, and Windows passes the mask on
-// to every child, Chrome included. `--prio high` sets BENCH_PRIORITY=high,
+// to every child, Chrome included (Chrome's own processes stay at normal
+// priority). `--prio high` sets BENCH_PRIORITY=high,
 // and run.js, memory.js and browser.js raise their own priority from it,
 // because a child doesn't inherit a high priority class. Both are Windows
-// only; elsewhere they're ignored. With --jobs 1 the run takes longer than
-// 15 minutes; results/logs/matrix.log has the time of every step.
+// only; elsewhere they're ignored. results/logs/matrix.log has the time of
+// every step. `npm run bench:clean` runs exactly this.
 //
 // Node versions other than the one running this script come from
 // `npx -p node@<major>`, so the global Node install is never changed. Set
